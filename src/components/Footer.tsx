@@ -18,10 +18,12 @@ export default function Footer() {
             <div className="flex gap-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
+                <span className="sr-only">Instagram</span>
                 <Instagram size={15} />
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
+                <span className="sr-only">Facebook</span>
                 <Facebook size={15} />
               </a>
             </div>

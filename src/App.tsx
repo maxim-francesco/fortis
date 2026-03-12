@@ -16,6 +16,7 @@ import Finantare from "./pages/Finantare";
 import LaComanda from "./pages/LaComanda";
 import BuyBack from "./pages/BuyBack";
 import Contact from "./pages/Contact";
+import PoliticaConfidentialitate from "./pages/PoliticaConfidentialitate";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ function AnimatedRoutes() {
           <Route path="/la-comanda" element={<LaComanda />} />
           <Route path="/buyback" element={<BuyBack />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/politica-confidentialitate" element={<PoliticaConfidentialitate />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
