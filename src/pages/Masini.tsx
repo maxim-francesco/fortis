@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
@@ -69,9 +69,22 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
 }
 
 export default function Masini() {
+  const [page, setPage] = useState("1");
   const [filterOpen, setFilterOpen] = useState(false);
-  const { listings, loading, error } = useListings();
+  const { listings, loading, error, pagination } = useListings({ page });
   const { ref, inView } = useInView(0.1);
+  const listTopRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top of list when page changes
+  useEffect(() => {
+    if (page !== "1" && listTopRef.current) {
+      listTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [page]);
+
+  const handlePageChange = (newPage: string) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="min-h-screen bg-[#080808]">
@@ -99,7 +112,7 @@ export default function Masini() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Filter toggle (mobile) + results header */}
-        <div className="flex items-center justify-between mb-8">
+        <div ref={listTopRef} className="flex items-center justify-between mb-8 scroll-mt-24">
           <div ref={ref as React.RefObject<HTMLDivElement>}>
             <motion.div
               initial={{ opacity: 0 }}
@@ -113,7 +126,7 @@ export default function Masini() {
               ) : error ? (
                 <p className="text-red-500 text-sm">Nu s-au putut încărca mașinile.</p>
               ) : (
-                <p><span className="text-[#B8962E]">{listings.length}</span> mașini disponibile</p>
+                <p><span className="text-[#B8962E]">{pagination?.total || listings.length}</span> mașini disponibile</p>
               )}
             </motion.div>
           </div>
@@ -160,6 +173,31 @@ export default function Masini() {
             <div key={i} className="animate-pulse bg-[#161616] border border-[rgba(184,150,46,0.1)] rounded-sm aspect-[16/14]" />
           ))}
         </div>
+
+        {/* Pagination controls */}
+        {pagination && pagination.totalPages > 1 && (
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mt-12 pb-10 border-t border-[rgba(184,150,46,0.1)] pt-10">
+            <button
+              onClick={() => handlePageChange((pagination.page - 1).toString())}
+              disabled={pagination.page <= 1 || loading}
+              className="btn-ghost px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+            >
+              Pagina anterioară
+            </button>
+            
+            <div className="font-body text-sm text-[#888880]">
+              Pagina <span className="text-[#B8962E] font-semibold">{pagination.page}</span> din {pagination.totalPages}
+            </div>
+
+            <button
+              onClick={() => handlePageChange((pagination.page + 1).toString())}
+              disabled={pagination.page >= pagination.totalPages || loading}
+              className="btn-gold px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+            >
+              Pagina următoare
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Mobile filter drawer */}
