@@ -6,7 +6,7 @@ export default function FloatingButtons() {
 
   return (
     <>
-      {/* Mobile sticky bottom bar */}
+      {/* Mobile sticky bottom bar - Visible on mobile and tablet (hidden on lg) */}
       <div className="lg:hidden sticky-cta flex gap-3 pb-safe">
         <a
           href="tel:0751489879"
@@ -26,12 +26,12 @@ export default function FloatingButtons() {
         </a>
       </div>
 
-      {/* Desktop floating WhatsApp */}
+      {/* Desktop floating WhatsApp - Visible only on desktop (lg:flex) */}
       <motion.a
         href={waLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden md:flex wa-float"
+        className="hidden lg:flex wa-float"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, scale: 0 }}
