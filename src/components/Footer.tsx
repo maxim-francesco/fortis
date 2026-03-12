@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
-import fortisLogo from "@/assets/fortis-logo.jpeg";
+import fortisLogo from "@/assets/fortis.png";
 
 export default function Footer() {
   return (
@@ -9,13 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <img src={fortisLogo} alt="Fortis" className="h-10 w-10 rounded-full object-cover" />
-              <div>
-                <div className="font-label text-[#F5F5F0] text-lg tracking-widest">FORTIS</div>
-                <div className="font-label text-[#B8962E] text-[10px] tracking-[0.2em]">PREMIUM AUTO</div>
-              </div>
-            </div>
+            <img src={fortisLogo} alt="Fortis Premium Auto" className="h-8 w-auto object-contain mb-6" />
             <p className="font-body text-sm text-[#888880] leading-relaxed mb-6">
               <em className="text-[#B8962E] not-italic font-display text-base">"Alegerea celor care știu."</em>
               <br />

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
-import fortisLogo from "@/assets/fortis-logo.jpeg";
+import fortisLogo from "@/assets/fortis.png";
 
 const navLinks = [
   { label: "Acasă", href: "/" },
@@ -47,12 +47,8 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-            <img src={fortisLogo} alt="Fortis Premium Auto" className="h-10 w-10 rounded-full object-cover" />
-            <div>
-              <div className="font-label text-warm-white text-lg leading-none tracking-widest text-[#F5F5F0]">FORTIS</div>
-              <div className="font-label text-gold text-[10px] tracking-[0.2em] text-[#B8962E]">PREMIUM AUTO</div>
-            </div>
+          <Link to="/" className="flex items-center flex-shrink-0">
+            <img src={fortisLogo} alt="Fortis Premium Auto" className="h-10 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav links */}
