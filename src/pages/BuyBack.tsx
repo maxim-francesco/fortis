@@ -118,14 +118,6 @@ export default function BuyBack() {
               <textarea rows={3} className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors resize-none" placeholder="Descrie starea mașinii, dotările speciale, istoricul service..." />
             </div>
 
-            <div>
-              <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">FOTOGRAFII (OPȚIONAL)</label>
-              <div className="border-2 border-dashed border-[rgba(184,150,46,0.2)] rounded-sm p-6 text-center hover:border-[rgba(184,150,46,0.4)] transition-colors cursor-pointer">
-                <p className="font-body text-sm text-[#888880]">📎 Adaugă fotografii ale mașinii</p>
-                <p className="font-body text-xs text-[#888880] opacity-60 mt-1">JPG, PNG — max 10MB fiecare</p>
-              </div>
-            </div>
-
             <button type="submit" className="btn-gold w-full py-4 rounded-sm text-sm font-semibold">
               Solicită Evaluare Gratuită
             </button>
