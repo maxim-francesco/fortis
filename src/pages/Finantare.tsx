@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { ChevronRight, ChevronDown, Check, Info } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 const faqs = [
   { q: "Ce acte sunt necesare pentru finanțare?", a: "Pentru finanțare este necesar doar buletinul de identitate. Nu sunt necesare documente suplimentare sau adeverințe de venit în majoritatea cazurilor." },
@@ -50,6 +54,41 @@ function CriteriaItem({ text }: { text: string }) {
 export default function Finantare() {
   const { ref, inView } = useInView(0.1);
 
+  // Calculator State
+  const [pretMasina, setPretMasina] = useState(30000);
+  const [avansPercent, setAvansPercent] = useState(20);
+  const [perioada, setPerioada] = useState(60);
+  
+  const EUR_TO_RON = 5.0;
+  const DAE = 0.079; // 7.9%
+
+  const formatNumber = (num: number) => {
+    return new Intl.NumberFormat("ro-RO", { maximumFractionDigits: 0 }).format(num);
+  };
+
+  const calculateLoan = () => {
+    const principalEur = pretMasina * (1 - avansPercent / 100);
+    const principalRon = principalEur * EUR_TO_RON;
+    
+    if (principalRon <= 0) return { rata: 0, totalDePlata: 0, totalDobanda: 0, principalRon: 0 };
+
+    const monthlyInterest = DAE / 12;
+    const rata = principalRon * (monthlyInterest * Math.pow(1 + monthlyInterest, perioada)) / (Math.pow(1 + monthlyInterest, perioada) - 1);
+    const totalDePlata = rata * perioada;
+    const totalDobanda = totalDePlata - principalRon;
+
+    return {
+      rata,
+      totalDePlata,
+      totalDobanda,
+      principalRon
+    };
+  };
+
+  const results = calculateLoan();
+  const avansEur = (pretMasina * avansPercent) / 100;
+  const avansRon = avansEur * EUR_TO_RON;
+
   return (
     <div className="min-h-screen bg-[#080808]">
       {/* Page hero */}
@@ -73,8 +112,8 @@ export default function Finantare() {
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-[#888880] leading-relaxed mb-6">
                 Finanțare disponibilă doar cu buletinul. Fără avans obligatoriu, fără adeverințe de venit, fără birocrație inutilă.
               </motion.p>
-              <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} href="#aplica" className="btn-gold py-4 px-8 rounded-sm text-sm inline-block">
-                Aplică pentru Finanțare
+              <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} href="#calculator" className="btn-gold py-4 px-8 rounded-sm text-sm inline-block">
+                Calculează Rată
               </motion.a>
             </div>
             {/* Geometric decoration */}
@@ -182,6 +221,113 @@ export default function Finantare() {
       </section>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 space-y-16">
+        {/* Loan Calculator */}
+        <div id="calculator" className="bg-[#161616] border border-[rgba(184,150,46,0.3)] rounded-sm p-6 sm:p-10 shadow-gold scroll-mt-24">
+          <div className="text-center mb-10">
+            <h2 className="font-display text-3xl text-[#F5F5F0] mb-2">Calculator Rate Auto</h2>
+            <p className="font-body text-xs text-[#888880] uppercase tracking-widest">Curs fix: 1 EUR = 5.0 RON</p>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-10">
+            {/* Inputs */}
+            <div className="lg:col-span-7 space-y-8">
+              {/* Preț Masina */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="font-label text-xs tracking-widest text-[#F5F5F0]">PREȚ MAȘINĂ (€)</Label>
+                  <span className="font-body text-sm text-[#B8962E] font-medium">{formatNumber(pretMasina)} €</span>
+                </div>
+                <Input 
+                  type="number" 
+                  value={pretMasina} 
+                  onChange={(e) => setPretMasina(Math.max(3000, Math.min(500000, Number(e.target.value))))}
+                  className="bg-[#111] border-[rgba(184,150,46,0.2)] text-[#F5F5F0] focus:border-[#B8962E]"
+                />
+              </div>
+
+              {/* Avans */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="font-label text-xs tracking-widest text-[#F5F5F0]">AVANS (%)</Label>
+                  <span className="font-body text-sm text-[#B8962E] font-medium">{avansPercent}%</span>
+                </div>
+                <Slider 
+                  defaultValue={[20]} 
+                  max={70} 
+                  step={5} 
+                  onValueChange={(val) => setAvansPercent(val[0])}
+                  className="py-4"
+                />
+                <div className="flex justify-between font-body text-[10px] text-[#888880] uppercase tracking-wider">
+                  <span>Valoare Avans: {formatNumber(avansEur)} €</span>
+                  <span>{formatNumber(avansRon)} RON</span>
+                </div>
+              </div>
+
+              {/* Perioada */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="font-label text-xs tracking-widest text-[#F5F5F0]">PERIOADĂ (LUNI)</Label>
+                  <span className="font-body text-sm text-[#B8962E] font-medium">{perioada} luni</span>
+                </div>
+                <Slider 
+                  defaultValue={[60]} 
+                  min={12}
+                  max={72} 
+                  step={12} 
+                  onValueChange={(val) => setPerioada(val[0])}
+                  className="py-4"
+                />
+                <div className="flex justify-between font-body text-[10px] text-[#888880] uppercase tracking-wider">
+                  <span>1 an</span>
+                  <span>6 ani</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Results Card */}
+            <div className="lg:col-span-5">
+              <div className="bg-[#111] border border-[rgba(184,150,46,0.2)] rounded-sm p-6 sm:p-8 flex flex-col h-full justify-between shadow-inner">
+                <div>
+                  <p className="font-label text-[10px] text-[#888880] tracking-[0.2em] mb-4 uppercase">Rată lunară estimată</p>
+                  <div className="flex items-baseline gap-2 mb-8">
+                    <span className="font-display text-5xl font-bold text-[#B8962E]">{formatNumber(results.rata)}</span>
+                    <span className="font-display text-xl text-[#B8962E]">LEI / LUNĂ</span>
+                  </div>
+
+                  <div className="space-y-4 border-t border-[rgba(184,150,46,0.1)] pt-6">
+                    <div className="flex justify-between items-center">
+                      <span className="font-body text-xs text-[#888880]">Sumă finanțată</span>
+                      <span className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.principalRon)} RON</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-body text-xs text-[#888880]">Total de plată</span>
+                      <span className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.totalDePlata)} RON</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-body text-xs text-[#888880]">Total dobândă</span>
+                      <span className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.totalDobanda)} RON</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-body text-xs text-[#888880]">DAE</span>
+                      <span className="font-body text-sm text-[#B8962E] font-semibold">7.9%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <p className="font-body text-[10px] text-[#888880] leading-relaxed mb-6 italic">
+                    * Calculul este orientativ. Rata finală poate varia în funcție de profilul financiar al clientului. Oferta TBI Bank.
+                  </p>
+                  <Link to="/contact" className="btn-gold w-full text-center py-4 rounded-sm text-sm font-semibold shadow-gold">
+                    Solicită Ofertă Acum
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Partners */}
         <div ref={ref as React.RefObject<HTMLDivElement>}>
           <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="font-label text-[#B8962E] tracking-widest text-sm mb-6 text-center">PARTENERI DE FINANȚARE</motion.p>
@@ -214,33 +360,6 @@ export default function Finantare() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Calculator placeholder */}
-        <div id="aplica" className="bg-[#161616] border border-[rgba(184,150,46,0.3)] rounded-sm p-8 text-center shadow-gold">
-          <div className="w-12 h-12 border border-[rgba(184,150,46,0.3)] rounded-sm flex items-center justify-center mx-auto mb-4">
-            <span className="text-[#B8962E] text-xl">⚡</span>
-          </div>
-          <h3 className="font-display text-2xl text-[#F5F5F0] mb-2">Calculator Rate</h3>
-          <p className="font-label text-[#B8962E] text-xs tracking-widest mb-6">COMING SOON</p>
-          <div className="grid sm:grid-cols-3 gap-4 mb-6 opacity-40 pointer-events-none">
-            <div className="bg-[#111] border border-[rgba(184,150,46,0.15)] rounded-sm p-3">
-              <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-1">PREȚ MAȘINĂ (€)</label>
-              <input disabled placeholder="30.000" className="bg-transparent text-[#F5F5F0] font-body text-sm w-full outline-none" />
-            </div>
-            <div className="bg-[#111] border border-[rgba(184,150,46,0.15)] rounded-sm p-3">
-              <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-1">AVANS (%)</label>
-              <input disabled placeholder="0%" className="bg-transparent text-[#F5F5F0] font-body text-sm w-full outline-none" />
-            </div>
-            <div className="bg-[#111] border border-[rgba(184,150,46,0.15)] rounded-sm p-3">
-              <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-1">PERIOADĂ (LUNI)</label>
-              <input disabled placeholder="60" className="bg-transparent text-[#F5F5F0] font-body text-sm w-full outline-none" />
-            </div>
-          </div>
-          <p className="font-body text-sm text-[#888880]">Calculatorul va fi disponibil în curând.<br />Contactează-ne direct pentru o ofertă personalizată.</p>
-          <a href="tel:0751489879" className="btn-gold text-sm px-8 py-3 rounded-sm mt-6 inline-block">
-            Solicită Ofertă Acum
-          </a>
         </div>
 
         {/* FAQ */}
