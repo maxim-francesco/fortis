@@ -2,22 +2,25 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
-import { Calendar, Gauge, Fuel, Settings, ChevronRight, SlidersHorizontal, X } from "lucide-react";
-import carBmw from "@/assets/car-bmw.jpg";
-import carMercedes from "@/assets/car-mercedes.jpg";
-import carAudi from "@/assets/car-audi.jpg";
+import { Calendar, Gauge, Fuel, Settings, ChevronRight, SlidersHorizontal, X, Loader2 } from "lucide-react";
+import { useListings } from "@/hooks/useListings";
 
-const allCars = [
-  { img: carBmw, badge: "RECOMANDAT", brand: "BMW", model: "Seria 5 530d M-Sport", year: "2021", km: "68.000", fuel: "Diesel", transmission: "Automată", price: "29.900", color: "Gri Grafit", body: "Berlină" },
-  { img: carMercedes, badge: "NOU", brand: "Mercedes-Benz", model: "E 220d AMG Line", year: "2020", km: "72.000", fuel: "Diesel", transmission: "Automată", price: "34.500", color: "Negru Obsidian", body: "Berlină" },
-  { img: carAudi, badge: "RECOMANDAT", brand: "Audi", model: "A6 50 TDI S-Line", year: "2022", km: "45.000", fuel: "Diesel", transmission: "Automată", price: "37.900", color: "Gri Quantum", body: "Berlină" },
-  { img: carBmw, badge: "", brand: "BMW", model: "X5 xDrive40d", year: "2021", km: "55.000", fuel: "Diesel", transmission: "Automată", price: "52.900", color: "Albastru Mediteranean", body: "SUV" },
-  { img: carMercedes, badge: "", brand: "Mercedes-Benz", model: "C 200d AMG", year: "2022", km: "38.000", fuel: "Diesel", transmission: "Automată", price: "28.900", color: "Argintiu", body: "Berlină" },
-  { img: carAudi, badge: "NOU", brand: "Audi", model: "Q5 40 TDI Quattro", year: "2023", km: "22.000", fuel: "Diesel", transmission: "Automată", price: "44.900", color: "Gri Manhattan", body: "SUV" },
-];
-
-function CarCard({ car, delay }: { car: typeof allCars[0]; delay: number }) {
+function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.05);
+
+  // Extract attributes from real data structure
+  const getAttr = (name: string) => {
+    const attr = listing.attributeValues?.find((av: any) => av.attribute.name === name);
+    return attr?.stringValue || attr?.numberValue || attr?.booleanValue;
+  };
+
+  const year = getAttr("An") || "N/A";
+  const fuel = getAttr("Combustibil") || "N/A";
+  const transmission = getAttr("Cutie de viteze") || "N/A";
+  const price = listing.price ? listing.price.toLocaleString() : "Contact";
+  const km = listing.mileage ? listing.mileage.toLocaleString() : "N/A";
+  const imageUrl = listing.images?.[0]?.url || "https://picsum.photos/seed/car/600/400";
+
   return (
     <motion.div
       ref={ref as React.RefObject<HTMLDivElement>}
@@ -27,35 +30,37 @@ function CarCard({ car, delay }: { car: typeof allCars[0]; delay: number }) {
       className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300"
     >
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
-        <img src={car.img} alt={`${car.brand} ${car.model}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+        <img 
+          src={imageUrl} 
+          alt={listing.title} 
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" 
+          data-ai-hint="car exterior"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/30 to-transparent" />
         <div className="absolute top-3 left-3 flex gap-2">
-          {car.badge && (
-            <span className="font-label text-[9px] tracking-widest bg-[#B8962E] text-[#080808] px-2 py-1">{car.badge}</span>
-          )}
           <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#B8962E] px-2 py-1 bg-[rgba(8,8,8,0.85)]">GARANȚIE 12 LUNI</span>
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-display text-lg font-semibold text-[#F5F5F0] mb-1">
-          {car.brand} <span className="font-light">{car.model}</span>
+        <h3 className="font-display text-lg font-semibold text-[#F5F5F0] mb-1 line-clamp-1">
+          {listing.title}
         </h3>
         <div className="flex items-center gap-2 mb-3 flex-wrap">
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Calendar size={10} />{car.year}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Calendar size={10} />{year}</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Gauge size={10} />{car.km} km</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Gauge size={10} />{km} km</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Fuel size={10} />{car.fuel}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Fuel size={10} />{fuel}</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Settings size={10} />{car.transmission}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Settings size={10} />{transmission}</span>
         </div>
         <div className="flex items-end justify-between mb-4">
           <div>
-            <div className="font-display text-xl font-semibold text-[#B8962E]">€{car.price}</div>
+            <div className="font-display text-xl font-semibold text-[#B8962E]">€{price}</div>
             <div className="font-body text-[10px] text-[#888880]">Finanțare disponibilă</div>
           </div>
         </div>
-        <Link to="#" className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
+        <Link to={`/listing/${listing.id}`} className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
           Vezi Detalii
         </Link>
       </div>
@@ -65,6 +70,7 @@ function CarCard({ car, delay }: { car: typeof allCars[0]; delay: number }) {
 
 export default function Masini() {
   const [filterOpen, setFilterOpen] = useState(false);
+  const { listings, loading, error } = useListings();
   const { ref, inView } = useInView(0.1);
 
   return (
@@ -95,13 +101,21 @@ export default function Masini() {
         {/* Filter toggle (mobile) + results header */}
         <div className="flex items-center justify-between mb-8">
           <div ref={ref as React.RefObject<HTMLDivElement>}>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               className="font-display text-xl text-[#F5F5F0]"
             >
-              <span className="text-[#B8962E]">{allCars.length}</span> mașini disponibile
-            </motion.p>
+              {loading ? (
+                <div className="flex items-center gap-2 text-sm text-[#888880]">
+                  <Loader2 className="animate-spin" size={16} /> Se încarcă stocul...
+                </div>
+              ) : error ? (
+                <p className="text-red-500 text-sm">Nu s-au putut încărca mașinile.</p>
+              ) : (
+                <p><span className="text-[#B8962E]">{listings.length}</span> mașini disponibile</p>
+              )}
+            </motion.div>
           </div>
           <div className="flex items-center gap-3">
             <select className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#888880] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
@@ -137,9 +151,13 @@ export default function Masini() {
         </div>
 
         {/* Cars grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {allCars.map((car, i) => (
-            <CarCard key={i} car={car} delay={i * 0.07} />
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 min-h-[400px]">
+          {!loading && !error && listings.map((listing, i) => (
+            <CarCard key={listing.id} listing={listing} delay={i * 0.07} />
+          ))}
+          
+          {loading && Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-[#161616] border border-[rgba(184,150,46,0.1)] rounded-sm aspect-[16/14]" />
           ))}
         </div>
       </div>
