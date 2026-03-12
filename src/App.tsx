@@ -10,6 +10,7 @@ import FloatingButtons from "@/components/FloatingButtons";
 import CookieBanner from "@/components/CookieBanner";
 import Index from "./pages/Index";
 import Masini from "./pages/Masini";
+import ListingDetail from "./pages/ListingDetail";
 import Finantare from "./pages/Finantare";
 import LaComanda from "./pages/LaComanda";
 import BuyBack from "./pages/BuyBack";
@@ -32,6 +33,7 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Index />} />
           <Route path="/masini" element={<Masini />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
           <Route path="/finantare" element={<Finantare />} />
           <Route path="/la-comanda" element={<LaComanda />} />
           <Route path="/buyback" element={<BuyBack />} />
