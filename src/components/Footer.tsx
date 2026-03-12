@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#050505] border-t border-[rgba(184,150,46,0.2)] mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <img src={fortisLogo} alt="Fortis Premium Auto" className="h-8 w-auto object-contain mb-6" />
@@ -72,6 +72,26 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Legal Links */}
+          <div>
+            <h4 className="font-label text-[#F5F5F0] tracking-widest text-sm mb-5">INFORMAȚII LEGALE</h4>
+            <ul className="space-y-3">
+              {[
+                { label: "Politică de Confidențialitate", href: "/politica-confidentialitate" },
+                { label: "Politică Cookies", href: "/politica-cookies" },
+                { label: "Termeni și Condiții", href: "/termeni-conditii" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link to={link.href}
+                    className="font-body text-sm text-[#888880] hover:text-[#D4AF6A] transition-colors duration-200 flex items-center gap-2 group">
+                    <span className="w-4 h-px bg-[rgba(184,150,46,0.3)] group-hover:bg-[#B8962E] transition-colors duration-200" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contact */}
           <div>
             <h4 className="font-label text-[#F5F5F0] tracking-widest text-sm mb-5">CONTACT</h4>
@@ -105,23 +125,19 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[rgba(184,150,46,0.12)] pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="font-body text-xs text-[#888880]">
-            © 2025 Fortis Premium Auto | CUI: 52925212
-          </p>
+        <div className="border-t border-[rgba(184,150,46,0.12)] pt-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+          <div className="text-center sm:text-left">
+            <p className="font-body text-xs text-[#888880]">
+              © 2025 Fortis Premium Auto | <span className="text-[#B8962E]">FORTIS PREMIUM AUTO SRL</span>
+            </p>
+            <p className="font-body text-[10px] text-[#888880]/60 mt-1 uppercase tracking-widest">
+              CUI: 52925212 | Nr. Reg. Com.: J2025088822001
+            </p>
+          </div>
           <div className="flex items-center gap-6">
-            <Link to="/politica-confidentialitate"
-              className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
-              Politică Confidențialitate
-            </Link>
-            <Link to="/politica-cookies"
-              className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
-              Politică Cookies
-            </Link>
-            <Link to="/termeni"
-              className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
-              Termeni și Condiții
-            </Link>
+            <p className="font-body text-[10px] text-[#888880] uppercase tracking-widest">
+              Toate drepturile rezervate.
+            </p>
           </div>
         </div>
       </div>
