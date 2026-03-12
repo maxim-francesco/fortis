@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
-import { Link, ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronDown, Check, Info } from "lucide-react";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 
 const faqs = [
   { q: "Ce acte sunt necesare pentru finanțare?", a: "Pentru finanțare este necesar doar buletinul de identitate. Nu sunt necesare documente suplimentare sau adeverințe de venit în majoritatea cazurilor." },
@@ -36,6 +35,15 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         <p className="font-body text-sm text-[#888880] pb-5 leading-relaxed">{a}</p>
       </motion.div>
     </div>
+  );
+}
+
+function CriteriaItem({ text }: { text: string }) {
+  return (
+    <li className="flex gap-3 text-sm font-body text-[#888880]">
+      <Check className="text-[#B8962E] w-4 h-4 shrink-0 mt-0.5" />
+      <span>{text}</span>
+    </li>
   );
 }
 
@@ -86,6 +94,92 @@ export default function Finantare() {
           </div>
         </div>
       </div>
+
+      {/* Detailed Criteria Section */}
+      <section className="section-padding bg-[#080808] border-b border-[rgba(184,150,46,0.05)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center gap-3 mb-12">
+            <div className="w-10 h-10 border border-[rgba(184,150,46,0.3)] rounded-sm flex items-center justify-center">
+              <Info size={20} className="text-[#B8962E]" />
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0]">Criterii de Finanțare TBI Bank</h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Persoane Fizice */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10"
+            >
+              <div className="relative">
+                <h3 className="font-display text-2xl text-[#F5F5F0] mb-6 gold-underline pb-3">Persoane Fizice</h3>
+                <div className="grid sm:grid-cols-1 gap-8 mt-8">
+                  <div>
+                    <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Criterii de Eligibilitate</h4>
+                    <ul className="space-y-3">
+                      <CriteriaItem text="Vârstă: 18-75 ani (la finalizarea creditului)" />
+                      <CriteriaItem text="Minim 3 luni la actualul angajator (3 salarii încasate și declarate la ANAF)" />
+                      <CriteriaItem text="Salariu minim: 2.000 lei / Pensie minimă: 1.250 lei" />
+                      <CriteriaItem text="Venituri acceptate: salarii, pensii, PFA, șoferi cu diurne, chirii, dividende, indemnizații" />
+                      <CriteriaItem text="Se acceptă codebitor dacă clientul nu se încadrează singur (nu trebuie să fie din familie)" />
+                    </ul>
+                  </div>
+
+                  <div className="p-5 bg-[#111] border border-[rgba(184,150,46,0.1)] rounded-sm">
+                    <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Detalii Credit</h4>
+                    <ul className="space-y-3">
+                      <CriteriaItem text="Sumă finanțată: 3.000 – 150.000 RON" />
+                      <CriteriaItem text="Timp de răspuns: 15 – 120 minute" />
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Venituri din Străinătate</h4>
+                    <ul className="space-y-3">
+                      <CriteriaItem text="Contract de muncă pe perioadă nedeterminată, vechime minim 6 luni" />
+                      <CriteriaItem text="Cu istoric de creditare în România (ultimii 5 ani): nu este necesar girant" />
+                      <CriteriaItem text="Fără istoric: girant angajat minim 3 luni (se acceptă și pensionari)" />
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Persoane Juridice */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10"
+            >
+              <div>
+                <h3 className="font-display text-2xl text-[#F5F5F0] mb-6 gold-underline pb-3">Persoane Juridice</h3>
+                <div className="grid sm:grid-cols-1 gap-8 mt-8">
+                  <div>
+                    <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Criterii de Eligibilitate</h4>
+                    <ul className="space-y-3">
+                      <CriteriaItem text="Cifră de afaceri minimă: 500.000 RON" />
+                      <CriteriaItem text="Cifră de afaceri minimă (transport și construcții): 1.500.000 RON" />
+                      <CriteriaItem text="Vechime firmă: minim 1 an" />
+                      <CriteriaItem text="Bilanțul anului anterior trebuie să fie depus" />
+                    </ul>
+                  </div>
+
+                  <div className="p-5 bg-[#111] border border-[rgba(184,150,46,0.1)] rounded-sm">
+                    <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Detalii Finanțare</h4>
+                    <ul className="space-y-3">
+                      <CriteriaItem text="Sumă maximă finanțată: 250.000 RON" />
+                      <CriteriaItem text="Se finanțează până la 10% din cifra de afaceri" />
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 space-y-16">
         {/* Partners */}
