@@ -30,7 +30,11 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    document.body.classList.toggle('menu-open', mobileOpen);
+    return () => { 
+      document.body.style.overflow = ""; 
+      document.body.classList.remove('menu-open');
+    };
   }, [mobileOpen]);
 
   return (
@@ -101,40 +105,60 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-[#080808] flex flex-col justify-center items-center lg:hidden"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed inset-0 z-[60] bg-[#080808]/97 backdrop-blur-sm flex flex-col lg:hidden"
           >
-            <div className="flex flex-col items-center gap-8">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07, duration: 0.4 }}
-                >
+            {/* Header row */}
+            <div className="flex justify-between items-center px-6 pt-6 h-16">
+              <Link to="/">
+                <img src={fortisLogo} alt="Fortis Premium Auto" className="h-10 w-auto object-contain" />
+              </Link>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="w-12 h-12 flex items-center justify-center text-[#F5F5F0] hover:text-[#B8962E]"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Links section centered */}
+            <div className="flex-1 flex flex-col justify-center items-center px-6">
+              <div className="w-full max-w-xs flex flex-col items-center">
+                {navLinks.map((link) => (
                   <Link
+                    key={link.href}
                     to={link.href}
-                    className={`font-display text-4xl font-light tracking-wide transition-colors duration-200 hover:text-[#D4AF6A] ${
-                      location.pathname === link.href ? "text-[#B8962E]" : "text-[#F5F5F0]"
+                    className={`font-display text-2xl py-3 w-full text-center transition-colors duration-200 border-b border-[#B8962E]/30 last:border-0 ${
+                      location.pathname === link.href ? "text-[#D4AF6A]" : "text-[#F5F5F0]"
                     }`}
                   >
                     {link.label}
                   </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.07 + 0.1, duration: 0.4 }}
-                className="mt-4 flex flex-col gap-3 w-full items-center"
-              >
-                <a href="tel:0751489879" className="btn-gold w-64 text-center py-3">
-                  Sună: 0751-489-879
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom buttons row */}
+            <div className="px-6 pb-10 w-full">
+              <div className="grid grid-cols-2 gap-4">
+                <a
+                  href="tel:0751489879"
+                  className="h-12 flex items-center justify-center bg-[#B8962E] text-[#080808] font-body font-semibold rounded-lg text-sm"
+                >
+                  Sună Acum
                 </a>
-              </motion.div>
+                <a
+                  href="https://wa.me/40751489879?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-12 flex items-center justify-center bg-[#080808] border border-[#B8962E] text-[#B8962E] font-body font-semibold rounded-lg text-sm"
+                >
+                  WhatsApp
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

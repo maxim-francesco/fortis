@@ -385,6 +385,12 @@
     box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
   }
 
+  /* Hide floating buttons when menu is open */
+  .menu-open .wa-float,
+  .menu-open .sticky-cta {
+    display: none !important;
+  }
+
   /* Frosted glass */
   .glass {
     background: rgba(8, 8, 8, 0.8);
