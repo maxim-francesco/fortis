@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   FORTIS PREMIUM AUTO — DESIGN SYSTEM
+   All colors MUST be HSL.
+   ============================================= */
+
+@layer base {
+  :root {
+    /* Brand Colors */
+    --bg-primary: 0 0% 3%;
+    --bg-secondary: 0 0% 7%;
+    --bg-card: 0 0% 9%;
+
+    --gold: 42 62% 45%;
+    --gold-light: 38 56% 63%;
+    --gold-muted: 42 62% 45% / 0.15;
+
+    --warm-white: 60 5% 96%;
+    --muted-text: 50 3% 53%;
+
+    /* Shadcn tokens mapped to brand */
+    --background: 0 0% 3%;
+    --foreground: 60 5% 96%;
+
+    --card: 0 0% 9%;
+    --card-foreground: 60 5% 96%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 60 5% 96%;
+
+    --primary: 42 62% 45%;
+    --primary-foreground: 0 0% 3%;
+
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 60 5% 96%;
+
+    --muted: 0 0% 13%;
+    --muted-foreground: 50 3% 53%;
+
+    --accent: 0 0% 13%;
+    --accent-foreground: 60 5% 96%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 60 5% 96%;
+
+    --border: 42 62% 45% / 0.15;
+    --input: 0 0% 13%;
+    --ring: 42 62% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 60 5% 96%;
+    --sidebar-primary: 42 62% 45%;
+    --sidebar-primary-foreground: 0 0% 3%;
+    --sidebar-accent: 0 0% 13%;
+    --sidebar-accent-foreground: 60 5% 96%;
+    --sidebar-border: 42 62% 45% / 0.15;
+    --sidebar-ring: 42 62% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #080808;
+    color: #F5F5F0;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  ::selection {
+    background-color: rgba(184, 150, 46, 0.35);
+    color: #F5F5F0;
+  }
+
+  :focus-visible {
+    outline: 2px solid #B8962E;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* =============================================
+   TYPOGRAPHY SCALES
+   ============================================= */
+@layer utilities {
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .font-label {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 0.12em;
+  }
+
+  .text-hero {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.05;
+    font-weight: 600;
+  }
+
+  .text-display {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 600;
+  }
+
+  .text-section-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    font-weight: 500;
+  }
+
+  /* Gold colors */
+  .text-gold {
+    color: #B8962E;
+  }
+
+  .text-gold-light {
+    color: #D4AF6A;
+  }
+
+  .text-warm-white {
+    color: #F5F5F0;
+  }
+
+  .text-muted-brand {
+    color: #888880;
+  }
+
+  /* Backgrounds */
+  .bg-brand-primary {
+    background-color: #080808;
+  }
+
+  .bg-brand-secondary {
+    background-color: #111111;
+  }
+
+  .bg-brand-card {
+    background-color: #161616;
+  }
+
+  /* Gold border */
+  .border-gold {
+    border-color: rgba(184, 150, 46, 0.3);
+  }
+
+  .border-gold-subtle {
+    border-color: rgba(184, 150, 46, 0.15);
+  }
+
+  /* Gold gradient */
+  .gradient-gold {
+    background: linear-gradient(135deg, #B8962E 0%, #D4AF6A 50%, #B8962E 100%);
+  }
+
+  .gradient-gold-text {
+    background: linear-gradient(135deg, #B8962E 0%, #D4AF6A 60%, #B8962E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Card styles */
+  .card-premium {
+    background-color: #161616;
+    border: 1px solid rgba(184, 150, 46, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .card-premium:hover {
+    border-color: rgba(184, 150, 46, 0.45);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px -15px rgba(184, 150, 46, 0.2);
+  }
+
+  /* Gold line decoration */
+  .gold-underline {
+    position: relative;
+  }
+
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #B8962E, #D4AF6A);
+  }
+
+  .gold-underline-center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Button styles */
+  .btn-gold {
+    background: linear-gradient(135deg, #B8962E 0%, #D4AF6A 50%, #B8962E 100%);
+    background-size: 200% 100%;
+    color: #080808;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.75rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .btn-gold:hover::after {
+    left: 100%;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #F5F5F0;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.75rem;
+    border-radius: 2px;
+    border: 1px solid rgba(184, 150, 46, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: #B8962E;
+    background: rgba(184, 150, 46, 0.08);
+    color: #D4AF6A;
+  }
+
+  /* Stats divider */
+  .stats-divider {
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(184, 150, 46, 0.5), transparent);
+  }
+
+  /* Scroll snap carousel */
+  .snap-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .snap-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snap-item {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  /* Gold glow */
+  .gold-glow {
+    box-shadow: 0 0 30px rgba(184, 150, 46, 0.25);
+  }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(184, 150, 46, 0.6);
+    border-radius: 50%;
+    animation: float-particle var(--duration, 8s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes float-particle {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+    33% { transform: translateY(-30px) translateX(15px); opacity: 1; }
+    66% { transform: translateY(-15px) translateX(-10px); opacity: 0.4; }
+  }
+
+  /* Step line decoration */
+  .step-line {
+    background: linear-gradient(90deg, #B8962E, rgba(184, 150, 46, 0.2));
+    height: 1px;
+    flex: 1;
+    border: none;
+    border-top: 1px dashed rgba(184, 150, 46, 0.4);
+  }
+
+  /* Page hero overlay */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 8, 8, 0.55) 0%,
+      rgba(8, 8, 8, 0.4) 40%,
+      rgba(8, 8, 8, 0.75) 80%,
+      rgba(8, 8, 8, 1) 100%
+    );
+  }
+
+  /* Sticky bottom bar */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(8, 8, 8, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(184, 150, 46, 0.2);
+    padding: 0.75rem 1rem;
+  }
+
+  /* WhatsApp floating */
+  .wa-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 1.5rem;
+    z-index: 80;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+  }
+
+  /* Frosted glass */
+  .glass {
+    background: rgba(8, 8, 8, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Section spacing */
+  .section-padding {
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+  }
+}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@layer utilities {
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes gold-line-expand {
+    from { width: 0; }
+    to { width: 80px; }
+  }
+
+  @keyframes bounce-chevron {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  .animate-bounce-chevron {
+    animation: bounce-chevron 1.5s ease-in-out infinite;
+  }
+
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
