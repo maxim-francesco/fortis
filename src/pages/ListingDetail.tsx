@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ChevronRight, 
   Calendar, 
@@ -12,7 +12,9 @@ import {
   Shield,
   CreditCard,
   Loader2,
-  ArrowLeft
+  ArrowLeft,
+  ChevronLeft,
+  X
 } from "lucide-react";
 import { getListingById } from "@/lib/api";
 
@@ -21,6 +23,19 @@ export default function ListingDetail() {
   const [listing, setListing] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  const images = listing?.images || [];
+
+  const nextImage = useCallback(() => {
+    if (images.length === 0) return;
+    setActiveImage((prev) => (prev + 1) % images.length);
+  }, [images]);
+
+  const prevImage = useCallback(() => {
+    if (images.length === 0) return;
+    setActiveImage((prev) => (prev - 1 + images.length) % images.length);
+  }, [images]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,6 +51,18 @@ export default function ListingDetail() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsLightboxOpen(false);
+      if (isLightboxOpen) {
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLightboxOpen, nextImage, prevImage]);
 
   if (loading) {
     return (
@@ -83,32 +110,55 @@ export default function ListingDetail() {
         <div className="grid lg:grid-cols-12 gap-10">
           
           {/* Left: Gallery */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="relative aspect-[16/10] bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden">
-              <img 
-                src={listing.images?.[activeImage]?.url || "https://picsum.photos/seed/car/800/500"} 
-                alt={listing.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 right-4">
-                <span className="font-label text-[10px] tracking-widest bg-[#B8962E] text-[#080808] px-3 py-1.5">
+          <div className="lg:col-span-7">
+            <div className="relative aspect-[16/10] bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group cursor-zoom-in">
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeImage}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  src={images[activeImage]?.url || "https://picsum.photos/seed/car/800/500"} 
+                  alt={listing.title}
+                  className="w-full h-full object-cover"
+                  onClick={() => setIsLightboxOpen(true)}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(e, { offset }) => {
+                    if (offset.x < -50) nextImage();
+                    else if (offset.x > 50) prevImage();
+                  }}
+                />
+              </AnimatePresence>
+
+              {/* Navigation Arrows */}
+              <button 
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all lg:opacity-0 lg:group-hover:opacity-100 z-10"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all lg:opacity-0 lg:group-hover:opacity-100 z-10"
+              >
+                <ChevronRight size={24} />
+              </button>
+
+              {/* Badges Overlay */}
+              <div className="absolute top-4 right-4 pointer-events-none z-10">
+                <span className="font-label text-[10px] tracking-widest bg-[#B8962E] text-[#080808] px-3 py-1.5 shadow-lg">
                   GARANȚIE 12 LUNI
                 </span>
               </div>
-            </div>
-            
-            <div className="flex gap-3 overflow-x-auto pb-4 snap-x scrollbar-hide">
-              {listing.images?.map((img: any, i: number) => (
-                <button 
-                  key={i}
-                  onClick={() => setActiveImage(i)}
-                  className={`relative flex-shrink-0 w-24 sm:w-32 aspect-video border rounded-sm overflow-hidden transition-all snap-start ${
-                    activeImage === i ? "border-[#B8962E]" : "border-[rgba(184,150,46,0.15)] opacity-60 hover:opacity-100"
-                  }`}
-                >
-                  <img src={img.url} className="w-full h-full object-cover" alt={`Gallery thumbnail ${i}`} />
-                </button>
-              ))}
+
+              {/* Counter Overlay */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10 pointer-events-none z-10">
+                <p className="text-[10px] font-label text-white tracking-widest uppercase">
+                  Poza {activeImage + 1} din {images.length}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -257,6 +307,73 @@ export default function ListingDetail() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox Fullscreen Overlay */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex flex-col items-center justify-center"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            {/* Close Button */}
+            <button 
+              className="absolute top-6 right-6 text-white hover:text-[#B8962E] transition-colors p-2 z-[110]"
+              onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
+            >
+              <X size={32} />
+            </button>
+
+            {/* Counter */}
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[110]">
+              <p className="text-sm font-label text-white tracking-widest uppercase bg-black/40 px-4 py-1 rounded-full backdrop-blur-sm border border-white/10">
+                Poza {activeImage + 1} din {images.length}
+              </p>
+            </div>
+
+            {/* Navigation Arrows */}
+            <button 
+              onClick={(e) => { e.stopPropagation(); prevImage(); }}
+              className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/5 text-white border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all z-[110]"
+            >
+              <ChevronLeft size={32} />
+            </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); nextImage(); }}
+              className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/5 text-white border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all z-[110]"
+            >
+              <ChevronRight size={32} />
+            </button>
+
+            {/* Image Container */}
+            <div 
+              className="w-full h-full flex items-center justify-center p-4 sm:p-10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeImage}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  src={images[activeImage]?.url} 
+                  className="max-w-full max-h-full object-contain shadow-2xl"
+                  alt={listing.title}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(e, { offset }) => {
+                    if (offset.x < -50) nextImage();
+                    else if (offset.x > 50) prevImage();
+                  }}
+                />
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
