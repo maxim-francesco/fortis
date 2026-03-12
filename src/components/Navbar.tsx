@@ -109,7 +109,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-0 z-[60] bg-[#080808]/97 backdrop-blur-sm flex flex-col lg:hidden"
+            className="fixed inset-0 z-[60] bg-[#080808] flex flex-col lg:hidden"
           >
             {/* Header row */}
             <div className="flex justify-between items-center px-6 pt-6 h-16">
