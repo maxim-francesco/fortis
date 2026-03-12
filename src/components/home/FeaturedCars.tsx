@@ -1,49 +1,26 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
-import { ArrowRight, Gauge, Calendar, Fuel } from "lucide-react";
-import carBmw from "@/assets/car-bmw.jpg";
-import carMercedes from "@/assets/car-mercedes.jpg";
-import carAudi from "@/assets/car-audi.jpg";
+import { ArrowRight, Gauge, Calendar, Fuel, Loader2 } from "lucide-react";
+import { searchListings } from "@/lib/api";
 
-const cars = [
-  {
-    img: carBmw,
-    badge: "RECOMANDAT",
-    brand: "BMW",
-    model: "Seria 5 M-Sport",
-    year: "2021",
-    km: "68.000",
-    fuel: "Diesel",
-    price: "29.900",
-    href: "/masini",
-  },
-  {
-    img: carMercedes,
-    badge: "NOU",
-    brand: "Mercedes-Benz",
-    model: "E 220d AMG Line",
-    year: "2020",
-    km: "72.000",
-    fuel: "Diesel",
-    price: "34.500",
-    href: "/masini",
-  },
-  {
-    img: carAudi,
-    badge: "RECOMANDAT",
-    brand: "Audi",
-    model: "A6 S-Line",
-    year: "2022",
-    km: "45.000",
-    fuel: "Diesel",
-    price: "37.900",
-    href: "/masini",
-  },
-];
-
-function CarCard({ car, delay }: { car: typeof cars[0]; delay: number }) {
+function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.1);
+
+  const getAttr = (name: string) => {
+    const attr = listing.attributeValues?.find(
+      (av: any) => av.attribute.name.toLowerCase() === name.toLowerCase()
+    );
+    return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
+  };
+
+  const year = getAttr("An") || "N/A";
+  const fuel = getAttr("Combustibil") || "N/A";
+  const km = listing.mileage ? listing.mileage.toLocaleString("ro-RO") : "N/A";
+  const price = listing.price ? listing.price.toLocaleString("ro-RO") : "Contact";
+  const imageUrl = listing.images?.[0]?.url || "https://picsum.photos/seed/car/600/400";
+
   return (
     <motion.div
       ref={ref as React.RefObject<HTMLDivElement>}
@@ -52,16 +29,15 @@ function CarCard({ car, delay }: { car: typeof cars[0]; delay: number }) {
       transition={{ delay, duration: 0.6 }}
       className="snap-item w-[80vw] sm:w-auto flex-shrink-0 sm:flex-shrink bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300"
     >
-      {/* Image */}
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
         <img
-          src={car.img}
-          alt={`${car.brand} ${car.model}`}
+          src={imageUrl}
+          alt={listing.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
         <div className="absolute top-3 left-3">
           <span className="font-label text-[10px] tracking-widest bg-[#B8962E] text-[#080808] px-2 py-1">
-            {car.badge}
+            RECOMANDAT
           </span>
         </div>
         <div className="absolute top-3 right-3">
@@ -71,39 +47,38 @@ function CarCard({ car, delay }: { car: typeof cars[0]; delay: number }) {
         </div>
       </div>
 
-      {/* Details */}
       <div className="p-5">
-        <h3 className="font-display text-xl font-semibold text-[#F5F5F0] mb-1">
-          {car.brand} <span className="font-light">{car.model}</span>
+        <h3 className="font-display text-xl font-semibold text-[#F5F5F0] mb-1 truncate">
+          {listing.title}
         </h3>
         <div className="flex items-center gap-3 mb-4">
           <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
             <Calendar size={11} />
-            {car.year}
+            {year}
           </span>
           <span className="w-1 h-1 rounded-full bg-[#888880]" />
           <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
             <Gauge size={11} />
-            {car.km} km
+            {km} km
           </span>
           <span className="w-1 h-1 rounded-full bg-[#888880]" />
           <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
             <Fuel size={11} />
-            {car.fuel}
+            {fuel}
           </span>
         </div>
 
         <div className="flex items-end justify-between mb-4">
           <div>
             <div className="font-display text-2xl font-semibold text-[#B8962E]">
-              €{car.price}
+              €{price}
             </div>
             <div className="font-body text-[11px] text-[#888880]">Finanțare disponibilă</div>
           </div>
         </div>
 
         <Link
-          to={car.href}
+          to={`/listing/${listing.id}`}
           className="block w-full text-center font-body text-sm font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300"
         >
           Vezi Detalii
@@ -113,8 +88,50 @@ function CarCard({ car, delay }: { car: typeof cars[0]; delay: number }) {
   );
 }
 
+function SkeletonCard() {
+  return (
+    <div className="bg-[#161616] border border-[rgba(184,150,46,0.1)] rounded-sm overflow-hidden aspect-[16/14] animate-pulse">
+      <div className="w-full h-1/2 bg-[#222]" />
+      <div className="p-5 space-y-4">
+        <div className="h-6 w-3/4 bg-[#222] rounded" />
+        <div className="h-4 w-1/2 bg-[#222] rounded" />
+        <div className="h-10 w-full bg-[#222] rounded" />
+      </div>
+    </div>
+  );
+}
+
 export default function FeaturedCars() {
+  const [listings, setListings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { ref, inView } = useInView(0.1);
+
+  useEffect(() => {
+    async function fetchFeatured() {
+      try {
+        setLoading(true);
+        const result = await searchListings({
+          businessId: 'cmmnj2md300dgp828hbr08wt6',
+          categoryId: 'cmmnj2mpu00dkp8286hw4xcww',
+          limit: '3',
+          sortBy: 'newest',
+        });
+        setListings(result.data || []);
+      } catch (err) {
+        console.error("Failed to fetch featured listings", err);
+        setError("Error fetching listings");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchFeatured();
+  }, []);
+
+  // Hide the section if there's an error or no results after loading
+  if (!loading && (error || listings.length === 0)) {
+    return null;
+  }
 
   return (
     <section className="section-padding bg-[#0A0A0A]">
@@ -154,9 +171,13 @@ export default function FeaturedCars() {
 
         {/* Carousel mobile / Grid desktop */}
         <div className="snap-carousel sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 gap-4">
-          {cars.map((car, i) => (
-            <CarCard key={i} car={car} delay={i * 0.1} />
-          ))}
+          {loading ? (
+            Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
+          ) : (
+            listings.map((listing, i) => (
+              <CarCard key={listing.id} listing={listing} delay={i * 0.1} />
+            ))
+          )}
         </div>
 
         <div className="sm:hidden mt-6 text-center">
