@@ -1,9 +1,82 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
-import { ChevronRight, Clock, AlertCircle } from "lucide-react";
+import { ChevronRight, Clock, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { submitContactForm } from "@/lib/api";
 
 export default function BuyBack() {
   const { ref, inView } = useInView(0.1);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    marca: "",
+    model: "",
+    an: "2025",
+    kilometraj: "",
+    stare: "Excelentă",
+    descriere: ""
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    const formattedMessage = `
+🚗 SOLICITARE EVALUARE BUYBACK
+
+👤 Nume: ${formData.name}
+📞 Telefon: ${formData.phone}
+🏷️ Marcă: ${formData.marca}
+📋 Model: ${formData.model}
+📅 An fabricație: ${formData.an}
+📍 Kilometraj: ${formData.kilometraj} km
+⭐ Stare generală: ${formData.stare}
+
+📝 Descriere:
+${formData.descriere}
+`.trim();
+
+    try {
+      const result = await submitContactForm({
+        name: formData.name,
+        email: 'buyback@fortispremiumauto.ro',
+        phone: formData.phone,
+        message: formattedMessage,
+      });
+
+      if (result.success) {
+        setSuccessMessage("Solicitarea ta a fost trimisă cu succes! Te vom contacta în curând cu evaluarea.");
+        setFormData({
+          name: "",
+          phone: "",
+          marca: "",
+          model: "",
+          an: "2025",
+          kilometraj: "",
+          stare: "Excelentă",
+          descriere: ""
+        });
+      } else {
+        setErrorMessage(result.error || "A apărut o eroare la trimiterea solicitării.");
+      }
+    } catch (err) {
+      setErrorMessage("Eroare de rețea. Încearcă din nou.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#080808]">
@@ -71,33 +144,78 @@ export default function BuyBack() {
           <h2 className="font-display text-2xl sm:text-3xl text-[#F5F5F0] mb-2">Solicită Evaluare Gratuită</h2>
           <p className="font-body text-sm text-[#888880] mb-8">Completează datele mașinii tale și îți trimitem o evaluare în 24 de ore.</p>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">NUME *</label>
-                <input required className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]" placeholder="Ion Popescu" />
+                <input 
+                  required 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50" 
+                  placeholder="Ion Popescu" 
+                />
               </div>
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">TELEFON *</label>
-                <input required type="tel" className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]" placeholder="07xx xxx xxx" />
+                <input 
+                  required 
+                  type="tel" 
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50" 
+                  placeholder="07xx xxx xxx" 
+                />
               </div>
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">MARCĂ MAȘINĂ</label>
-                <input className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]" placeholder="ex: BMW, Audi..." />
+                <input 
+                  name="marca"
+                  value={formData.marca}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50" 
+                  placeholder="ex: BMW, Audi..." 
+                />
               </div>
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">MODEL</label>
-                <input className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]" placeholder="ex: Seria 3, A4..." />
+                <input 
+                  name="model"
+                  value={formData.model}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50" 
+                  placeholder="ex: Seria 3, A4..." 
+                />
               </div>
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">AN FABRICAȚIE</label>
-                <select className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]">
-                  {Array.from({ length: 15 }, (_, i) => 2025 - i).map(y => <option key={y}>{y}</option>)}
+                <select 
+                  name="an"
+                  value={formData.an}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50"
+                >
+                  {Array.from({ length: 15 }, (_, i) => 2025 - i).map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
               </div>
               <div>
                 <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">KILOMETRAJ</label>
-                <input type="number" className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]" placeholder="ex: 90000" />
+                <input 
+                  type="number" 
+                  name="kilometraj"
+                  value={formData.kilometraj}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50" 
+                  placeholder="ex: 90000" 
+                />
               </div>
             </div>
 
@@ -106,7 +224,15 @@ export default function BuyBack() {
               <div className="flex flex-wrap gap-3">
                 {["Excelentă", "Bună", "Acceptabilă"].map((s) => (
                   <label key={s} className="flex items-center gap-2 border border-[rgba(184,150,46,0.2)] px-4 py-2.5 rounded-sm cursor-pointer hover:border-[#B8962E] transition-colors min-h-[44px]">
-                    <input type="radio" name="condition" className="accent-[#B8962E]" />
+                    <input 
+                      type="radio" 
+                      name="stare" 
+                      value={s}
+                      checked={formData.stare === s}
+                      onChange={handleInputChange}
+                      disabled={isLoading}
+                      className="accent-[#B8962E]" 
+                    />
                     <span className="font-body text-sm text-[#888880]">{s}</span>
                   </label>
                 ))}
@@ -115,12 +241,57 @@ export default function BuyBack() {
 
             <div>
               <label className="font-label text-[10px] text-[#888880] tracking-widest block mb-2">DESCRIERE</label>
-              <textarea rows={3} className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors resize-none" placeholder="Descrie starea mașinii, dotările speciale, istoricul service..." />
+              <textarea 
+                rows={3} 
+                name="descriere"
+                value={formData.descriere}
+                onChange={handleInputChange}
+                disabled={isLoading}
+                className="w-full bg-[#111] border border-[rgba(184,150,46,0.2)] text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors resize-none disabled:opacity-50" 
+                placeholder="Descrie starea mașinii, dotările speciale, istoricul service..." 
+              />
             </div>
 
-            <button type="submit" className="btn-gold w-full py-4 rounded-sm text-sm font-semibold">
-              Solicită Evaluare Gratuită
+            <button 
+              type="submit" 
+              disabled={isLoading}
+              className="btn-gold w-full py-4 rounded-sm text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  <span>Se trimite...</span>
+                </>
+              ) : (
+                "Solicită Evaluare Gratuită"
+              )}
             </button>
+
+            {/* Feedback Messages */}
+            <AnimatePresence>
+              {successMessage && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="p-4 bg-[rgba(184,150,46,0.1)] border border-[#B8962E] rounded-sm flex items-start gap-3"
+                >
+                  <CheckCircle2 className="text-[#B8962E] flex-shrink-0 mt-0.5" size={18} />
+                  <p className="text-sm font-body text-[#F5F5F0]">{successMessage}</p>
+                </motion.div>
+              )}
+              {errorMessage && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="p-4 bg-red-500/10 border border-red-500 rounded-sm flex items-start gap-3"
+                >
+                  <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+                  <p className="text-sm font-body text-red-500">{errorMessage}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
 
           <div className="flex items-center gap-2 mt-4 justify-center">
