@@ -114,6 +114,10 @@ export default function Footer() {
               className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
               Politică Confidențialitate
             </Link>
+            <Link to="/politica-cookies"
+              className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
+              Politică Cookies
+            </Link>
             <Link to="/termeni"
               className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors">
               Termeni și Condiții
