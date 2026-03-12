@@ -31,7 +31,7 @@ export default function FloatingButtons() {
         href={waLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden lg:flex wa-float"
+        className="hidden md:flex wa-float"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, scale: 0 }}
