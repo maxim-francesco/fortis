@@ -372,7 +372,7 @@
     height: 56px;
     background: #25D366;
     border-radius: 50%;
-    display: flex;
+    /* Removed display: flex to allow Tailwind's hidden/lg:flex to work */
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
