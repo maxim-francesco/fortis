@@ -319,9 +319,14 @@ export default function Finantare() {
                   <p className="font-body text-[10px] text-[#888880] leading-relaxed mb-6 italic">
                     * Calculul este orientativ. Rata finală poate varia în funcție de profilul financiar al clientului. Oferta TBI Bank.
                   </p>
-                  <Link to="/contact" className="btn-gold w-full text-center py-4 rounded-sm text-sm font-semibold shadow-gold">
-                    Solicită Ofertă Acum
-                  </Link>
+                  <div className="flex justify-center w-full">
+                    <Link 
+                      to="/contact" 
+                      className="btn-gold min-w-[220px] whitespace-nowrap px-8 py-3 rounded-sm text-sm font-semibold shadow-gold inline-flex items-center justify-center"
+                    >
+                      Solicită Ofertă Acum
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
