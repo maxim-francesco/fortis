@@ -287,12 +287,6 @@
     color: #D4AF6A;
   }
 
-  /* Stats divider */
-  .stats-divider {
-    width: 1px;
-    background: linear-gradient(180deg, transparent, rgba(184, 150, 46, 0.5), transparent);
-  }
-
   /* Scroll snap carousel */
   .snap-carousel {
     display: flex;
