@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
+import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
 import { Calendar, Gauge, Fuel, Settings, ChevronRight, SlidersHorizontal, X, Loader2 } from "lucide-react";
 import { useListings } from "@/hooks/useListings";
+import { cldImage } from "@/lib/cloudinary";
 
 function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.05);
@@ -28,21 +29,23 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const transmission = getAttr("Cutie de viteze") || "N/A";
   const price = listing.price ? listing.price.toLocaleString() : "Contact";
   const km = listing.mileage ? listing.mileage.toLocaleString() : "N/A";
-  const imageUrl = listing.images?.[0]?.url || "https://picsum.photos/seed/car/600/400";
+  const imageUrl = cldImage(listing.images?.[0]?.url, 600) || "https://picsum.photos/seed/car/600/400";
 
   return (
-    <motion.div
-      ref={ref as React.RefObject<HTMLDivElement>}
+    <m.article
+      ref={ref as React.RefObject<HTMLElement>}
       initial={{ opacity: 0, y: 25 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay, duration: 0.55 }}
-      className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300"
+      className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300 flex flex-col"
     >
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
         <img 
           src={imageUrl} 
-          alt={listing.title} 
+          alt={`Fotografie exterioară ${listing.title || 'Mașină second-hand'}`} 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" 
+          loading="lazy"
+          decoding="async"
           data-ai-hint="car exterior"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/30 to-transparent" />
@@ -73,7 +76,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           Vezi Detalii
         </Link>
       </div>
-    </motion.div>
+    </m.article>
   );
 }
 
@@ -97,11 +100,24 @@ export default function Masini() {
 
   return (
     <div className="min-h-screen bg-[#080808]">
-      <Helmet>
-        <title>Stoc Mașini de Vânzare Cluj | Prețuri Auto Rulate | MEDFIL</title>
-        <meta name="description" content="Vezi stocul complet de mașini de vânzare la MEDFIL Cluj. Prețuri competitive, livrare națională, istoric verificat și garanție inclusă." />
-        <link rel="canonical" href="https://medfil.ro/stoc" />
-      </Helmet>
+      <SEO
+        title="Stoc Mașini Disponibile - MEDFIL Automobile Cluj"
+        description="Descoperă întregul stoc de mașini second-hand MEDFIL: BMW, Audi, Mercedes, Volkswagen și multe altele. Verificate tehnic, cu carte service completă."
+        canonical="https://medfil.ro/stoc"
+        structuredData={[
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Stoc Mașini MEDFIL Automobile",
+            "url": "https://medfil.ro/stoc",
+            "itemListElement": listings.slice(0, 10).map((l, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "url": `https://medfil.ro/stoc/${l.id}`
+            }))
+          }
+        ]}
+      />
       {/* Page hero */}
       <div className="relative pt-20 pb-14 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)]">
         <div
@@ -128,7 +144,7 @@ export default function Masini() {
         {/* Filter toggle (mobile) + results header */}
         <div ref={listTopRef} className="flex items-center justify-between mb-8 scroll-mt-24">
           <div ref={ref as React.RefObject<HTMLDivElement>}>
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               className="font-display text-xl text-[#F5F5F0]"
@@ -142,10 +158,10 @@ export default function Masini() {
               ) : (
                 <p><span className="text-[#B8962E]">{pagination?.total || listings.length}</span> mașini disponibile</p>
               )}
-            </motion.div>
+            </m.div>
           </div>
           <div className="flex items-center gap-3">
-            <select className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#888880] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
+            <select aria-label="Sortează mașinile" className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#888880] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
               <option>Preț crescător</option>
               <option>Preț descrescător</option>
               <option>An (nou→vechi)</option>
@@ -153,7 +169,9 @@ export default function Masini() {
             </select>
             <button
               onClick={() => setFilterOpen(true)}
-              className="flex items-center gap-2 border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] font-body text-sm px-4 py-2 rounded-sm hover:border-[#B8962E] transition-colors sm:hidden"
+              aria-label="Deschide filtre"
+              aria-expanded={filterOpen}
+              className="flex items-center gap-2 border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] font-body text-sm px-4 py-2 rounded-sm hover:border-[#B8962E] transition-colors sm:hidden list-btn min-h-[44px]"
             >
               <SlidersHorizontal size={15} />
               Filtre
@@ -194,7 +212,8 @@ export default function Masini() {
             <button
               onClick={() => handlePageChange((pagination.page - 1).toString())}
               disabled={pagination.page <= 1 || loading}
-              className="btn-ghost px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+              aria-label="Du-te la pagina anterioară"
+              className="btn-ghost px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all min-h-[44px]"
             >
               Pagina anterioară
             </button>
@@ -206,7 +225,8 @@ export default function Masini() {
             <button
               onClick={() => handlePageChange((pagination.page + 1).toString())}
               disabled={pagination.page >= pagination.totalPages || loading}
-              className="btn-gold px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+              aria-label="Du-te la pagina următoare"
+              className="btn-gold px-6 py-2.5 rounded-sm text-sm disabled:opacity-20 disabled:cursor-not-allowed transition-all min-h-[44px]"
             >
               Pagina următoare
             </button>
@@ -217,8 +237,11 @@ export default function Masini() {
       {/* Mobile filter drawer */}
       {filterOpen && (
         <div className="fixed inset-0 z-50 flex flex-col">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setFilterOpen(false)} />
-          <motion.div
+          <div className="absolute inset-0 bg-black/50" onClick={() => setFilterOpen(false)} aria-hidden="true" />
+          <m.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="filter-dialog-title"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
@@ -226,8 +249,8 @@ export default function Masini() {
             className="relative mt-auto bg-[#161616] border-t border-[rgba(184,150,46,0.2)] rounded-t-xl p-6 z-10 max-h-[80vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="font-display text-xl text-[#F5F5F0]">Filtre</h3>
-              <button onClick={() => setFilterOpen(false)} className="text-[#888880] hover:text-[#F5F5F0]"><X size={20} /></button>
+              <h3 id="filter-dialog-title" className="font-display text-xl text-[#F5F5F0]">Filtre</h3>
+              <button aria-label="Închide filtre" onClick={() => setFilterOpen(false)} className="text-[#888880] hover:text-[#F5F5F0] min-h-[44px] min-w-[44px] flex items-center justify-center"><X size={20} /></button>
             </div>
             <div className="mb-5">
               <p className="font-label text-[#B8962E] text-xs tracking-widest mb-3">MARCĂ</p>
@@ -249,7 +272,7 @@ export default function Masini() {
               <button className="flex-1 btn-ghost py-3 rounded-sm text-sm">Resetează</button>
               <button onClick={() => setFilterOpen(false)} className="flex-1 btn-gold py-3 rounded-sm text-sm">Aplică</button>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Cookie } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCookieConsent } from "@/context/CookieConsentContext";
 
 /**
  * @fileOverview Cookie consent banner for GDPR compliance.
@@ -9,25 +9,13 @@ import { Link } from "react-router-dom";
  */
 
 export default function CookieBanner() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Avoid hydration mismatch by checking localStorage inside useEffect
-    const consent = localStorage.getItem("cookie_consent");
-    if (!consent) {
-      setVisible(true);
-    }
-  }, []);
-
-  const handleConsent = (type: "all" | "necessary") => {
-    localStorage.setItem("cookie_consent", type);
-    setVisible(false);
-  };
+  const { hasConsent, acceptAll, acceptNecessary } = useCookieConsent();
+  const visible = !hasConsent;
 
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
+        <m.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
@@ -51,19 +39,19 @@ export default function CookieBanner() {
           
           <div className="flex flex-col gap-2">
             <button
-              onClick={() => handleConsent("all")}
+              onClick={acceptAll}
               className="btn-gold w-full text-xs py-3 rounded-sm font-semibold shadow-gold"
             >
               Accept toate
             </button>
             <button
-              onClick={() => handleConsent("necessary")}
+              onClick={acceptNecessary}
               className="font-body text-[10px] text-[#888880] hover:text-[#F5F5F0] transition-colors py-2 text-center tracking-widest uppercase font-medium"
             >
               Doar necesare
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

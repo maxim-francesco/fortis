@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+import { m } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { ChevronRight, FileText, Info, ShieldAlert, Phone, Scale } from "lucide-react";
 
 export default function TermeniConditii() {
@@ -7,9 +7,11 @@ export default function TermeniConditii() {
 
   return (
     <div className="min-h-screen bg-[#080808] pb-20">
-      <Helmet>
-        <title>Termeni și Condiții | MEDFIL Automobile</title>
-      </Helmet>
+      <SEO 
+        title="Termeni și Condiții | MEDFIL Automobile" 
+        description="Termeni și condiții de utilizare pentru platforma MEDFIL Automobile."
+        canonical="https://medfil.ro/termeni-si-conditii"
+      />
       {/* Hero Header */}
       <div className="relative pt-24 pb-12 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -19,20 +21,20 @@ export default function TermeniConditii() {
             <ChevronRight size={12} />
             <span className="text-[#B8962E]">Termeni și Condiții</span>
           </div>
-          <motion.h1 
+          <m.h1 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             className="font-display text-4xl sm:text-5xl font-semibold text-[#F5F5F0] mb-4"
           >
             Termeni și Condiții
-          </motion.h1>
+          </m.h1>
           <p className="font-body text-sm text-[#888880]">Ultima actualizare: {lastUpdated}</p>
         </div>
       </div>
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 0.2 }}
@@ -118,7 +120,7 @@ export default function TermeniConditii() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

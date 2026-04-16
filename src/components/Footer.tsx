@@ -17,14 +17,16 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                aria-label="Instagram MEDFIL Automobile"
                 className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
                 <span className="sr-only">Instagram</span>
-                <Instagram size={15} />
+                <Instagram size={15} aria-hidden="true" />
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                aria-label="Facebook MEDFIL Automobile"
                 className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
                 <span className="sr-only">Facebook</span>
-                <Facebook size={15} />
+                <Facebook size={15} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -79,7 +81,7 @@ export default function Footer() {
               {[
                 { label: "Politică de Confidențialitate", href: "/politica-de-confidentialitate" },
                 { label: "Politică Cookies", href: "/politica-cookies" },
-                { label: "Termeni și Condiții", href: "/termeni-conditii" },
+                { label: "Termeni și Condiții", href: "/termeni-si-conditii" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link to={link.href}
@@ -98,8 +100,9 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a href="tel:0754299199"
+                  aria-label="Sună la numărul 0754 299 199"
                   className="flex items-center gap-3 font-body text-sm text-[#888880] hover:text-[#D4AF6A] transition-colors group">
-                  <div className="w-8 h-8 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center group-hover:border-[#B8962E] transition-colors">
+                  <div aria-hidden="true" className="w-8 h-8 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center group-hover:border-[#B8962E] transition-colors">
                     <Phone size={13} className="text-[#B8962E]" />
                   </div>
                   <div>

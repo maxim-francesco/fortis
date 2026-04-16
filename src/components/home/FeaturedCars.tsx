@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
 import { ArrowRight, Gauge, Calendar, Fuel, Loader2 } from "lucide-react";
@@ -28,7 +28,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const imageUrl = listing.images?.[0]?.url || "https://picsum.photos/seed/car/600/400";
 
   return (
-    <motion.div
+    <m.div
       ref={ref as React.RefObject<HTMLDivElement>}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -90,7 +90,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           Vezi Detalii
         </Link>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -143,23 +143,23 @@ export default function FeaturedCars() {
         {/* Header */}
         <div ref={ref as React.RefObject<HTMLDivElement>} className="flex items-end justify-between mb-10">
           <div>
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: 10 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               className="font-label text-[#B8962E] tracking-widest text-sm mb-2"
             >
               SELECȚIE CURENTĂ
-            </motion.p>
-            <motion.h2
+            </m.p>
+            <m.h2
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
               className="font-display text-section-title text-[#F5F5F0]"
             >
               Stoc Recomandat
-            </motion.h2>
+            </m.h2>
           </div>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2 }}
@@ -170,7 +170,7 @@ export default function FeaturedCars() {
             >
               Vezi Toate <ArrowRight size={15} />
             </Link>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Carousel mobile / Grid desktop */}

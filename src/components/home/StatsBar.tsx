@@ -1,11 +1,11 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useInView, useCountUp } from "@/hooks/useInView";
 
 function Stat({ value, suffix, label, delay }: { value: number; suffix: string; label: string; delay: number }) {
   const { ref, inView } = useInView();
   const count = useCountUp(value, inView);
   return (
-    <motion.div
+    <m.div
       ref={ref as React.RefObject<HTMLDivElement>}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -16,7 +16,7 @@ function Stat({ value, suffix, label, delay }: { value: number; suffix: string; 
         {count}{suffix}
       </div>
       <div className="font-label text-[#B8962E] text-xs tracking-widest">{label}</div>
-    </motion.div>
+    </m.div>
   );
 }
 

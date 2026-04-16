@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { 
   ChevronRight, 
   Calendar, 
@@ -18,7 +18,7 @@ import {
   X
 } from "lucide-react";
 import { getListingById } from "@/lib/api";
-
+import { getVehicleSchema } from "@/lib/seo/schemas";
 export default function ListingDetail() {
   const { id } = useParams<{ id: string }>();
   const [listing, setListing] = useState<any>(null);
@@ -102,10 +102,13 @@ export default function ListingDetail() {
 
   return (
     <div className="min-h-screen bg-[#080808] pb-20">
-      <Helmet>
-        <title>{listing ? `${listing.title} | MEDFIL Automobile Cluj` : "Mașină | MEDFIL"}</title>
-        <meta name="description" content={listing ? `Cumpără ${listing.title} cu garanție 12 luni și finanțare în rate. Kilometri reali, verificare completă. Test drive în Cluj-Napoca, cartierul Iris.` : ""} />
-      </Helmet>
+      <SEO
+        title={`${listing.marca || "Auto"} ${listing.model || ""} ${listing.an || ""} - MEDFIL Cluj | ${listing.price?.toLocaleString()} EUR`}
+        description={`${listing.marca || "Auto"} ${listing.model || ""} din ${listing.an || ""}, ${listing.mileage?.toLocaleString() || "0"} km, ${getAttr("Combustibil")?.stringValue || "Nespecificat"}, ${getAttr("Cutie de viteze")?.stringValue || "Nespecificat"}. Verificat tehnic la MEDFIL Automobile Cluj. Finanțare disponibilă.`}
+        canonical={`https://medfil.ro/stoc/${id}`}
+        ogImage={images[0]?.url || "/og-default.jpg"}
+        structuredData={[getVehicleSchema(listing)]}
+      />
       {/* Breadcrumbs */}
       <div className="pt-24 pb-6 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -126,14 +129,14 @@ export default function ListingDetail() {
           <div className="lg:col-span-7">
             <div className="relative aspect-[16/10] bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group cursor-zoom-in">
               <AnimatePresence mode="wait">
-                <motion.img 
+                <m.img 
                   key={activeImage}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   src={images[activeImage]?.url || "https://picsum.photos/seed/car/800/500"} 
-                  alt={listing.title}
+                  alt={`Fotografie principală ${listing.title || 'vehicul'}`}
                   className="w-full h-full object-cover"
                   onClick={() => setIsLightboxOpen(true)}
                   drag="x"
@@ -148,12 +151,14 @@ export default function ListingDetail() {
               {/* Navigation Arrows */}
               <button 
                 onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                aria-label="Imaginea anterioară"
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all lg:opacity-0 lg:group-hover:opacity-100 z-10"
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                aria-label="Imaginea următoare"
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all lg:opacity-0 lg:group-hover:opacity-100 z-10"
               >
                 <ChevronRight size={24} />
@@ -324,15 +329,19 @@ export default function ListingDetail() {
       {/* Lightbox Fullscreen Overlay */}
       <AnimatePresence>
         {isLightboxOpen && (
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Galerie foto vehicul"
             className="fixed inset-0 z-[100] bg-black/90 flex flex-col items-center justify-center"
             onClick={() => setIsLightboxOpen(false)}
           >
             {/* Close Button */}
             <button 
+              aria-label="Închide galeria"
               className="absolute top-6 right-6 text-white hover:text-[#B8962E] transition-colors p-2 z-[110]"
               onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
             >
@@ -349,12 +358,14 @@ export default function ListingDetail() {
             {/* Navigation Arrows */}
             <button 
               onClick={(e) => { e.stopPropagation(); prevImage(); }}
+              aria-label="Imaginea anterioară"
               className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/5 text-white border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all z-[110]"
             >
               <ChevronLeft size={32} />
             </button>
             <button 
               onClick={(e) => { e.stopPropagation(); nextImage(); }}
+              aria-label="Imaginea următoare"
               className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/5 text-white border border-white/10 hover:bg-[#B8962E] hover:text-[#080808] transition-all z-[110]"
             >
               <ChevronRight size={32} />
@@ -366,7 +377,7 @@ export default function ListingDetail() {
               onClick={(e) => e.stopPropagation()}
             >
               <AnimatePresence mode="wait">
-                <motion.img 
+                <m.img 
                   key={activeImage}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -374,7 +385,7 @@ export default function ListingDetail() {
                   transition={{ duration: 0.2 }}
                   src={images[activeImage]?.url} 
                   className="max-w-full max-h-full object-contain shadow-2xl"
-                  alt={listing.title}
+                  alt={`Fotografie detaliu ${listing.title || 'vehicul'}`}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(e, { offset }) => {
@@ -384,7 +395,7 @@ export default function ListingDetail() {
                 />
               </AnimatePresence>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

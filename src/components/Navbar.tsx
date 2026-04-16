@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
 import medfilLogo from "@/assets/medfil2.jpg";
 
@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
+      <m.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -56,7 +56,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav aria-label="Navigație principală" className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -94,17 +94,19 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden w-12 h-12 flex items-center justify-center text-[#F5F5F0] hover:text-[#B8962E] transition-colors"
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Închide meniul" : "Deschide meniul mobil"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
-      </motion.nav>
+      </m.nav>
 
       {/* Mobile fullscreen overlay */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -119,13 +121,14 @@ export default function Navbar() {
               <button
                 onClick={() => setMobileOpen(false)}
                 className="w-12 h-12 flex items-center justify-center text-[#F5F5F0] hover:text-[#B8962E]"
+                aria-label="Închide meniul mobil"
               >
-                <X size={24} />
+                <X size={24} aria-hidden="true" />
               </button>
             </div>
 
             {/* Links section centered */}
-            <div className="flex-1 flex flex-col justify-center items-center px-6">
+            <nav id="mobile-menu" aria-label="Meniu mobil" className="flex-1 flex flex-col justify-center items-center px-6">
               <div className="w-full max-w-xs flex flex-col items-center">
                 {navLinks.map((link) => (
                   <Link
@@ -139,7 +142,7 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
-            </div>
+            </nav>
 
             {/* Bottom buttons row */}
             <div className="px-6 pb-10 w-full">
@@ -160,7 +163,7 @@ export default function Navbar() {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

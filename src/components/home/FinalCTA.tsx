@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
 
@@ -27,30 +27,30 @@ export default function FinalCTA() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           className="font-label text-[#B8962E] tracking-widest text-sm mb-4"
         >
           PASUL URMĂTOR
-        </motion.p>
-        <motion.h2
+        </m.p>
+        <m.h2
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1, duration: 0.7 }}
           className="font-display text-display text-[#F5F5F0] mb-5"
         >
           Gata să faci alegerea cea bună?
-        </motion.h2>
-        <motion.p
+        </m.h2>
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.6 }}
           className="font-body text-base text-[#888880] mb-10 max-w-lg mx-auto"
         >
           Echipa MEDFIL Automobile te așteaptă cu o selecție exclusivă de mașini premium verificate.
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -62,7 +62,7 @@ export default function FinalCTA() {
           <Link to="/stoc" className="btn-ghost py-4 px-10 rounded-sm text-sm text-center">
             Explorează Stocul
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

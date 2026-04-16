@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import heroCar from "@/assets/hero-car.jpg";
@@ -12,6 +12,9 @@ export default function HeroSection() {
           src={heroCar}
           alt="MEDFIL Automobile - Parc Auto Cluj"
           className="w-full h-full object-cover"
+          fetchpriority="high"
+          loading="eager"
+          decoding="sync"
         />
         <div className="absolute inset-0 hero-overlay" />
         <div
@@ -25,7 +28,7 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-32">
         {/* Gold line */}
-        <motion.div
+        <m.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
@@ -33,7 +36,7 @@ export default function HeroSection() {
         />
 
         {/* Badge */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -43,10 +46,10 @@ export default function HeroSection() {
           <span className="font-label text-[#B8962E] text-xs tracking-widest">
             DEALER PREMIUM VERIFICAT
           </span>
-        </motion.div>
+        </m.div>
 
         {/* H1 */}
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -55,10 +58,10 @@ export default function HeroSection() {
           Găsește Mașina
           <br />
           <span className="gradient-gold-text">Ta Perfectă</span>
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -72,10 +75,10 @@ export default function HeroSection() {
           <p className="font-body text-sm text-[#888880] opacity-80">
             Parc auto autorizat în cartierul Iris, Cluj-Napoca.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* CTAs */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -87,11 +90,11 @@ export default function HeroSection() {
           <Link to="/comanda" className="btn-ghost text-center py-4 px-8 rounded-sm text-sm">
             Mașini la Comandă
           </Link>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
@@ -99,7 +102,7 @@ export default function HeroSection() {
       >
         <span className="font-label text-[#888880] text-[10px] tracking-[0.3em]">SCROLL</span>
         <ChevronDown size={20} className="text-[#B8962E] animate-bounce-chevron" />
-      </motion.div>
+      </m.div>
     </section>
   );
 }

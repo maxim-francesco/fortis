@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Shield, Truck, CreditCard, FileText, Car, Video } from "lucide-react";
 
@@ -43,22 +43,22 @@ export default function BenefitsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-14">
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
             className="font-label text-[#B8962E] tracking-widest text-sm mb-3"
           >
             AVANTAJE EXCLUSIVE
-          </motion.p>
-          <motion.h2
+          </m.p>
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-section-title text-[#F5F5F0] gold-underline gold-underline-center pb-3"
           >
             De Ce MEDFIL?
-          </motion.h2>
+          </m.h2>
         </div>
 
         {/* Grid */}
@@ -66,7 +66,7 @@ export default function BenefitsSection() {
           {benefits.map((benefit, i) => {
             const Icon = benefit.icon;
             return (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -82,7 +82,7 @@ export default function BenefitsSection() {
                 <p className="font-body text-sm text-[#888880] leading-relaxed">
                   {benefit.description}
                 </p>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Star, Quote } from "lucide-react";
 
@@ -37,27 +37,27 @@ export default function Testimonials() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
         <div ref={ref as React.RefObject<HTMLDivElement>} className="text-center mb-12">
-          <motion.p
+          <m.p
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             className="font-label text-[#B8962E] tracking-widest text-sm mb-3"
           >
             RECENZII VERIFICATE
-          </motion.p>
-          <motion.h2
+          </m.p>
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
             className="font-display text-section-title text-[#F5F5F0] gold-underline gold-underline-center pb-3"
           >
             Ce Spun Clienții
-          </motion.h2>
+          </m.h2>
         </div>
 
         {/* Carousel (swipeable on mobile) */}
         <div className="snap-carousel sm:grid sm:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
-            <motion.div
+            <m.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -77,7 +77,7 @@ export default function Testimonials() {
                 <div className="font-body text-sm font-medium text-[#F5F5F0]">{t.name}</div>
                 <div className="font-body text-xs text-[#888880]">{t.city}</div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 

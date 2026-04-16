@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useInView } from "@/hooks/useInView";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
@@ -10,35 +10,35 @@ export default function LocationSection() {
     <section className="section-padding bg-[#080808] border-t border-[rgba(184,150,46,0.12)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 sm:mb-16">
-          <motion.p
+          <m.p
             ref={ref as React.RefObject<HTMLParagraphElement>}
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             className="font-label text-[#B8962E] tracking-widest text-sm mb-2"
           >
             LOCAȚIE
-          </motion.p>
-          <motion.h2
+          </m.p>
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
             className="font-display text-4xl sm:text-5xl font-semibold text-[#F5F5F0] mb-4"
           >
             Ne găsești în Cartierul Iris!
-          </motion.h2>
-          <motion.p
+          </m.h2>
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 }}
             className="font-body text-[#888880] max-w-2xl mx-auto"
           >
             Te așteptăm în parcul nostru auto de pe Strada Oașului 134a, Cluj-Napoca.
-          </motion.p>
+          </m.p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Map Left */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 }}
@@ -55,10 +55,10 @@ export default function LocationSection() {
               referrerPolicy="no-referrer-when-downgrade"
               title="MEDFIL Automobile - Str. Oașului 134a, Cluj-Napoca"
             />
-          </motion.div>
+          </m.div>
 
           {/* Info Right */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.4 }}
@@ -99,7 +99,7 @@ export default function LocationSection() {
                 Programează o vizionare <ArrowRight size={15} />
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
