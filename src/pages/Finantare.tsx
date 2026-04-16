@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { useInView } from "@/hooks/useInView";
 import { ChevronRight, ChevronDown, Check, Info } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -13,7 +14,7 @@ const faqs = [
   { q: "Este obligatoriu avansul?", a: "Nu, avansul nu este obligatoriu. Poți finanța 100% din valoarea mașinii, în funcție de profilul tău financiar." },
   { q: "Pe câți ani pot lua credit?", a: "Perioadele de finanțare disponibile sunt între 12 și 84 de luni, astfel poți adapta rata lunară la bugetul tău." },
   { q: "Pot face rambursare anticipată?", a: "Da, poți rambursa anticipat partial sau total creditul, de obicei fără penalizări semnificative, în funcție de contractul ales." },
-  { q: "Ce se întâmplă dacă mașina are o problemă în perioada de garanție?", a: "Intervenim rapid. Garanția Fortis acoperă motorul și cutia de viteze 12 luni. Te punem în contact cu service autorizat." },
+  { q: "Ce se întâmplă dacă mașina are o problemă în perioada de garanție?", a: "Intervenim rapid. Garanția MEDFIL acoperă motorul și cutia de viteze 12 luni. Te punem în contact cu service autorizat." },
 ];
 
 function FaqItem({ q, a }: { q: string; a: string }) {
@@ -91,6 +92,10 @@ export default function Finantare() {
 
   return (
     <div className="min-h-screen bg-[#080808]">
+      <Helmet>
+        <title>Mașini în Rate Cluj | Leasing & Credit Auto Rulate | MEDFIL</title>
+        <meta name="description" content="Cumpără mașini în rate de la MEDFIL Cluj. Finanțare TBI Bank, UniCredit și Mogo pentru mașini rulate, cu aprobare rapidă doar cu buletinul. Simulează rata!" />
+      </Helmet>
       {/* Page hero */}
       <div className="relative pt-20 pb-14 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -178,7 +183,7 @@ export default function Finantare() {
                     <h4 className="font-label text-[#B8962E] text-[10px] tracking-[0.2em] mb-4 uppercase">Venituri din Străinătate</h4>
                     <ul className="space-y-3">
                       <CriteriaItem text="Contract de muncă pe perioadă nedeterminată, vechime minim 6 luni" />
-                      <CriteriaItem text="Cu istoric de creditare în România (ultimii 5 ani): nu este necesar girant" />
+                      <CriteriaItem text="Cu istoric de creditare în Str. Oașului 134a, Cluj-Napoca, cartier Iris (ultimii 5 ani): nu este necesar girant" />
                       <CriteriaItem text="Fără istoric: girant angajat minim 3 luni (se acceptă și pensionari)" />
                     </ul>
                   </div>
@@ -337,7 +342,7 @@ export default function Finantare() {
         <div ref={ref as React.RefObject<HTMLDivElement>}>
           <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="font-label text-[#B8962E] tracking-widest text-sm mb-6 text-center">PARTENERI DE FINANȚARE</motion.p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {["TBI Bank", "BCR", "BT Rate", "ING Bank"].map((bank) => (
+            {["TBI Bank", "UniCredit", "Mogo IFN", "BT Rate"].map((bank) => (
               <div key={bank} className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm p-5 flex items-center justify-center">
                 <span className="font-label text-[#888880] text-sm tracking-wider">{bank}</span>
               </div>

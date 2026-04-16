@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ChevronRight, Cookie, ShieldCheck, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -7,6 +8,9 @@ export default function PoliticaCookies() {
 
   return (
     <div className="min-h-screen bg-[#080808] pb-20">
+      <Helmet>
+        <title>Politica de Cookies | MEDFIL Automobile</title>
+      </Helmet>
       {/* Hero Header */}
       <div className="relative pt-24 pb-12 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -53,7 +57,7 @@ export default function PoliticaCookies() {
             <h2 className="font-display text-2xl text-[#F5F5F0] mb-4 flex items-center gap-3">
               <span className="text-[#B8962E]">02.</span> Tipuri de Cookie-uri utilizate
             </h2>
-            <p>Site-ul <strong>Fortis Premium Auto</strong> utilizează următoarele categorii de cookie-uri:</p>
+            <p>Site-ul <strong>MEDFIL Automobile</strong> utilizează următoarele categorii de cookie-uri:</p>
             <div className="space-y-6 mt-6">
               <div className="p-6 bg-[#111] border border-[rgba(184,150,46,0.1)] rounded-sm">
                 <h4 className="text-[#F5F5F0] font-medium text-lg mb-2 flex items-center gap-2">
@@ -114,14 +118,14 @@ export default function PoliticaCookies() {
               <span className="text-[#B8962E]">05.</span> Contact
             </h2>
             <p>
-              Dacă aveți întrebări suplimentare despre modul în care utilizăm cookie-urile, vă rugăm să ne contactați la <strong>[EMAIL CONTACT]</strong> sau să consultați <Link to="/politica-confidentialitate" className="text-[#B8962E] hover:underline">Politica de Confidențialitate</Link>.
+              Dacă aveți întrebări suplimentare despre modul în care utilizăm cookie-urile, vă rugăm să ne contactați la <strong>medfilautomobile@gmail.com</strong> sau să consultați <Link to="/politica-de-confidentialitate" className="text-[#B8962E] hover:underline">Politica de Confidențialitate</Link>.
             </p>
           </section>
 
           {/* Business Info Footer */}
           <div className="mt-16 pt-8 border-t border-[rgba(184,150,46,0.12)]">
             <p className="text-xs text-center">
-              © 2025 FORTIS PREMIUM AUTO SRL | CUI: 52925212 | [ADRESA FIRMEI]
+              © 2025 MEDFIL AUTOMOBILE SRL | CUI: 44290330 | Str. Oașului 164/A, Cluj-Napoca, Jud. Cluj (sediu social) / Str. Oașului 134a, Cluj-Napoca (punct de lucru)
             </p>
           </div>
         </motion.div>

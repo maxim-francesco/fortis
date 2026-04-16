@@ -2,14 +2,14 @@ import { Phone, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function FloatingButtons() {
-  const waLink = "https://wa.me/40751489879?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații%20despre%20mașinile%20disponibile.";
+  const waLink = "https://wa.me/40754299199?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații%20despre%20mașinile%20disponibile.";
 
   return (
     <>
       {/* Mobile sticky bottom bar - Visible on mobile and tablet (hidden on lg) */}
       <div className="lg:hidden sticky-cta flex gap-3 pb-safe">
         <a
-          href="tel:0751489879"
+          href="tel:0754299199"
           className="flex-1 flex items-center justify-center gap-2 bg-[#B8962E] text-[#080808] font-body font-semibold text-sm py-3 rounded-sm"
         >
           <Phone size={16} />

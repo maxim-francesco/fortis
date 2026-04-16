@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
@@ -60,7 +61,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
             <div className="font-body text-[10px] text-[#888880]">Finanțare disponibilă</div>
           </div>
         </div>
-        <Link to={`/listing/${listing.id}`} className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
+        <Link to={`/stoc/${listing.id}`} className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
           Vezi Detalii
         </Link>
       </div>
@@ -88,6 +89,11 @@ export default function Masini() {
 
   return (
     <div className="min-h-screen bg-[#080808]">
+      <Helmet>
+        <title>Stoc Mașini de Vânzare Cluj | Prețuri Auto Rulate | MEDFIL</title>
+        <meta name="description" content="Vezi stocul complet de mașini de vânzare la MEDFIL Cluj. Prețuri competitive, livrare națională, istoric verificat și garanție inclusă." />
+        <link rel="canonical" href="https://medfil.ro/stoc" />
+      </Helmet>
       {/* Page hero */}
       <div className="relative pt-20 pb-14 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)]">
         <div

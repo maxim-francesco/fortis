@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Clock, ChevronRight, Network, Tag, Search, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -72,7 +73,7 @@ ${formData.observatii || 'Fără observații'}
     try {
       const result = await submitContactForm({
         name: formData.nume,
-        email: 'comanda@fortispremiumauto.ro',
+        email: 'medfilautomobile@gmail.com',
         phone: formData.telefon,
         message: formattedMessage,
       });
@@ -102,6 +103,10 @@ ${formData.observatii || 'Fără observații'}
 
   return (
     <div className="min-h-screen bg-[#080808]">
+      <Helmet>
+        <title>Mașini la Comandă Cluj | Serviciu Concierge | MEDFIL Automobile</title>
+        <meta name="description" content="Serviciu concierge MEDFIL pentru achiziția mașinii perfecte. Acces la rețea națională de furnizori, verificare completă și livrare la cheie în toată România." />
+      </Helmet>
       {/* Hero */}
       <div className="relative pt-20 pb-20 overflow-hidden" style={{ minHeight: "40vh", display: "flex", alignItems: "center" }}>
         <div className="absolute inset-0 bg-[#080808]" />
@@ -129,7 +134,7 @@ ${formData.observatii || 'Fără observații'}
             <span className="gradient-gold-text">Ce Cauți?</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-[#888880] text-base sm:text-lg max-w-xl leading-relaxed">
-            Îți aducem noi mașina dorită, oriunde în România. Rețea națională de furnizori, prețuri negociate.
+            Îți aducem noi mașina dorită, oriunde în Str. Oașului 134a, Cluj-Napoca, cartier Iris. Rețea națională de furnizori, prețuri negociate.
           </motion.p>
         </div>
       </div>
@@ -146,7 +151,7 @@ ${formData.observatii || 'Fără observații'}
               { n: "01", t: "Ne Spui Ce Vrei", d: "Completezi formularul cu specificațiile mașinii dorite." },
               { n: "02", t: "Căutăm Pentru Tine", d: "Accesăm rețeaua noastră națională de furnizori verificați." },
               { n: "03", t: "Prezentăm Opțiunile", d: "Îți trimitem ofertele găsite cu poze, inspecție și preț." },
-              { n: "04", t: "Livrare la Tine", d: "Finalizezi tranzacția și mașina ajunge la ușa ta." },
+              { n: "04", t: "Livrare la Tine", d: "Finalizezi tranzacția și mașina ajunge la ușa ta, oriunde în România. Pentru clienții din zona Cluj, livrare gratuită." },
             ].map((step, i) => (
               <motion.div
                 key={i}
@@ -345,7 +350,7 @@ ${formData.observatii || 'Fără observații'}
         {/* Trust strip */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { icon: Network, t: "Rețea Națională", d: "Furnizori verificați din toată România" },
+            { icon: Network, t: "Rețea Națională", d: "Furnizori verificați din toată Str. Oașului 134a, Cluj-Napoca, cartier Iris" },
             { icon: Tag, t: "Prețuri Negociate", d: "Cel mai bun preț pentru mașina ta" },
             { icon: Search, t: "Inspecție Inclusă", d: "Verificare tehnică înainte de livrare" },
           ].map((item, i) => {

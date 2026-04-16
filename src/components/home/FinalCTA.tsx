@@ -48,7 +48,7 @@ export default function FinalCTA() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="font-body text-base text-[#888880] mb-10 max-w-lg mx-auto"
         >
-          Echipa Fortis Premium Auto te așteaptă cu o selecție exclusivă de mașini premium verificate.
+          Echipa MEDFIL Automobile te așteaptă cu o selecție exclusivă de mașini premium verificate.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +59,7 @@ export default function FinalCTA() {
           <Link to="/contact" className="btn-gold py-4 px-10 rounded-sm text-sm font-semibold text-center">
             Contactează-ne Acum
           </Link>
-          <Link to="/masini" className="btn-ghost py-4 px-10 rounded-sm text-sm text-center">
+          <Link to="/stoc" className="btn-ghost py-4 px-10 rounded-sm text-sm text-center">
             Explorează Stocul
           </Link>
         </motion.div>

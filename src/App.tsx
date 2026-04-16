@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -10,14 +11,15 @@ import FloatingButtons from "@/components/FloatingButtons";
 import CookieBanner from "@/components/CookieBanner";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
-import Masini from "./pages/Masini";
+import Stoc from "./pages/Stoc";
 import ListingDetail from "./pages/ListingDetail";
 import Finantare from "./pages/Finantare";
-import LaComanda from "./pages/LaComanda";
+import Comanda from "./pages/Comanda";
 import BuyBack from "./pages/BuyBack";
 import Contact from "./pages/Contact";
 import PoliticaConfidentialitate from "./pages/PoliticaConfidentialitate";
 import PoliticaCookies from "./pages/PoliticaCookies";
+import TermeniConditii from "./pages/TermeniConditii";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,14 +37,15 @@ function AnimatedRoutes() {
       >
         <Routes location={location}>
           <Route path="/" element={<Index />} />
-          <Route path="/masini" element={<Masini />} />
-          <Route path="/listing/:id" element={<ListingDetail />} />
+          <Route path="/stoc" element={<Stoc />} />
+          <Route path="/stoc/:id" element={<ListingDetail />} />
           <Route path="/finantare" element={<Finantare />} />
-          <Route path="/la-comanda" element={<LaComanda />} />
+          <Route path="/comanda" element={<Comanda />} />
           <Route path="/buyback" element={<BuyBack />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/politica-confidentialitate" element={<PoliticaConfidentialitate />} />
+          <Route path="/politica-de-confidentialitate" element={<PoliticaConfidentialitate />} />
           <Route path="/politica-cookies" element={<PoliticaCookies />} />
+          <Route path="/termeni-si-conditii" element={<TermeniConditii />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
@@ -51,8 +54,9 @@ function AnimatedRoutes() {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
@@ -68,7 +72,8 @@ const App = () => (
         </div>
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;

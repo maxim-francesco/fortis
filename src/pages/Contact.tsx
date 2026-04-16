@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, Clock, MapPin, ChevronRight, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { submitContactForm } from "@/lib/api";
 
 export default function Contact() {
-  const waLink = "https://wa.me/40751489879?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații.";
+  const waLink = "https://wa.me/40754299199?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații.";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -57,6 +58,10 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-[#080808]">
+      <Helmet>
+        <title>Contact | MEDFIL Automobile - Parc Auto Cluj Iris</title>
+        <meta name="description" content="Contactează MEDFIL Automobile în Cluj-Napoca. Telefon: 0754 299 199. Programări, informații, consultanță gratuită. Str. Oașului 134a, cartier Iris." />
+      </Helmet>
       {/* Page hero */}
       <div className="relative pt-20 pb-10 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -73,22 +78,31 @@ export default function Contact() {
           {/* Left — Contact Info */}
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">CONTACT</p>
-            <h1 className="font-display text-4xl sm:text-5xl font-semibold text-[#F5F5F0] mb-10 gold-underline pb-3">
+            <h1 className="font-display text-4xl sm:text-5xl font-semibold text-[#F5F5F0] mb-4 gold-underline pb-3">
               Hai să Vorbim
             </h1>
+            <p className="font-body text-base text-[#888880] mb-8 leading-relaxed max-w-sm">
+              Suntem aici pentru tine. Fie că ai o întrebare sau vrei să programezi un test-drive, echipa MEDFIL este gata să te ajute.
+            </p>
 
             {/* Phone */}
             <div className="mb-8">
-              <p className="font-label text-[10px] text-[#888880] tracking-widest mb-2">TELEFON — GABRIEL</p>
+              <p className="font-label text-[10px] text-[#888880] tracking-widest mb-2">TELEFON</p>
               <a
-                href="tel:0751489879"
+                href="tel:0754299199"
                 className="font-display text-3xl sm:text-4xl text-[#B8962E] hover:text-[#D4AF6A] transition-colors block mb-3"
               >
-                0751-489-879
+                0754 299 199
               </a>
-              <div className="flex items-center gap-2 font-body text-sm text-[#888880]">
-                <Clock size={13} className="text-[#B8962E]" />
-                <span>Luni–Sâmbătă: 09:00–19:00</span>
+              <div className="flex flex-col gap-1 font-body text-sm text-[#888880]">
+                <div className="flex items-center gap-2">
+                  <Clock size={13} className="text-[#B8962E]" />
+                  <span>Luni–Sâmbătă: 09:00–18:00</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="w-[13px]" />
+                  <span>Duminică: Închis</span>
+                </div>
               </div>
             </div>
 
@@ -111,7 +125,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="font-body text-sm font-medium text-[#F5F5F0]">Locație</div>
-                  <div className="font-body text-xs text-[#888880]">România — livrare națională</div>
+                  <div className="font-body text-xs text-[#888880]">Str. Oașului 134a, Cluj-Napoca, cartier Iris</div>
                 </div>
               </div>
               <div className="flex items-center gap-4 bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm p-4">
@@ -119,8 +133,8 @@ export default function Contact() {
                   <Phone size={16} className="text-[#B8962E]" />
                 </div>
                 <div>
-                  <div className="font-body text-sm font-medium text-[#F5F5F0]">CUI: 52925212</div>
-                  <div className="font-body text-xs text-[#888880]">Fortis Premium Auto SRL</div>
+                  <div className="font-body text-sm font-medium text-[#F5F5F0]">CUI: 44290330</div>
+                  <div className="font-body text-xs text-[#888880]">MEDFIL AUTOMOBILE SRL</div>
                 </div>
               </div>
             </div>
@@ -243,22 +257,17 @@ export default function Contact() {
 
         {/* Map placeholder */}
         <div className="mt-14">
-          <div className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden" style={{ height: "300px" }}>
-            <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-              <MapPin size={36} className="text-[#B8962E] opacity-50" />
-              <div className="text-center">
-                <p className="font-display text-xl text-[#F5F5F0] mb-1">Fortis Premium Auto</p>
-                <p className="font-body text-sm text-[#888880] mb-4">România — Livrare Națională</p>
-                <a
-                  href="https://maps.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-ghost text-xs px-5 py-2.5 rounded-sm inline-flex items-center gap-2"
-                >
-                  <MapPin size={12} /> Găsești-ne pe Google Maps
-                </a>
-              </div>
-            </div>
+          <div className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden" style={{ height: "450px" }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2731.396342616854!2d23.60635397637841!3d46.7972749712497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490fb9ec2b4739%3A0x6c6e756531317537!2sStrada%20Oa%C8%99ului%20134A%2C%20Cluj-Napoca%20400000!5e0!3m2!1sen!2sro!4v1709230000000!5m2!1sen!2sro"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="MEDFIL Automobile - Str. Oașului 134a, Cluj-Napoca"
+            />
           </div>
         </div>
       </div>

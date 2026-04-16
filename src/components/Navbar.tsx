@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
-import fortisLogo from "@/assets/fortis.png";
+import medfilLogo from "@/assets/medfil2.jpg";
 
 const navLinks = [
   { label: "Acasă", href: "/" },
-  { label: "Mașini", href: "/masini" },
+  { label: "Mașini", href: "/stoc" },
   { label: "Finanțare", href: "/finantare" },
-  { label: "La Comandă", href: "/la-comanda" },
+  { label: "La Comandă", href: "/comanda" },
   { label: "BuyBack", href: "/buyback" },
   { label: "Contact", href: "/contact" },
 ];
@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center flex-shrink-0">
-            <img src={fortisLogo} alt="Fortis Premium Auto" className="h-10 w-auto object-contain" />
+            <img src={medfilLogo} alt="MEDFIL Automobile - Parc Auto Cluj" className="h-14 md:h-16 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav links */}
@@ -76,14 +76,14 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:0751489879"
+              href="tel:0754299199"
               className="flex items-center gap-2 font-body text-sm text-[#B8962E] hover:text-[#D4AF6A] transition-colors"
             >
               <Phone size={14} />
-              <span>0751-489-879</span>
+              <span>0754 299 199</span>
             </a>
             <a
-              href="tel:0751489879"
+              href="tel:0754299199"
               className="btn-gold text-sm px-5 py-2.5 rounded-sm font-semibold"
             >
               Sună Acum
@@ -112,9 +112,9 @@ export default function Navbar() {
             className="fixed inset-0 z-[60] bg-[#080808] flex flex-col lg:hidden"
           >
             {/* Header row */}
-            <div className="flex justify-between items-center px-6 pt-6 h-16">
+            <div className="flex justify-between items-center px-6 pt-6 h-auto pb-4">
               <Link to="/">
-                <img src={fortisLogo} alt="Fortis Premium Auto" className="h-10 w-auto object-contain" />
+                <img src={medfilLogo} alt="MEDFIL Automobile - Parc Auto Cluj" className="h-14 w-auto object-contain" />
               </Link>
               <button
                 onClick={() => setMobileOpen(false)}
@@ -145,13 +145,13 @@ export default function Navbar() {
             <div className="px-6 pb-10 w-full">
               <div className="grid grid-cols-2 gap-4">
                 <a
-                  href="tel:0751489879"
+                  href="tel:0754299199"
                   className="h-12 flex items-center justify-center bg-[#B8962E] text-[#080808] font-body font-semibold rounded-lg text-sm"
                 >
                   Sună Acum
                 </a>
                 <a
-                  href="https://wa.me/40751489879?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații."
+                  href="https://wa.me/40754299199?text=Bună%20ziua%2C%20aș%20dori%20mai%20multe%20informații."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-12 flex items-center justify-center bg-[#080808] border border-[#B8962E] text-[#B8962E] font-body font-semibold rounded-lg text-sm"

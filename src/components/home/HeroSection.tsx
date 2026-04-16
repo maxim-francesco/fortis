@@ -10,7 +10,7 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <img
           src={heroCar}
-          alt="Fortis Premium Auto"
+          alt="MEDFIL Automobile - Parc Auto Cluj"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 hero-overlay" />
@@ -58,16 +58,21 @@ export default function HeroSection() {
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="font-body text-base sm:text-lg text-[#888880] mb-10 max-w-lg leading-relaxed"
+          className="mb-10 max-w-lg"
         >
-          Mașini rulate premium, garanție 12 luni,
-          <br />
-          formalități zero stres.
-        </motion.p>
+          <p className="font-body text-base sm:text-lg text-[#888880] leading-relaxed mb-2">
+            Mașini rulate premium, garanție 12 luni,
+            <br />
+            formalități zero stres.
+          </p>
+          <p className="font-body text-sm text-[#888880] opacity-80">
+            Parc auto autorizat în cartierul Iris, Cluj-Napoca.
+          </p>
+        </motion.div>
 
         {/* CTAs */}
         <motion.div
@@ -76,10 +81,10 @@ export default function HeroSection() {
           transition={{ delay: 0.85, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="flex flex-col sm:flex-row gap-4"
         >
-          <Link to="/masini" className="btn-gold text-center py-4 px-8 rounded-sm text-sm font-semibold">
+          <Link to="/stoc" className="btn-gold text-center py-4 px-8 rounded-sm text-sm font-semibold">
             Explorează Stocul
           </Link>
-          <Link to="/la-comanda" className="btn-ghost text-center py-4 px-8 rounded-sm text-sm">
+          <Link to="/comanda" className="btn-ghost text-center py-4 px-8 rounded-sm text-sm">
             Mașini la Comandă
           </Link>
         </motion.div>

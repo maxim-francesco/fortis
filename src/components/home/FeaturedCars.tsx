@@ -78,7 +78,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
         </div>
 
         <Link
-          to={`/listing/${listing.id}`}
+          to={`/stoc/${listing.id}`}
           className="block w-full text-center font-body text-sm font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300"
         >
           Vezi Detalii
@@ -112,8 +112,6 @@ export default function FeaturedCars() {
       try {
         setLoading(true);
         const result = await searchListings({
-          businessId: 'cmmnj2md300dgp828hbr08wt6',
-          categoryId: 'cmmnj2mpu00dkp8286hw4xcww',
           limit: '3',
           sortBy: 'newest',
         });
@@ -161,7 +159,7 @@ export default function FeaturedCars() {
             transition={{ delay: 0.2 }}
           >
             <Link
-              to="/masini"
+              to="/stoc"
               className="hidden sm:flex items-center gap-2 font-body text-sm text-[#B8962E] hover:text-[#D4AF6A] transition-colors"
             >
               Vezi Toate <ArrowRight size={15} />
@@ -181,7 +179,7 @@ export default function FeaturedCars() {
         </div>
 
         <div className="sm:hidden mt-6 text-center">
-          <Link to="/masini" className="btn-ghost text-sm px-6 py-3 rounded-sm inline-flex items-center gap-2">
+          <Link to="/stoc" className="btn-ghost text-sm px-6 py-3 rounded-sm inline-flex items-center gap-2">
             Vezi Toate Mașinile <ArrowRight size={14} />
           </Link>
         </div>

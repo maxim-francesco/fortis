@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ChevronRight, ShieldCheck, Mail, Phone, MapPin } from "lucide-react";
 
 export default function PoliticaConfidentialitate() {
@@ -6,6 +7,9 @@ export default function PoliticaConfidentialitate() {
 
   return (
     <div className="min-h-screen bg-[#080808] pb-20">
+      <Helmet>
+        <title>Politica de Confidențialitate | MEDFIL Automobile</title>
+      </Helmet>
       {/* Hero Header */}
       <div className="relative pt-24 pb-12 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -40,7 +44,7 @@ export default function PoliticaConfidentialitate() {
               <span className="text-[#B8962E]">01.</span> Identitatea Operatorului
             </h2>
             <p>
-              Prezenta Politică de Confidențialitate descrie modul în care <strong>FORTIS PREMIUM AUTO SRL</strong> („Societatea”, „noi” sau „Operatorul”), cu sediul în [ADRESA FIRMEI], înmatriculată la Registrul Comerțului sub nr. <strong>J2025088822001</strong>, având CUI <strong>52925212</strong>, colectează și procesează datele dumneavoastră cu caracter personal.
+              Prezenta Politică de Confidențialitate descrie modul în care <strong>MEDFIL AUTOMOBILE SRL</strong> („Societatea”, „noi” sau „Operatorul”), cu sediul în Str. Oașului 164/A, Cluj-Napoca, Jud. Cluj (sediu social) / Str. Oașului 134a, Cluj-Napoca (punct de lucru), înmatriculată la Registrul Comerțului sub nr. <strong>J12/2390/2021</strong>, având CUI <strong>44290330</strong>, colectează și procesează datele dumneavoastră cu caracter personal.
             </p>
             <p>
               În calitate de operator de date, suntem angajați să protejăm confidențialitatea datelor dumneavoastră în conformitate cu Regulamentul (UE) 2016/679 (GDPR) și legislația română în vigoare.
@@ -128,19 +132,19 @@ export default function PoliticaConfidentialitate() {
                 <div className="w-10 h-10 bg-[rgba(184,150,46,0.1)] rounded-sm flex items-center justify-center">
                   <Mail size={18} className="text-[#B8962E]" />
                 </div>
-                <span className="text-[#F5F5F0]">[EMAIL CONTACT]</span>
+                <span className="text-[#F5F5F0]">medfilautomobile@gmail.com</span>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-[rgba(184,150,46,0.1)] rounded-sm flex items-center justify-center">
                   <Phone size={18} className="text-[#B8962E]" />
                 </div>
-                <span className="text-[#F5F5F0]">0751-489-879</span>
+                <span className="text-[#F5F5F0]">0754 299 199</span>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-[rgba(184,150,46,0.1)] rounded-sm flex items-center justify-center">
                   <MapPin size={18} className="text-[#B8962E]" />
                 </div>
-                <span className="text-[#F5F5F0]">[ADRESA FIRMEI]</span>
+                <span className="text-[#F5F5F0]">Str. Oașului 164/A, Cluj-Napoca, Jud. Cluj (sediu social) / Str. Oașului 134a, Cluj-Napoca (punct de lucru)</span>
               </div>
             </div>
 

@@ -15,7 +15,7 @@ const steps = [
   {
     number: "03",
     title: "Primești Mașina Acasă",
-    description: "Transport gratuit oriunde în România. Pleci mulțumit, sau nu pleci.",
+    description: "Transport gratuit oriunde în Str. Oașului 134a, Cluj-Napoca, cartier Iris. Pleci mulțumit, sau nu pleci.",
   },
 ];
 

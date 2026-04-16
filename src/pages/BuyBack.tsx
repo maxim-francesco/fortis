@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { ChevronRight, Clock, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
@@ -51,7 +52,7 @@ ${formData.descriere}
     try {
       const result = await submitContactForm({
         name: formData.name,
-        email: 'buyback@fortispremiumauto.ro',
+        email: 'medfilautomobile@gmail.com',
         phone: formData.phone,
         message: formattedMessage,
       });
@@ -80,6 +81,10 @@ ${formData.descriere}
 
   return (
     <div className="min-h-screen bg-[#080808]">
+      <Helmet>
+        <title>BuyBack & Trade-In Cluj | Evaluare Auto | MEDFIL Automobile</title>
+        <meta name="description" content="Evaluează-ți mașina online la MEDFIL și folosește-o ca avans pentru un nou automobil. Proces rapid, transparent și corect în Cluj-Napoca." />
+      </Helmet>
       {/* Hero */}
       <div className="relative pt-20 pb-16 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -115,7 +120,7 @@ ${formData.descriere}
             {[
               {
                 title: "Consultanță Vânzare",
-                description: "Te ajutăm să îți vinzi mașina la cel mai bun preț. Sfaturi despre pregătire, fotografiere și promovare. Experiența noastră în piața auto românească îți oferă avantaj real.",
+                description: "Te ajutăm să îți vinzi mașina la cel mai bun preț. Sfaturi despre pregătire, fotografiere și promovare. Experiența noastră în piața auto românească îți oferă avantaj real. Echipa MEDFIL îți oferă consultanță pentru vânzarea mașinii tale în Cluj și împrejurimi.",
                 icon: "💬",
               },
               {

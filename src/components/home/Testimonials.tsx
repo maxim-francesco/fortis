@@ -5,17 +5,17 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    text: "Am cumpărat un BMW Seria 5 de la Fortis și am fost impresionat de profesionalism. Mașina a venit livrată acasă, cu tot cu numere provizorii. Recomand cu toată încrederea!",
+    text: "Am cumpărat un BMW Seria 5 de la MEDFIL și am fost impresionat de profesionalism. Mașina a venit livrată acasă, cu tot cu numere provizorii. Recomand cu toată încrederea!",
     name: "Alexandru M.",
     city: "București",
   },
   {
-    text: "Serviciu impecabil. Gabriel a fost disponibil non-stop, mi-a prezentat mașina live pe video înainte să o cumpăr. Formalitățile au durat o oră. Exact cum promit.",
+    text: "Am venit din afara județului Cluj să văd o mașină la MEDFIL și merită fiecare kilometru. Parcul e ușor de găsit în cartierul Iris, echipa e foarte profesionistă și mașina a fost exact cum a fost descrisă. Formalitățile s-au făcut în aceeași zi.",
     name: "Cristina P.",
-    city: "Cluj-Napoca",
+    city: "Oradea",
   },
   {
-    text: "Rate cu buletinul, chiar funcționează! Am luat un Audi A6 fără avans. Mașina e superbă, garanția de 12 luni m-a liniștit complet. Fortis e alegerea cea bună.",
+    text: "Rate cu buletinul, chiar funcționează! Am luat un Audi A6 fără avans. Mașina e superbă, garanția de 12 luni m-a liniștit complet. MEDFIL e alegerea cea bună.",
     name: "Mihai D.",
     city: "Timișoara",
   },

@@ -1,10 +1,10 @@
-const API_BASE_URL = "https://saas-platform-backend.onrender.com/api";
+import { API_BASE_URL, MEDFIL_BUSINESS_ID, MEDFIL_CATEGORY_ID, DEFAULT_LISTINGS_LIMIT } from "@/config/api";
 
 export const searchListings = async (params?: Record<string, string>) => {
   const query = new URLSearchParams({
-    businessId: "cmmnj2md300dgp828hbr08wt6",
-    categoryId: "cmmnj2mpu00dkp8286hw4xcww",
-    limit: "20",
+    businessId: MEDFIL_BUSINESS_ID,
+    categoryId: MEDFIL_CATEGORY_ID,
+    limit: DEFAULT_LISTINGS_LIMIT,
     ...params,
   });
   const response = await fetch(`${API_BASE_URL}/public/listings/search?${query}`);
@@ -25,23 +25,20 @@ export async function submitContactForm(data: {
   message: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch(
-      'https://saas-platform-backend.onrender.com/api/public/contact',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          businessId: 'cmmnj2md300dgp828hbr08wt6',
-          ...data,
-        }),
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/public/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        businessId: MEDFIL_BUSINESS_ID,
+        ...data,
+      }),
+    });
     if (!response.ok) {
-      const err = await response.json();
-      return { success: false, error: err.message || 'Eroare la trimitere.' };
+      const err = await response.json().catch(() => ({ message: "Eroare la trimitere." }));
+      return { success: false, error: err.message || "Eroare la trimitere." };
     }
     return { success: true };
   } catch {
-    return { success: false, error: 'Eroare de rețea. Încearcă din nou.' };
+    return { success: false, error: "Eroare de rețea. Încearcă din nou." };
   }
 }

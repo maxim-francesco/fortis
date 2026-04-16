@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -77,7 +78,7 @@ export default function ListingDetail() {
     return (
       <div className="min-h-screen bg-[#080808] flex flex-col items-center justify-center p-4">
         <h1 className="font-display text-2xl text-[#F5F5F0] mb-4 text-center">Mașina solicitată nu a putut fi găsită.</h1>
-        <Link to="/masini" className="btn-gold flex items-center gap-2">
+        <Link to="/stoc" className="btn-gold flex items-center gap-2">
           <ArrowLeft size={16} /> Înapoi la stoc
         </Link>
       </div>
@@ -89,17 +90,21 @@ export default function ListingDetail() {
   };
 
   const attributes = listing.attributeValues || [];
-  const waLink = `https://wa.me/40751489879?text=Bună%20ziua%2C%20sunt%20interesat%20de%20anunțul%20${encodeURIComponent(listing.title)}`;
+  const waLink = `https://wa.me/40754299199?text=Bună%20ziua%2C%20sunt%20interesat%20de%20anunțul%20${encodeURIComponent(listing.title)}`;
 
   return (
     <div className="min-h-screen bg-[#080808] pb-20">
+      <Helmet>
+        <title>{listing ? `${listing.title} | MEDFIL Automobile Cluj` : "Mașină | MEDFIL"}</title>
+        <meta name="description" content={listing ? `Cumpără ${listing.title} cu garanție 12 luni și finanțare în rate. Kilometri reali, verificare completă. Test drive în Cluj-Napoca, cartierul Iris.` : ""} />
+      </Helmet>
       {/* Breadcrumbs */}
       <div className="pt-24 pb-6 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 font-body text-xs text-[#888880]">
             <Link to="/" className="hover:text-[#B8962E] transition-colors">Acasă</Link>
             <ChevronRight size={12} />
-            <Link to="/masini" className="hover:text-[#B8962E] transition-colors">Mașini</Link>
+            <Link to="/stoc" className="hover:text-[#B8962E] transition-colors">Mașini</Link>
             <ChevronRight size={12} />
             <span className="text-[#B8962E] truncate max-w-[200px] sm:max-w-none">{listing.title}</span>
           </div>
@@ -213,7 +218,7 @@ export default function ListingDetail() {
 
             {/* Actions */}
             <div className="space-y-3">
-              <a href="tel:0751489879" className="btn-gold w-full py-4 flex items-center justify-center gap-2">
+              <a href="tel:0754299199" className="btn-gold w-full py-4 flex items-center justify-center gap-2">
                 <Phone size={18} />
                 <span>Contactează Dealer</span>
               </a>
@@ -289,7 +294,7 @@ export default function ListingDetail() {
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2 font-medium">Vrei să o vezi live?</h3>
                 <p className="font-body text-xs text-[#888880] mb-8 leading-relaxed">Programează o prezentare video prin WhatsApp sau vizitează parcul nostru auto.</p>
-                <a href="tel:0751489879" className="btn-gold w-full text-center py-3 rounded-sm text-sm">Programează Vizionare</a>
+                <a href="tel:0754299199" className="btn-gold w-full text-center py-3 rounded-sm text-sm">Programează Vizionare</a>
               </div>
               
               <div className="border border-[rgba(184,150,46,0.1)] rounded-sm p-6">

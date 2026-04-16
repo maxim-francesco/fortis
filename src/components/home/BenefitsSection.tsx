@@ -11,7 +11,7 @@ const benefits = [
   {
     icon: Truck,
     title: "Transport Gratuit",
-    description: "Livrăm mașina ta oriunde în România, fără costuri suplimentare. Direct la ușa ta.",
+    description: "Livrăm mașina ta oriunde în Str. Oașului 134a, Cluj-Napoca, cartier Iris, fără costuri suplimentare. Direct la ușa ta.",
   },
   {
     icon: CreditCard,
@@ -57,7 +57,7 @@ export default function BenefitsSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-section-title text-[#F5F5F0] gold-underline gold-underline-center pb-3"
           >
-            De Ce Fortis?
+            De Ce MEDFIL?
           </motion.h2>
         </div>
 
