@@ -17,7 +17,7 @@ export default function PoliticaCookies() {
       <div className="relative pt-24 pb-12 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex items-center gap-2 font-body text-xs text-[#888880] mb-4">
+          <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8] mb-4">
             <Link to="/" className="hover:text-[#B8962E] transition-colors">Acasă</Link>
             <ChevronRight size={12} />
             <span className="text-[#B8962E]">Politică de Cookie-uri</span>
@@ -29,7 +29,7 @@ export default function PoliticaCookies() {
           >
             Politică de Cookie-uri
           </m.h1>
-          <p className="font-body text-sm text-[#888880]">Ultima actualizare: {lastUpdated}</p>
+          <p className="font-body text-sm text-[#B0B0A8]">Ultima actualizare: {lastUpdated}</p>
         </div>
       </div>
 
@@ -39,7 +39,7 @@ export default function PoliticaCookies() {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 0.2 }}
-          className="prose prose-invert prose-gold max-w-none space-y-10 font-body text-[#888880] leading-relaxed"
+          className="prose prose-invert prose-gold max-w-none space-y-10 font-body text-[#B0B0A8] leading-relaxed"
         >
           {/* Section 1 */}
           <section>

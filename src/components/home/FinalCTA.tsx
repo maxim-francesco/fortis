@@ -46,7 +46,7 @@ export default function FinalCTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="font-body text-base text-[#888880] mb-10 max-w-lg mx-auto"
+          className="font-body text-base text-[#B0B0A8] mb-10 max-w-lg mx-auto"
         >
           Echipa MEDFIL Automobile te așteaptă cu o selecție exclusivă de mașini premium verificate.
         </m.p>

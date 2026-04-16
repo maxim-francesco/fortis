@@ -1,21 +1,32 @@
 import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
-import heroCar from "@/assets/hero-car.jpg";
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
-          src={heroCar}
-          alt="MEDFIL Automobile - Parc Auto Cluj"
-          className="w-full h-full object-cover"
-          fetchpriority="high"
-          loading="eager"
-          decoding="sync"
-        />
+        <picture>
+          <source 
+            type="image/avif" 
+            srcSet="/images/hero-car-mobile.avif 720w, /images/hero-car.avif 1920w"
+            sizes="100vw"
+          />
+          <source 
+            type="image/webp" 
+            srcSet="/images/hero-car.webp"
+          />
+          <img 
+            src="/images/hero-car.jpg"
+            alt="MEDFIL Automobile showroom"
+            width="1920"
+            height="1080"
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-full object-cover"
+          />
+        </picture>
         <div className="absolute inset-0 hero-overlay" />
         <div
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -67,12 +78,12 @@ export default function HeroSection() {
           transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-10 max-w-lg"
         >
-          <p className="font-body text-base sm:text-lg text-[#888880] leading-relaxed mb-2">
+          <p className="font-body text-base sm:text-lg text-[#B0B0A8] leading-relaxed mb-2">
             Mașini rulate premium, garanție 12 luni,
             <br />
             formalități zero stres.
           </p>
-          <p className="font-body text-sm text-[#888880] opacity-80">
+          <p className="font-body text-sm text-[#B0B0A8] opacity-80">
             Parc auto autorizat în cartierul Iris, Cluj-Napoca.
           </p>
         </m.div>
@@ -100,7 +111,7 @@ export default function HeroSection() {
         transition={{ delay: 1.5, duration: 0.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="font-label text-[#888880] text-[10px] tracking-[0.3em]">SCROLL</span>
+        <span className="font-label text-[#B0B0A8] text-[10px] tracking-[0.3em]">SCROLL</span>
         <ChevronDown size={20} className="text-[#B8962E] animate-bounce-chevron" />
       </m.div>
     </section>

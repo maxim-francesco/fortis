@@ -63,7 +63,7 @@ export default function HowItWorks() {
               <h3 className="font-display text-2xl font-medium text-[#F5F5F0] mb-3">
                 {step.title}
               </h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed max-w-xs mx-auto lg:mx-0">
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed max-w-xs mx-auto lg:mx-0">
                 {step.description}
               </p>
             </m.div>

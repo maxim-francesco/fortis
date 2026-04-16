@@ -28,7 +28,7 @@ export default function CookieBanner() {
             </div>
             <div>
               <h4 className="font-display text-lg text-[#F5F5F0] mb-1">Setări Cookie</h4>
-              <p className="font-body text-[11px] text-[#888880] leading-relaxed">
+              <p className="font-body text-[11px] text-[#B0B0A8] leading-relaxed">
                 Utilizăm module cookie pentru a vă oferi cea mai bună experiență pe site-ul nostru. Citiți mai multe în{" "}
                 <Link to="/politica-cookies" className="text-[#B8962E] hover:text-[#D4AF6A] transition-colors underline underline-offset-2">
                   Politică Cookies
@@ -46,7 +46,7 @@ export default function CookieBanner() {
             </button>
             <button
               onClick={acceptNecessary}
-              className="font-body text-[10px] text-[#888880] hover:text-[#F5F5F0] transition-colors py-2 text-center tracking-widest uppercase font-medium"
+              className="font-body text-[10px] text-[#B0B0A8] hover:text-[#F5F5F0] transition-colors py-2 text-center tracking-widest uppercase font-medium"
             >
               Doar necesare
             </button>

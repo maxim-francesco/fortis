@@ -40,7 +40,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </span>
         <ChevronDown
           size={18}
-          className={`flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180 text-[#B8962E]" : "text-[#888880] group-hover:text-[#D4AF6A]"}`}
+          className={`flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180 text-[#B8962E]" : "text-[#B0B0A8] group-hover:text-[#D4AF6A]"}`}
         />
       </button>
       <AnimatePresence>
@@ -52,7 +52,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="font-body text-sm text-[#888880] pb-6 pl-4 pr-12 leading-relaxed">{a}</p>
+            <p className="font-body text-sm text-[#B0B0A8] pb-6 pl-4 pr-12 leading-relaxed">{a}</p>
           </m.div>
         )}
       </AnimatePresence>
@@ -206,7 +206,7 @@ ${formData.descriere || 'Fără descriere adițională'}
             
             {/* Left Col */}
             <div className="w-full lg:w-[60%]">
-              <div className="flex items-center gap-2 font-body text-xs text-[#888880] mb-6">
+              <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8] mb-6">
                 <a href="/" className="hover:text-[#B8962E] transition-colors duration-300">Acasă</a>
                 <ChevronRight size={12} />
                 <span className="text-[#B8962E]">BuyBack</span>
@@ -218,7 +218,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                 Vrei să-ți vinzi<br />
                 <span className="gradient-gold-text">mașina mai bine?</span>
               </m.h1>
-              <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-[#888880] text-base sm:text-lg max-w-lg mb-8 leading-relaxed">
+              <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-[#B0B0A8] text-base sm:text-lg max-w-lg mb-8 leading-relaxed">
                 Completezi detaliile mașinii tale, iar noi îți oferim consultanță de vânzare sau o analiză de part-exchange cu o mașină din stocul nostru.
               </m.p>
               
@@ -227,7 +227,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                   Cere Evaluare
                   <ChevronDown size={18} />
                 </a>
-                <div className="flex items-center gap-2 text-[#888880]">
+                <div className="flex items-center gap-2 text-[#B0B0A8]">
                   <span className="hidden sm:inline">·</span>
                   <a href="#cum-functioneaza" className="font-body text-sm hover:text-[#B8962E] transition-colors">sau <span className="underline decoration-[rgba(184,150,46,0.3)] underline-offset-4">Vezi cum funcționează</span></a>
                 </div>
@@ -247,19 +247,19 @@ ${formData.descriere || 'Fără descriere adițională'}
                   </div>
                 </div>
                 <div className="pt-2">
-                  <p className="font-body text-sm sm:text-base text-[#888880] leading-relaxed mb-5">
+                  <p className="font-body text-sm sm:text-base text-[#B0B0A8] leading-relaxed mb-5">
                     Momentan nu oferim serviciu de buyback direct, dar evaluăm fiecare situație individual. Îți oferim:
                   </p>
                   <ul className="space-y-3">
-                    <li className="flex gap-3 font-body text-sm text-[#888880]">
+                    <li className="flex gap-3 font-body text-sm text-[#B0B0A8]">
                       <span className="text-[#B8962E] flex-shrink-0 font-medium">→</span>
                       <span>Consultanță gratuită pentru vânzare la preț corect</span>
                     </li>
-                    <li className="flex gap-3 font-body text-sm text-[#888880]">
+                    <li className="flex gap-3 font-body text-sm text-[#B0B0A8]">
                       <span className="text-[#B8962E] flex-shrink-0 font-medium">→</span>
                       <span>Analiză part-exchange cu mașinile din stocul nostru</span>
                     </li>
-                    <li className="flex gap-3 font-body text-sm text-[#888880]">
+                    <li className="flex gap-3 font-body text-sm text-[#B0B0A8]">
                       <span className="text-[#B8962E] flex-shrink-0 font-medium">→</span>
                       <span>Evaluare de piață în 24 de ore</span>
                     </li>
@@ -278,7 +278,7 @@ ${formData.descriere || 'Fără descriere adițională'}
           <div className="text-center mb-12">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">SERVICIILE NOASTRE</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] gold-underline gold-underline-center pb-3 inline-block">Două Opțiuni Pentru Mașina Ta</h2>
-            <p className="font-body text-sm sm:text-base text-[#888880] max-w-xl mx-auto mt-4 leading-relaxed">
+            <p className="font-body text-sm sm:text-base text-[#B0B0A8] max-w-xl mx-auto mt-4 leading-relaxed">
               Alegi ce ți se potrivește. Ambele opțiuni pornesc cu aceeași evaluare gratuită — decizi tu ce urmează.
             </p>
           </div>
@@ -291,18 +291,18 @@ ${formData.descriere || 'Fără descriere adițională'}
               </div>
               <p className="font-label text-[10px] text-[#B8962E] tracking-[0.2em] mb-2 uppercase">OPȚIUNEA A</p>
               <h3 className="font-display text-3xl text-[#F5F5F0] mb-4">Consultanță Vânzare</h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed mb-6">
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-6">
                 Te ajutăm să-ți vinzi mașina la preț corect de piață. Experiența noastră în zona auto-rulate din Cluj îți oferă un avantaj real față de vânzarea pe cont propriu.
               </p>
               <div className="border-t border-[rgba(184,150,46,0.1)] my-5" />
               <ul className="space-y-3">
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Estimare preț corect de piață
                 </li>
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Sfaturi pregătire mașină pentru vânzare (fotografii, descriere)
                 </li>
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Recomandări platforme și anunțuri optimizate
                 </li>
               </ul>
@@ -315,18 +315,18 @@ ${formData.descriere || 'Fără descriere adițională'}
               </div>
               <p className="font-label text-[10px] text-[#B8962E] tracking-[0.2em] mb-2 uppercase">OPȚIUNEA B</p>
               <h3 className="font-display text-3xl text-[#F5F5F0] mb-4">Part-Exchange</h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed mb-6">
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-6">
                 Schimbi mașina ta actuală cu una din stocul nostru. Evaluăm corect vehiculul tău și îl folosim ca avans pentru upgrade. Tranzacție rapidă, documente pregătite.
               </p>
               <div className="border-t border-[rgba(184,150,46,0.1)] my-5" />
               <ul className="space-y-3">
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Evaluare obiectivă în 24 de ore
                 </li>
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Ofertă folosită ca avans pentru mașina dorită
                 </li>
-                <li className="flex gap-2 text-sm font-body text-[#888880]">
+                <li className="flex gap-2 text-sm font-body text-[#B0B0A8]">
                   <span className="text-[#B8962E]">·</span> Documente și formalități gestionate de noi
                 </li>
               </ul>
@@ -338,7 +338,7 @@ ${formData.descriere || 'Fără descriere adițională'}
       {/* 3. TRUST STRIP */}
       <section className="bg-[#080808]">
         <div ref={trustRef as any} className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-          <p className="font-label text-[#888880] tracking-[0.3em] text-[10px] text-center mb-8 uppercase">DE CE SĂ VINZI PRIN MEDFIL</p>
+          <p className="font-label text-[#B0B0A8] tracking-[0.3em] text-[10px] text-center mb-8 uppercase">DE CE SĂ VINZI PRIN MEDFIL</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             <m.div initial={{ opacity: 0, y: 20 }} animate={trustInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0 }} className="bg-[#0A0A0A] border border-[rgba(184,150,46,0.15)] rounded-sm p-6 relative shadow-gold">
@@ -348,7 +348,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                 <Clock className="text-[#B8962E]" size={20} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Evaluare în 24 Ore</h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed">Analizăm rapid detaliile tale și revenim cu o estimare corectă bazată pe piața actuală din România.</p>
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed">Analizăm rapid detaliile tale și revenim cu o estimare corectă bazată pe piața actuală din România.</p>
             </m.div>
 
             <m.div initial={{ opacity: 0, y: 20 }} animate={trustInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1 }} className="bg-[#0A0A0A] border border-[rgba(184,150,46,0.15)] rounded-sm p-6 relative shadow-gold">
@@ -358,7 +358,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                 <Gift className="text-[#B8962E]" size={20} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Fără Costuri Ascunse</h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed">Evaluarea e gratuită. Dacă alegi part-exchange, negocierea e transparentă — vezi exact cum se calculează valoarea mașinii tale.</p>
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed">Evaluarea e gratuită. Dacă alegi part-exchange, negocierea e transparentă — vezi exact cum se calculează valoarea mașinii tale.</p>
             </m.div>
 
             <m.div initial={{ opacity: 0, y: 20 }} animate={trustInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="bg-[#0A0A0A] border border-[rgba(184,150,46,0.15)] rounded-sm p-6 relative shadow-gold">
@@ -368,7 +368,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                 <MapPin className="text-[#B8962E]" size={20} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Experiență în Zona Cluj</h3>
-              <p className="font-body text-sm text-[#888880] leading-relaxed">Cunoaștem piața auto-rulate din zona de nord a Clujului — cartier Iris, Oașului-Muncii — și negociem pe cunoștință reală.</p>
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed">Cunoaștem piața auto-rulate din zona de nord a Clujului — cartier Iris, Oașului-Muncii — și negociem pe cunoștință reală.</p>
             </m.div>
           </div>
         </div>
@@ -380,7 +380,7 @@ ${formData.descriere || 'Fără descriere adițională'}
           <div className="text-center mb-10">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">CEREA DE EVALUARE</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] gold-underline gold-underline-center pb-3 inline-block">Solicită Evaluare Gratuită</h2>
-            <p className="font-body text-sm text-[#888880] max-w-xl mx-auto mt-6">
+            <p className="font-body text-sm text-[#B0B0A8] max-w-xl mx-auto mt-6">
               3 pași simpli. Te sunăm în maxim 24 de ore cu evaluarea mașinii tale.
             </p>
           </div>
@@ -397,12 +397,12 @@ ${formData.descriere || 'Fără descriere adițională'}
                   <Check size={40} className="text-[#B8962E]" strokeWidth={2} />
                 </div>
                 <h3 className="font-display text-3xl text-[#F5F5F0] mb-4">Cerere Primită!</h3>
-                <p className="font-body text-base text-[#888880] max-w-md mx-auto mb-8 leading-relaxed">
+                <p className="font-body text-base text-[#B0B0A8] max-w-md mx-auto mb-8 leading-relaxed">
                   {successMessage}
                 </p>
                 <div className="border-t border-[rgba(184,150,46,0.15)] pt-6 mt-6">
                   <p className="font-label text-xs text-[#B8962E] tracking-widest mb-5 uppercase">CE URMEAZĂ</p>
-                  <ul className="text-left max-w-sm mx-auto space-y-4 font-body text-sm text-[#888880]">
+                  <ul className="text-left max-w-sm mx-auto space-y-4 font-body text-sm text-[#B0B0A8]">
                     <li className="flex gap-4">
                       <div className="text-[#B8962E] font-display text-xl leading-none mt-[-2px]">01</div>
                       <span className="leading-relaxed">Analizăm detaliile și comparăm cu piața actuală.</span>
@@ -435,12 +435,12 @@ ${formData.descriere || 'Fără descriere adițională'}
                       <div className={`w-8 h-8 rounded-full border-[2px] flex items-center justify-center font-body text-sm font-semibold transition-all duration-300 ${
                         currentStep >= step 
                           ? 'bg-[#B8962E] border-[#B8962E] text-[#080808] shadow-[0_0_12px_rgba(184,150,46,0.4)]' 
-                          : 'bg-[#0E0E0E] border-[rgba(184,150,46,0.3)] text-[#888880]'
+                          : 'bg-[#0E0E0E] border-[rgba(184,150,46,0.3)] text-[#B0B0A8]'
                       }`}>
                         {currentStep > step ? <Check size={14} strokeWidth={3} /> : step}
                       </div>
                       <span className={`font-label text-[10px] sm:text-xs tracking-widest mt-3 transition-colors duration-300 uppercase ${
-                        currentStep >= step ? 'text-[#B8962E]' : 'text-[#888880]'
+                        currentStep >= step ? 'text-[#B8962E]' : 'text-[#B0B0A8]'
                       }`}>
                         {step === 1 ? 'CONTACT' : step === 2 ? 'MAȘINA' : 'STAREA'}
                       </span>
@@ -462,11 +462,11 @@ ${formData.descriere || 'Fără descriere adițională'}
                         className="space-y-6"
                       >
                         <h3 ref={stepHeadingRef} tabIndex={-1} className="font-display text-xl text-[#F5F5F0] mb-2 focus:outline-none">Pasul 1: Cum Te Putem Contacta?</h3>
-                        <p className="font-body text-sm text-[#888880] mb-6">Ai noștri te sună cu evaluarea. Nu facem spam, promitem.</p>
+                        <p className="font-body text-sm text-[#B0B0A8] mb-6">Ai noștri te sună cu evaluarea. Nu facem spam, promitem.</p>
                         
                         <div className="grid sm:grid-cols-2 gap-5">
                           <div>
-                            <label htmlFor="nume" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">Nume Complet *</label>
+                            <label htmlFor="nume" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Nume Complet *</label>
                             <input 
                               id="nume"
                               name="nume"
@@ -481,7 +481,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             {validationErrors.nume && <p id="nume-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.nume}</p>}
                           </div>
                           <div>
-                            <label htmlFor="telefon" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">Telefon *</label>
+                            <label htmlFor="telefon" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Telefon *</label>
                             <input 
                               id="telefon"
                               type="tel"
@@ -497,7 +497,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             {validationErrors.telefon && <p id="telefon-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.telefon}</p>}
                           </div>
                         </div>
-                        <p className="font-body text-xs text-[#888880]/70 italic mt-4">
+                        <p className="font-body text-xs text-[#B0B0A8]/70 italic mt-4">
                           Preferăm să te sunăm decât să trimitem email — e mai rapid și mai personal.
                         </p>
                         <div className="flex justify-end pt-4 mt-8 border-t border-[rgba(184,150,46,0.1)]">
@@ -519,11 +519,11 @@ ${formData.descriere || 'Fără descriere adițională'}
                         className="space-y-6"
                       >
                         <h3 ref={stepHeadingRef} tabIndex={-1} className="font-display text-xl text-[#F5F5F0] mb-2 focus:outline-none">Pasul 2: Detaliile Mașinii</h3>
-                        <p className="font-body text-sm text-[#888880] mb-6">Cu cât sunt mai precise datele, cu atât evaluarea e mai corectă.</p>
+                        <p className="font-body text-sm text-[#B0B0A8] mb-6">Cu cât sunt mai precise datele, cu atât evaluarea e mai corectă.</p>
                         
                         <div className="grid sm:grid-cols-2 gap-5">
                           <div>
-                            <label htmlFor="marca" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">Marcă *</label>
+                            <label htmlFor="marca" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Marcă *</label>
                             <input 
                               id="marca"
                               name="marca"
@@ -538,7 +538,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             {validationErrors.marca && <p id="marca-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.marca}</p>}
                           </div>
                           <div>
-                            <label htmlFor="model" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">Model *</label>
+                            <label htmlFor="model" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Model *</label>
                             <input 
                               id="model"
                               name="model"
@@ -553,7 +553,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             {validationErrors.model && <p id="model-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.model}</p>}
                           </div>
                           <div>
-                            <label htmlFor="an" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">An Fabricație</label>
+                            <label htmlFor="an" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">An Fabricație</label>
                             <select 
                               id="an"
                               name="an"
@@ -565,7 +565,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             </select>
                           </div>
                           <div>
-                            <label htmlFor="kilometraj" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">Kilometraj (aprox) *</label>
+                            <label htmlFor="kilometraj" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Kilometraj (aprox) *</label>
                             <input 
                               id="kilometraj"
                               type="number" 
@@ -581,7 +581,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                             {validationErrors.kilometraj && <p id="kilometraj-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.kilometraj}</p>}
                           </div>
                         </div>
-                        <p className="font-body text-xs text-[#888880]/70 italic mt-4">
+                        <p className="font-body text-xs text-[#B0B0A8]/70 italic mt-4">
                           Kilometrajul real îl verificăm prin test drive și diagnoză — nu-ți face griji să fie exact.
                         </p>
                         <div className="flex justify-between items-center pt-4 mt-8 border-t border-[rgba(184,150,46,0.1)]">
@@ -605,10 +605,10 @@ ${formData.descriere || 'Fără descriere adițională'}
                         transition={{ duration: 0.25 }}
                       >
                         <h3 ref={stepHeadingRef} tabIndex={-1} className="font-display text-xl text-[#F5F5F0] mb-2 focus:outline-none">Pasul 3: Starea Mașinii</h3>
-                        <p className="font-body text-sm text-[#888880] mb-6">Fii sincer — o descriere onestă ne ajută să îți dăm o evaluare realistă. Nu te judecăm pentru defecte.</p>
+                        <p className="font-body text-sm text-[#B0B0A8] mb-6">Fii sincer — o descriere onestă ne ajută să îți dăm o evaluare realistă. Nu te judecăm pentru defecte.</p>
                         
                         <fieldset className="mb-8">
-                          <legend className="font-label text-[10px] text-[#888880] tracking-widest block mb-3 uppercase">Stare generală</legend>
+                          <legend className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-3 uppercase">Stare generală</legend>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {[
                               { value: "Excelentă", label: "Excelentă", desc: "Impecabilă, minime urme de uzură" },
@@ -636,17 +636,17 @@ ${formData.descriere || 'Fără descriere adițională'}
                                 }`}>
                                   {s.label}
                                 </div>
-                                <div className="font-body text-xs text-[#888880] leading-snug">
+                                <div className="font-body text-xs text-[#B0B0A8] leading-snug">
                                   {s.desc}
                                 </div>
                               </label>
                             ))}
                           </div>
-                          <p className="font-body text-[11px] text-[#888880]/70 italic mt-3">Evaluarea finală poate diferi după test drive fizic. Estimarea noastră inițială e un punct de plecare.</p>
+                          <p className="font-body text-[11px] text-[#B0B0A8]/70 italic mt-3">Evaluarea finală poate diferi după test drive fizic. Estimarea noastră inițială e un punct de plecare.</p>
                         </fieldset>
 
                         <div className="mb-6">
-                          <label htmlFor="descriere" className="font-label text-[10px] text-[#888880] tracking-widest block mb-3 uppercase">Descriere adițională</label>
+                          <label htmlFor="descriere" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-3 uppercase">Descriere adițională</label>
                           <textarea 
                             id="descriere"
                             rows={4} 
@@ -671,7 +671,7 @@ ${formData.descriere || 'Fără descriere adițională'}
                                   ...prev, 
                                   descriere: prev.descriere + (prev.descriere ? '\n' : '') + chip + '. ' 
                                 }))}
-                                className="text-xs font-body text-[#888880] border border-[rgba(184,150,46,0.15)] px-3 py-1.5 rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all bg-[#0A0A0A]"
+                                className="text-xs font-body text-[#B0B0A8] border border-[rgba(184,150,46,0.15)] px-3 py-1.5 rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all bg-[#0A0A0A]"
                               >
                                 + {chip}
                               </button>
@@ -686,12 +686,12 @@ ${formData.descriere || 'Fără descriere adițională'}
                             <button 
                               type="button"
                               onClick={() => setCurrentStep(1)}
-                              className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors underline-offset-2 hover:underline leading-none m-0"
+                              className="font-body text-xs text-[#B0B0A8] hover:text-[#B8962E] transition-colors underline-offset-2 hover:underline leading-none m-0"
                             >
                               Editează
                             </button>
                           </div>
-                          <div className="space-y-3 font-body text-sm text-[#888880]">
+                          <div className="space-y-3 font-body text-sm text-[#B0B0A8]">
                             <div className="flex justify-between gap-4">
                               <span>Contact:</span>
                               <span className="text-[#F5F5F0] text-right font-medium">{formData.nume}, {formData.telefon}</span>
@@ -765,7 +765,7 @@ ${formData.descriere || 'Fără descriere adițională'}
               <FaqItem key={i} q={faq.q} a={faq.a} />
             ))}
           </div>
-          <p className="font-body text-sm text-[#888880] text-center max-w-sm mx-auto">
+          <p className="font-body text-sm text-[#B0B0A8] text-center max-w-sm mx-auto">
             Ai altă întrebare specifică mașinii tale? <a href="tel:0754299199" className="text-[#F5F5F0] hover:text-[#B8962E] font-medium underline decoration-[#B8962E]/50 underline-offset-4 transition-colors">Sună 0754 299 199</a> sau scrie pe <a href="https://wa.me/40754299199?text=Bun%C4%83%20ziua%2C%20am%20o%20ma%C8%99in%C4%83%20pe%20care%20a%C8%99%20vrea%20s%C4%83%20o%20v%C3%A2nd%20%2F%20schimb." target="_blank" rel="noopener noreferrer" className="text-[#F5F5F0] hover:text-[#B8962E] font-medium underline decoration-[#B8962E]/50 underline-offset-4 transition-colors">WhatsApp</a>.
           </p>
         </div>
@@ -778,7 +778,7 @@ ${formData.descriere || 'Fără descriere adițională'}
         
         <div className="max-w-2xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] font-semibold mb-4">Preferi Să Vorbim Direct?</h2>
-          <p className="font-body text-base text-[#888880] mb-10 leading-relaxed">
+          <p className="font-body text-base text-[#B0B0A8] mb-10 leading-relaxed">
             Unii clienți preferă să discute detaliile la telefon — mai rapid, mai personal. Echipa MEDFIL răspunde în 2 minute.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

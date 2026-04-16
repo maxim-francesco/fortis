@@ -12,7 +12,7 @@ export default function PageLoader() {
         className="flex flex-col items-center gap-4"
       >
         <Loader2 className="w-8 h-8 text-[#B8962E] animate-spin" />
-        <p className="font-label text-[10px] tracking-widest text-[#888880] uppercase">
+        <p className="font-label text-[10px] tracking-widest text-[#B0B0A8] uppercase">
           Se încarcă pagina...
         </p>
       </m.div>

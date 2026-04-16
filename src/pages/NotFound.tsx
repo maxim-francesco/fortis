@@ -30,7 +30,7 @@ const NotFound = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mb-8 text-xl font-body text-[#888880]"
+            className="mb-8 text-xl font-body text-[#B0B0A8]"
           >
             Această pagină nu există sau a fost mutată.
           </m.p>

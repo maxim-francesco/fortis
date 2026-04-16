@@ -19,27 +19,7 @@ export default defineConfig(({ mode }) => ({
     drop: mode === 'production' ? ['console', 'debugger'] : [],
   },
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('framer-motion')) {
-              return 'motion';
-            }
-            if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
-              return 'ui-vendor';
-            }
-            if (id.includes('react-hook-form') || id.includes('@hookform/resolvers')) {
-              return 'forms';
-            }
-            return 'vendor';
-          }
-        }
-      }
-    }
+    // Rely on Rolldown's default chunking strategy to avoid Vercel build errors
   },
   plugins: [
     react(),

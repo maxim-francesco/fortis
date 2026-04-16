@@ -79,7 +79,7 @@ export default function BenefitsSection() {
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-3 font-medium">
                   {benefit.title}
                 </h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed">
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed">
                   {benefit.description}
                 </p>
               </m.div>

@@ -13,9 +13,9 @@
       "type": "image/png"
     },
     {
-      "src": "/logo.jpeg",
+      "src": "/images/logo/medfil-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }

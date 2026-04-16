@@ -1,23 +1,44 @@
 /**
- * Formats a Cloudinary URL to include dynamic optimizations for size and format.
- * If the URL is not a Cloudinary URL, it returns the original URL.
- * 
- * @param url The original image URL
- * @param width The target width in pixels (e.g., 600, 800)
+ * Transforma URL Cloudinary pentru responsive + format modern
  */
-export function cldImage(url: string, width: number = 800): string {
-  if (!url) return "";
-  if (!url.includes("res.cloudinary.com")) return url;
+export function cldImage(
+  url: string | undefined,
+  options: {
+    width?: number;
+    height?: number;
+    quality?: 'auto' | number;
+    format?: 'auto' | 'webp' | 'avif' | 'jpg';
+    crop?: 'fill' | 'fit' | 'scale';
+  } = {}
+): string {
+  if (!url || !url.includes('res.cloudinary.com')) return url || '';
   
-  // Example Cloudinary URL:
-  // https://res.cloudinary.com/demo/image/upload/v1512569594/sample.jpg
-  // Transform to:
-  // https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_800/v1512569594/sample.jpg
+  const {
+    width,
+    height,
+    quality = 'auto',
+    format = 'auto',
+    crop = 'fill'
+  } = options;
+  
+  const transformations: string[] = [];
+  if (format) transformations.push(`f_${format}`);
+  if (quality) transformations.push(`q_${quality}`);
+  if (width) transformations.push(`w_${width}`);
+  if (height) transformations.push(`h_${height}`);
+  if (crop && (width || height)) transformations.push(`c_${crop}`);
+  transformations.push('dpr_auto');
+  
+  const transformStr = transformations.join(',');
+  return url.replace('/upload/', `/upload/${transformStr}/`);
+}
 
-  if (url.includes("/upload/v")) {
-    return url.replace("/upload/", `/upload/f_auto,q_auto,w_${width}/`);
-  }
-  
-  // If it doesn't match the standard versioned format, just append to upload
-  return url.replace("/upload/", `/upload/f_auto,q_auto,w_${width}/`);
+/**
+ * Generează srcSet pentru responsive images
+ */
+export function cldSrcSet(url: string | undefined, widths: number[] = [400, 800, 1200]): string {
+  if (!url || !url.includes('res.cloudinary.com')) return '';
+  return widths
+    .map(w => `${cldImage(url, { width: w })} ${w}w`)
+    .join(', ');
 }

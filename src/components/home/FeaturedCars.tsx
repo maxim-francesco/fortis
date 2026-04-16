@@ -58,17 +58,17 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           {listing.title}
         </h3>
         <div className="flex items-center gap-3 mb-4">
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]">
             <Calendar size={11} />
             {year}
           </span>
-          <span className="w-1 h-1 rounded-full bg-[#888880]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
+          <span className="w-1 h-1 rounded-full bg-[#B0B0A8]" />
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]">
             <Gauge size={11} />
             {km} km
           </span>
-          <span className="w-1 h-1 rounded-full bg-[#888880]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]">
+          <span className="w-1 h-1 rounded-full bg-[#B0B0A8]" />
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]">
             <Fuel size={11} />
             {fuel}
           </span>
@@ -79,12 +79,13 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
             <div className="font-display text-2xl font-semibold text-[#B8962E]">
               €{price}
             </div>
-            <div className="font-body text-[11px] text-[#888880]">Finanțare disponibilă</div>
+            <div className="font-body text-[11px] text-[#B0B0A8]">Finanțare disponibilă</div>
           </div>
         </div>
 
         <Link
           to={`/stoc/${listing.id}`}
+          aria-label={`Vezi detalii despre ${listing.title}`}
           className="block w-full text-center font-body text-sm font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300"
         >
           Vezi Detalii

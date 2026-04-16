@@ -26,6 +26,7 @@ export default function Contact() {
   const { ref: gridRef, inView: gridInView } = useInView(0.1);
   const { ref: crossRef, inView: crossInView } = useInView(0.1);
   const { ref: mapRef, inView: mapInView } = useInView(0.1);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const [formData, setFormData] = useState({
     nume: "",
@@ -113,7 +114,7 @@ ${formData.mesaj}
         }} />
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-left">
-          <div className="flex items-center gap-2 font-body text-xs text-[#888880] mb-6">
+          <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8] mb-6">
             <Link to="/" className="hover:text-[#B8962E] transition-colors duration-300">Acasă</Link>
             <ChevronRight size={12} />
             <span className="text-[#B8962E]">Contact</span>
@@ -126,7 +127,7 @@ ${formData.mesaj}
             În Inima<br />
             <span className="gradient-gold-text">Cartierului Iris</span>
           </m.h1>
-          <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-base sm:text-lg text-[#888880] max-w-xl leading-relaxed">
+          <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-body text-base sm:text-lg text-[#B0B0A8] max-w-xl leading-relaxed">
             Parcul nostru auto e pe Str. Oașului 134a, Cluj-Napoca. Te așteptăm de luni până sâmbătă să vezi mașinile live, să faci test drive și să discuți direct cu echipa.
           </m.p>
         </div>
@@ -135,7 +136,7 @@ ${formData.mesaj}
       {/* 2. INFO/TRUST GRID */}
       <section className="bg-[#080808]">
         <div ref={gridRef as any} className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-          <p className="font-label text-[#888880] tracking-[0.3em] text-[10px] text-center mb-12 uppercase">METODE DE CONTACT</p>
+          <p className="font-label text-[#B0B0A8] tracking-[0.3em] text-[10px] text-center mb-12 uppercase">METODE DE CONTACT</p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {/* Card 1 - Telefon */}
@@ -151,7 +152,7 @@ ${formData.mesaj}
               <div className="font-display text-2xl sm:text-3xl text-[#F5F5F0] mb-2 leading-tight">
                 0754 299 199
               </div>
-              <p className="font-body text-sm text-[#888880] leading-snug mt-auto pt-3">
+              <p className="font-body text-sm text-[#B0B0A8] leading-snug mt-auto pt-3">
                 Echipa MEDFIL, luni-sâmbătă 09:00–18:00
               </p>
             </m.a>
@@ -170,7 +171,7 @@ ${formData.mesaj}
               <div className="font-display text-2xl sm:text-3xl text-[#F5F5F0] mb-2 leading-tight">
                 Chat instant
               </div>
-              <p className="font-body text-sm text-[#888880] leading-snug mt-auto pt-3">
+              <p className="font-body text-sm text-[#B0B0A8] leading-snug mt-auto pt-3">
                 Răspuns în câteva minute în orele de program
               </p>
             </m.a>
@@ -189,7 +190,7 @@ ${formData.mesaj}
               <div className="font-display text-2xl sm:text-3xl text-[#F5F5F0] mb-2 leading-tight">
                 Str. Oașului 134a
               </div>
-              <p className="font-body text-sm text-[#888880] leading-snug mt-auto pt-3">
+              <p className="font-body text-sm text-[#B0B0A8] leading-snug mt-auto pt-3">
                 Cluj-Napoca, cartier Iris · Deschide în Google Maps
               </p>
             </m.a>
@@ -207,7 +208,7 @@ ${formData.mesaj}
                 <div className="text-xl mb-1">Luni – Sâmbătă</div>
                 <div className="text-2xl gradient-gold-text">09:00 – 18:00</div>
               </div>
-              <p className="font-body text-sm text-[#888880] leading-snug mt-auto pt-3">
+              <p className="font-body text-sm text-[#B0B0A8] leading-snug mt-auto pt-3">
                 <strong className="text-[#F5F5F0] font-medium">Duminică închis.</strong> Programări telefonice în afara orelor la cerere.
               </p>
             </m.div>
@@ -221,7 +222,7 @@ ${formData.mesaj}
           <div className="text-center mb-12">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">ȘTII EXACT CE VREI?</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] gold-underline gold-underline-center pb-3 inline-block">Formulare Dedicate</h2>
-            <p className="font-body text-sm text-[#888880] max-w-xl mx-auto mt-4 leading-relaxed">
+            <p className="font-body text-sm text-[#B0B0A8] max-w-xl mx-auto mt-4 leading-relaxed">
               Pentru anumite servicii avem formulare specifice care ne ajută să îți răspundem mai rapid și mai precis. Alege opțiunea potrivită.
             </p>
           </div>
@@ -234,7 +235,7 @@ ${formData.mesaj}
                   <Car size={24} className="text-[#B8962E]" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Vezi Mașinile</h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed mb-4 flex-grow">
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-4 flex-grow">
                   Explorează stocul curent — toate mașinile disponibile cu poze, specificații și preț.
                 </p>
                 <div className="flex items-center gap-2 text-[#B8962E] font-label text-xs tracking-widest group-hover:gap-3 transition-all mt-auto uppercase">
@@ -251,7 +252,7 @@ ${formData.mesaj}
                   <Search size={24} className="text-[#B8962E]" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Comandă Personalizată</h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed mb-4 flex-grow">
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-4 flex-grow">
                   Nu găsești ce cauți? Îți aducem mașina dorită din rețeaua noastră națională de furnizori.
                 </p>
                 <div className="flex items-center gap-2 text-[#B8962E] font-label text-xs tracking-widest group-hover:gap-3 transition-all mt-auto uppercase">
@@ -268,7 +269,7 @@ ${formData.mesaj}
                   <RefreshCw size={24} className="text-[#B8962E]" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Vinde Mașina Ta</h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed mb-4 flex-grow">
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-4 flex-grow">
                   Evaluare gratuită în 24 ore. Consultanță de vânzare sau part-exchange cu o mașină din stoc.
                 </p>
                 <div className="flex items-center gap-2 text-[#B8962E] font-label text-xs tracking-widest group-hover:gap-3 transition-all mt-auto uppercase">
@@ -285,7 +286,7 @@ ${formData.mesaj}
                   <CreditCard size={24} className="text-[#B8962E]" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2">Simulează Rata</h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed mb-4 flex-grow">
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-4 flex-grow">
                   Calculator rate auto. Aprobare rapidă doar cu buletinul prin TBI Bank și partenerii noștri.
                 </p>
                 <div className="flex items-center gap-2 text-[#B8962E] font-label text-xs tracking-widest group-hover:gap-3 transition-all mt-auto uppercase">
@@ -304,7 +305,7 @@ ${formData.mesaj}
           <div className="text-center mb-12">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">ÎNTREBARE GENERALĂ?</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] gold-underline gold-underline-center pb-3 inline-block">Scrie-ne un Mesaj</h2>
-            <p className="font-body text-sm text-[#888880] max-w-lg mx-auto mt-4 leading-relaxed">
+            <p className="font-body text-sm text-[#B0B0A8] max-w-lg mx-auto mt-4 leading-relaxed">
               Pentru orice altă întrebare. Răspundem în aceeași zi, de obicei în câteva ore.
             </p>
           </div>
@@ -313,7 +314,7 @@ ${formData.mesaj}
             <form onSubmit={handleSubmit} className="space-y-5">
               
               <div>
-                <label htmlFor="nume" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">NUME *</label>
+                <label htmlFor="nume" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">NUME *</label>
                 <input 
                   id="nume"
                   required 
@@ -334,7 +335,7 @@ ${formData.mesaj}
               </div>
 
               <div>
-                <label htmlFor="telefon" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">TELEFON *</label>
+                <label htmlFor="telefon" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">TELEFON *</label>
                 <input 
                   id="telefon"
                   required
@@ -350,14 +351,14 @@ ${formData.mesaj}
                   }`}
                   placeholder="07xx xxx xxx" 
                 />
-                <p className="font-body text-[10px] text-[#888880]/60 mt-1">Te sunăm — nu folosim numărul pentru marketing.</p>
+                <p className="font-body text-[10px] text-[#B0B0A8]/60 mt-1">Te sunăm — nu folosim numărul pentru marketing.</p>
                 {validationErrors.telefon && (
                   <p id="telefon-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.telefon}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="mesaj" className="font-label text-[10px] text-[#888880] tracking-widest block mb-2 uppercase">MESAJUL TĂU *</label>
+                <label htmlFor="mesaj" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">MESAJUL TĂU *</label>
                 <textarea 
                   id="mesaj"
                   required
@@ -377,7 +378,7 @@ ${formData.mesaj}
                   {validationErrors.mesaj ? (
                     <p id="mesaj-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.mesaj}</p>
                   ) : <div />}
-                  <p className="font-body text-[10px] text-[#888880]/60 mt-1 text-right">{formData.mesaj.length} / 1000</p>
+                  <p className="font-body text-[10px] text-[#B0B0A8]/60 mt-1 text-right">{formData.mesaj.length} / 1000</p>
                 </div>
               </div>
 
@@ -412,7 +413,7 @@ ${formData.mesaj}
                     <CheckCircle2 className="text-[#B8962E] flex-shrink-0 mt-0.5" size={18} aria-hidden="true" />
                     <div>
                       <p className="text-sm font-body text-[#F5F5F0] mb-1 font-medium">Mesaj trimis cu succes!</p>
-                      <p className="text-xs font-body text-[#888880]">
+                      <p className="text-xs font-body text-[#B0B0A8]">
                         {successMessage}
                       </p>
                     </div>
@@ -435,7 +436,7 @@ ${formData.mesaj}
             </form>
           </div>
           
-          <p className="font-body text-xs text-[#888880]/70 text-center mt-6 italic">
+          <p className="font-body text-xs text-[#B0B0A8]/70 text-center mt-6 italic">
             Preferi să ne suni direct? <a href="tel:0754299199" className="text-[#B8962E] hover:underline hover:underline-offset-2 font-medium">0754 299 199</a> — răspundem în 2 minute.
           </p>
         </div>
@@ -447,7 +448,7 @@ ${formData.mesaj}
           <div className="text-center mb-12">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">VIZITEAZĂ SHOWROOM-UL</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] gold-underline gold-underline-center pb-3 inline-block">Te Așteptăm la Parc</h2>
-            <p className="font-body text-sm text-[#888880] max-w-xl mx-auto mt-4 leading-relaxed">
+            <p className="font-body text-sm text-[#B0B0A8] max-w-xl mx-auto mt-4 leading-relaxed">
               Mașinile arată mai bine live. Vino la Str. Oașului 134a să le vezi în persoană, să faci test drive și să discuți cu echipa.
             </p>
           </div>
@@ -456,16 +457,33 @@ ${formData.mesaj}
             {/* Hartă */}
             <m.div initial={{ opacity: 0 }} animate={mapInView ? { opacity: 1 } : {}} transition={{ duration: 0.6 }} className="lg:col-span-7">
               <div className="relative bg-[#0E0E0E] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden" style={{ height: "500px" }}>
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2731.396342616854!2d23.60635397637841!3d46.7972749712497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490fb9ec2b4739%3A0x6c6e756531317537!2sStrada%20Oa%C8%99ului%20134A%2C%20Cluj-Napoca%20400000!5e0!3m2!1sen!2sro!4v1709230000000!5m2!1sen!2sro"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: "grayscale(30%) contrast(1.1)" }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="MEDFIL Automobile - Str. Oașului 134a, Cluj-Napoca"
-                />
+                {!mapLoaded ? (
+                  <div 
+                    className="w-full h-full flex flex-col items-center justify-center cursor-pointer group bg-[#111] hover:bg-[#1a1a1a] transition-all"
+                    onClick={() => setMapLoaded(true)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setMapLoaded(true)}
+                    aria-label="Încarcă Google Maps"
+                  >
+                    <div className="w-16 h-16 bg-[rgba(184,150,46,0.1)] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <MapPin className="text-[#B8962E]" size={32} />
+                    </div>
+                    <span className="font-display text-xl text-[#F5F5F0] mb-2">Apasă pentru Hartă</span>
+                    <span className="font-body text-sm text-[#B0B0A8]">Click pentru a încărca Google Maps</span>
+                  </div>
+                ) : (
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2731.396342616854!2d23.60635397637841!3d46.7972749712497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490fb9ec2b4739%3A0x6c6e756531317537!2sStrada%20Oa%C8%99ului%20134A%2C%20Cluj-Napoca%20400000!5e0!3m2!1sen!2sro!4v1709230000000!5m2!1sen!2sro"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, filter: "grayscale(30%) contrast(1.1)" }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="MEDFIL Automobile - Str. Oașului 134a, Cluj-Napoca"
+                  />
+                )}
               </div>
             </m.div>
             
@@ -479,8 +497,8 @@ ${formData.mesaj}
                     <MapPin size={16} className="text-[#B8962E] flex-shrink-0 mt-1" />
                     <div>
                       <p className="font-display text-lg text-[#F5F5F0] leading-tight">Str. Oașului 134a</p>
-                      <p className="font-body text-sm text-[#888880]">Cluj-Napoca, cartier Iris</p>
-                      <p className="font-body text-xs text-[#888880]/70 mt-1">400000, Jud. Cluj</p>
+                      <p className="font-body text-sm text-[#B0B0A8]">Cluj-Napoca, cartier Iris</p>
+                      <p className="font-body text-xs text-[#B0B0A8]/70 mt-1">400000, Jud. Cluj</p>
                     </div>
                   </div>
                 </div>
@@ -490,7 +508,7 @@ ${formData.mesaj}
                     <Clock size={16} className="text-[#B8962E] flex-shrink-0 mt-1" />
                     <div>
                       <p className="font-body text-sm text-[#F5F5F0] font-medium mb-1">Program vizitare</p>
-                      <p className="font-body text-sm text-[#888880]">Luni – Sâmbătă: 09:00 – 18:00</p>
+                      <p className="font-body text-sm text-[#B0B0A8]">Luni – Sâmbătă: 09:00 – 18:00</p>
                       <p className="font-body text-xs text-red-400/70 mt-1">Duminică: Închis</p>
                     </div>
                   </div>
@@ -498,7 +516,7 @@ ${formData.mesaj}
                 
                 <div className="mb-6 flex-grow">
                   <p className="font-label text-[10px] text-[#B8962E] tracking-widest mb-3 uppercase">CÂTEVA SFATURI</p>
-                  <ul className="space-y-2 font-body text-sm text-[#888880]">
+                  <ul className="space-y-2 font-body text-sm text-[#B0B0A8]">
                     <li className="flex gap-2">
                       <span className="text-[#B8962E] flex-shrink-0">→</span>
                       <span>Sună înainte pentru a ne asigura că mașina dorită e la parc</span>
@@ -536,7 +554,7 @@ ${formData.mesaj}
         
         <div className="max-w-2xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <h2 className="font-display text-2xl sm:text-3xl text-[#F5F5F0] mb-3">Orice metodă alegi, răspundem rapid.</h2>
-          <p className="font-body text-sm text-[#888880] mb-8">
+          <p className="font-body text-sm text-[#B0B0A8] mb-8">
             Telefon, WhatsApp, formular sau vizită la parc. Alege ce-ți convine.
           </p>
           <div className="flex items-center justify-center">

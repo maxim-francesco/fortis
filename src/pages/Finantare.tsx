@@ -44,7 +44,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </span>
         <ChevronDown
           size={18}
-          className={`flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180 text-[#B8962E]" : "text-[#888880] group-hover:text-[#D4AF6A]"}`}
+          className={`flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180 text-[#B8962E]" : "text-[#B0B0A8] group-hover:text-[#D4AF6A]"}`}
         />
       </button>
       <AnimatePresence>
@@ -56,7 +56,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="font-body text-sm text-[#888880] pb-6 pl-4 pr-12 leading-relaxed">{a}</p>
+            <p className="font-body text-sm text-[#B0B0A8] pb-6 pl-4 pr-12 leading-relaxed">{a}</p>
           </m.div>
         )}
       </AnimatePresence>
@@ -117,7 +117,7 @@ export default function Finantare() {
       <div className="relative pt-24 pb-16 lg:pb-20 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.12)] overflow-hidden" ref={heroRef as any}>
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(184,150,46,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(184,150,46,0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex items-center gap-2 font-body text-xs text-[#888880] mb-8">
+          <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8] mb-8">
             <Link to="/" className="hover:text-[#B8962E] transition-colors duration-300">Acasă</Link>
             <ChevronRight size={12} />
             <span className="text-[#B8962E]">Finanțare</span>
@@ -131,7 +131,7 @@ export default function Finantare() {
                 Rate Simple,<br />
                 <span className="gradient-gold-text">Aprobare Rapidă</span>
               </m.h1>
-              <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="font-body text-[#888880] text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
+              <m.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="font-body text-[#B0B0A8] text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
                 Finanțare disponibilă doar cu buletinul. Fără avans obligatoriu, fără adeverințe de venit, fără birocrație inutilă.
               </m.p>
               <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
@@ -160,7 +160,7 @@ export default function Finantare() {
                     </div>
                     <div>
                       <h4 className="font-display text-[#F5F5F0] text-lg font-medium mb-0.5">{item.title}</h4>
-                      <p className="font-body text-sm text-[#888880]">{item.text}</p>
+                      <p className="font-body text-sm text-[#B0B0A8]">{item.text}</p>
                     </div>
                   </div>
                 ))}
@@ -199,7 +199,7 @@ export default function Finantare() {
                 <div className="absolute top-6 right-6 font-display text-7xl text-[#B8962E] opacity-15 leading-none font-bold select-none">{step.n}</div>
                 <div className="w-8 h-px bg-[#B8962E] mb-6" />
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-3 relative z-10">{step.title}</h3>
-                <p className="font-body text-sm text-[#888880] leading-relaxed mb-8 flex-grow relative z-10">{step.desc}</p>
+                <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-8 flex-grow relative z-10">{step.desc}</p>
                 <div className="flex items-center gap-2 font-label text-[10px] tracking-widest text-[#B8962E] uppercase relative z-10">
                   <Clock size={12} />
                   <span>{step.val}</span>
@@ -222,7 +222,7 @@ export default function Finantare() {
             <div className="mb-12 border-b border-[rgba(184,150,46,0.12)] pb-8">
               <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3">CALCULATOR</p>
               <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] mb-3 font-semibold">Cât Te Costă Mașina Dorită?</h2>
-              <p className="font-body text-xs text-[#888880] uppercase tracking-widest">Curs fix 1 EUR = 5.0 RON · DAE 7.9% · TBI Bank</p>
+              <p className="font-body text-xs text-[#B0B0A8] uppercase tracking-widest">Curs fix 1 EUR = 5.0 RON · DAE 7.9% · TBI Bank</p>
             </div>
 
             <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-10 lg:gap-14">
@@ -233,7 +233,7 @@ export default function Finantare() {
                 {/* Preț Masina */}
                 <div className="space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                    <Label htmlFor="pretMasina" className="font-label text-sm tracking-widest text-[#888880] uppercase">PREȚ MAȘINĂ</Label>
+                    <Label htmlFor="pretMasina" className="font-label text-sm tracking-widest text-[#B0B0A8] uppercase">PREȚ MAȘINĂ</Label>
                     <div className="font-display text-3xl sm:text-4xl text-[#B8962E] font-semibold tracking-tight">€ {formatNumber(pretMasina)}</div>
                   </div>
                   <Input 
@@ -248,7 +248,7 @@ export default function Finantare() {
                 {/* Avans */}
                 <div className="space-y-5">
                   <div className="flex justify-between items-end">
-                    <Label htmlFor="avansPercent" className="font-label text-sm tracking-widest text-[#888880] uppercase">AVANS</Label>
+                    <Label htmlFor="avansPercent" className="font-label text-sm tracking-widest text-[#B0B0A8] uppercase">AVANS</Label>
                     <div className="text-right">
                       <div className="font-display text-2xl text-[#F5F5F0] font-semibold" aria-live="polite">{avansPercent}%</div>
                     </div>
@@ -263,7 +263,7 @@ export default function Finantare() {
                     className="py-4 cursor-pointer"
                     aria-label="Procent avans"
                   />
-                  <div className="flex justify-between font-body text-xs text-[#888880]">
+                  <div className="flex justify-between font-body text-xs text-[#B0B0A8]">
                     <span>Valoare avans: {formatNumber(avansEur)} €</span>
                     <span>{formatNumber(avansRon)} RON</span>
                   </div>
@@ -272,7 +272,7 @@ export default function Finantare() {
                 {/* Perioada */}
                 <div className="space-y-5">
                   <div className="flex justify-between items-end">
-                    <Label htmlFor="perioada" className="font-label text-sm tracking-widest text-[#888880] uppercase">PERIOADĂ</Label>
+                    <Label htmlFor="perioada" className="font-label text-sm tracking-widest text-[#B0B0A8] uppercase">PERIOADĂ</Label>
                     <div className="font-display text-2xl text-[#F5F5F0] font-semibold" aria-live="polite">{perioada} luni</div>
                   </div>
                   <Slider 
@@ -286,7 +286,7 @@ export default function Finantare() {
                     className="py-4 cursor-pointer"
                     aria-label="Perioadă finanțare în luni"
                   />
-                  <div className="flex justify-between font-label text-[10px] text-[#888880] uppercase">
+                  <div className="flex justify-between font-label text-[10px] text-[#B0B0A8] uppercase">
                     <span>12</span>
                     <span>24</span>
                     <span>36</span>
@@ -306,32 +306,32 @@ export default function Finantare() {
                       <span className="font-display text-5xl sm:text-6xl font-bold gradient-gold-text">{formatNumber(results.rata)}</span>
                       <span className="font-display text-xl text-[#B8962E] opacity-70">LEI</span>
                     </div>
-                    <p className="font-body text-xs text-[#888880]">pe lună, timp de {perioada} luni</p>
+                    <p className="font-body text-xs text-[#B0B0A8]">pe lună, timp de {perioada} luni</p>
                   </div>
 
                   <div className="border-t border-[rgba(184,150,46,0.1)] py-6 flex-grow">
                     <div className="grid grid-cols-2 gap-y-6 gap-x-4">
                       <div>
-                        <div className="font-label text-[10px] text-[#888880] uppercase tracking-wider mb-1">Sumă finanțată</div>
+                        <div className="font-label text-[10px] text-[#B0B0A8] uppercase tracking-wider mb-1">Sumă finanțată</div>
                         <div className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.principalRon)} RON</div>
                       </div>
                       <div>
-                        <div className="font-label text-[10px] text-[#888880] uppercase tracking-wider mb-1">Total de plată</div>
+                        <div className="font-label text-[10px] text-[#B0B0A8] uppercase tracking-wider mb-1">Total de plată</div>
                         <div className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.totalDePlata)} RON</div>
                       </div>
                       <div>
-                        <div className="font-label text-[10px] text-[#888880] uppercase tracking-wider mb-1">Total dobândă</div>
+                        <div className="font-label text-[10px] text-[#B0B0A8] uppercase tracking-wider mb-1">Total dobândă</div>
                         <div className="font-body text-sm text-[#F5F5F0]">{formatNumber(results.totalDobanda)} RON</div>
                       </div>
                       <div>
-                        <div className="font-label text-[10px] text-[#888880] uppercase tracking-wider mb-1">DAE</div>
+                        <div className="font-label text-[10px] text-[#B0B0A8] uppercase tracking-wider mb-1">DAE</div>
                         <div className="font-body text-sm text-[#B8962E] font-semibold">7.9%</div>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-auto space-y-4 pt-4">
-                    <p className="font-body text-[11px] text-[#888880] italic leading-relaxed text-center mb-6">
+                    <p className="font-body text-[11px] text-[#B0B0A8] italic leading-relaxed text-center mb-6">
                       * Calculul este orientativ. Oferta finală se stabilește individual, în funcție de profilul financiar.
                     </p>
                     <Link 
@@ -342,7 +342,7 @@ export default function Finantare() {
                       <ArrowRight size={16} />
                     </Link>
                     <div className="text-center">
-                      <a href="tel:0754299199" className="font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors min-h-[44px] inline-flex items-center justify-center">
+                      <a href="tel:0754299199" className="font-body text-xs text-[#B0B0A8] hover:text-[#B8962E] transition-colors min-h-[44px] inline-flex items-center justify-center">
                         sau sună direct la 0754 299 199
                       </a>
                     </div>
@@ -361,7 +361,7 @@ export default function Finantare() {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <p className="font-label text-[#B8962E] tracking-widest text-sm mb-3 uppercase">CRITERII DE ELIGIBILITATE</p>
             <h2 className="font-display text-3xl sm:text-4xl text-[#F5F5F0] font-semibold mb-4">Condiții Finanțare TBI Bank</h2>
-            <p className="font-body text-[#888880] leading-relaxed">Cea mai comună întrebare: mă încadrez? Iată condițiile exacte pentru finanțare auto prin TBI Bank.</p>
+            <p className="font-body text-[#B0B0A8] leading-relaxed">Cea mai comună întrebare: mă încadrez? Iată condițiile exacte pentru finanțare auto prin TBI Bank.</p>
           </div>
 
           <div className="max-w-md mx-auto flex gap-2 sm:gap-4 mb-12" role="tablist" aria-label="Taburi eligibilitate credit">
@@ -371,7 +371,7 @@ export default function Finantare() {
               aria-selected={activeTab === "pf"}
               aria-controls="panel-pf"
               onClick={() => setActiveTab("pf")}
-              className={`flex-1 py-4 px-2 sm:px-6 flex items-center justify-center gap-2 font-body font-medium text-sm transition-all duration-300 min-h-[56px] border-b-2 ${activeTab === "pf" ? "border-[#B8962E] text-[#B8962E]" : "border-transparent text-[#888880] hover:text-[#F5F5F0]"}`}
+              className={`flex-1 py-4 px-2 sm:px-6 flex items-center justify-center gap-2 font-body font-medium text-sm transition-all duration-300 min-h-[56px] border-b-2 ${activeTab === "pf" ? "border-[#B8962E] text-[#B8962E]" : "border-transparent text-[#B0B0A8] hover:text-[#F5F5F0]"}`}
             >
               <User size={18} aria-hidden="true" />
               <span className="whitespace-nowrap">Persoane Fizice</span>
@@ -382,7 +382,7 @@ export default function Finantare() {
               aria-selected={activeTab === "pj"}
               aria-controls="panel-pj"
               onClick={() => setActiveTab("pj")}
-              className={`flex-1 py-4 px-2 sm:px-6 flex items-center justify-center gap-2 font-body font-medium text-sm transition-all duration-300 min-h-[56px] border-b-2 ${activeTab === "pj" ? "border-[#B8962E] text-[#B8962E]" : "border-transparent text-[#888880] hover:text-[#F5F5F0]"}`}
+              className={`flex-1 py-4 px-2 sm:px-6 flex items-center justify-center gap-2 font-body font-medium text-sm transition-all duration-300 min-h-[56px] border-b-2 ${activeTab === "pj" ? "border-[#B8962E] text-[#B8962E]" : "border-transparent text-[#B0B0A8] hover:text-[#F5F5F0]"}`}
             >
               <Building2 size={18} aria-hidden="true" />
               <span className="whitespace-nowrap">Persoane Juridice</span>
@@ -410,7 +410,7 @@ export default function Finantare() {
                     <h3 className="font-display text-xl text-[#F5F5F0] mb-6">Eligibilitate</h3>
                     <ul className="space-y-3">
                       {["Vârstă: 18-75 ani (la finalizarea creditului)", "Minim 3 luni la actualul angajator (3 salarii încasate și declarate la ANAF)", "Salariu minim: 2.000 lei / Pensie minimă: 1.250 lei", "Venituri acceptate: salarii, pensii, PFA, șoferi cu diurne, chirii, dividende, indemnizații", "Se acceptă codebitor dacă clientul nu se încadrează singur (nu trebuie să fie din familie)"].map((li, i) => (
-                        <li key={i} className="flex gap-3 text-sm font-body text-[#888880]">
+                        <li key={i} className="flex gap-3 text-sm font-body text-[#B0B0A8]">
                           <Check className="text-[#B8962E] w-4 h-4 shrink-0 mt-0.5" />
                           <span>{li}</span>
                         </li>
@@ -426,11 +426,11 @@ export default function Finantare() {
                     <div className="space-y-8">
                       <div>
                         <div className="font-display text-3xl sm:text-4xl gradient-gold-text mb-2 tracking-tight">3.000 - 150.000 RON</div>
-                        <div className="font-body text-sm text-[#888880]">Sumă ce poate fi finanțată</div>
+                        <div className="font-body text-sm text-[#B0B0A8]">Sumă ce poate fi finanțată</div>
                       </div>
                       <div>
                         <div className="font-display text-3xl sm:text-4xl gradient-gold-text mb-2 tracking-tight">15 - 120 MINUTE</div>
-                        <div className="font-body text-sm text-[#888880]">Timp estimat de răspuns</div>
+                        <div className="font-body text-sm text-[#B0B0A8]">Timp estimat de răspuns</div>
                       </div>
                     </div>
                   </div>
@@ -446,7 +446,7 @@ export default function Finantare() {
                         "Cu istoric de creditare în România (ultimii 5 ani): fără girant",
                         "Fără istoric: girant angajat minim 3 luni (se acceptă și pensionari)"
                       ].map((li, i) => (
-                        <li key={i} className="flex gap-3 text-sm font-body text-[#888880]">
+                        <li key={i} className="flex gap-3 text-sm font-body text-[#B0B0A8]">
                           <Check className="text-[#B8962E] w-4 h-4 shrink-0 mt-0.5" />
                           <span>{li}</span>
                         </li>
@@ -480,7 +480,7 @@ export default function Finantare() {
                         "Vechime firmă: minim 1 an",
                         "Bilanțul anului anterior depus"
                       ].map((li, i) => (
-                        <li key={i} className="flex gap-3 text-sm font-body text-[#888880]">
+                        <li key={i} className="flex gap-3 text-sm font-body text-[#B0B0A8]">
                           <Check className="text-[#B8962E] w-4 h-4 shrink-0 mt-0.5" />
                           <span>{li}</span>
                         </li>
@@ -496,11 +496,11 @@ export default function Finantare() {
                     <div className="space-y-8">
                       <div>
                         <div className="font-display text-3xl sm:text-4xl gradient-gold-text mb-2 tracking-tight">Până la 250.000 RON</div>
-                        <div className="font-body text-sm text-[#888880]">Sumă maximă finanțată</div>
+                        <div className="font-body text-sm text-[#B0B0A8]">Sumă maximă finanțată</div>
                       </div>
                       <div>
                         <div className="font-display text-3xl sm:text-4xl gradient-gold-text mb-2 tracking-tight">10% CA</div>
-                        <div className="font-body text-sm text-[#888880]">Se finanțează până la 10% din cifra de afaceri</div>
+                        <div className="font-body text-sm text-[#B0B0A8]">Se finanțează până la 10% din cifra de afaceri</div>
                       </div>
                     </div>
                   </div>
@@ -514,16 +514,16 @@ export default function Finantare() {
       {/* 5. PARTENERI FINANȚARE */}
       <section className="bg-[#080808]">
         <div className="max-w-6xl mx-auto px-4 py-12">
-          <p className="font-label text-[10px] tracking-[0.3em] text-[#888880] text-center mb-8 uppercase">PARTENERI OFICIALI DE FINANȚARE</p>
+          <p className="font-label text-[10px] tracking-[0.3em] text-[#B0B0A8] text-center mb-8 uppercase">PARTENERI OFICIALI DE FINANȚARE</p>
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12">
             {["TBI Bank", "UniCredit", "Mogo IFN", "BT Rate"].map((partner, i, arr) => (
               <div key={partner} className="flex items-center gap-6 sm:gap-12">
-                <span className="font-display text-xl sm:text-2xl text-[#888880] hover:text-[#B8962E] transition-colors duration-300 cursor-default select-none">{partner}</span>
+                <span className="font-display text-xl sm:text-2xl text-[#B0B0A8] hover:text-[#B8962E] transition-colors duration-300 cursor-default select-none">{partner}</span>
                 {i < arr.length - 1 && <div className="w-px h-6 bg-[rgba(184,150,46,0.15)] hidden sm:block" />}
               </div>
             ))}
           </div>
-          <p className="font-body text-[11px] text-[#888880]/60 text-center mt-10 max-w-lg mx-auto">
+          <p className="font-body text-[11px] text-[#B0B0A8]/60 text-center mt-10 max-w-lg mx-auto">
             Oferta finală se stabilește individual, în funcție de profilul financiar al clientului.
           </p>
         </div>
@@ -544,7 +544,7 @@ export default function Finantare() {
           
           <div className="bg-[#0E0E0E] border border-[rgba(184,150,46,0.2)] rounded-sm p-6 sm:p-10 text-center w-full mt-4">
             <h3 className="font-display text-xl sm:text-2xl text-[#F5F5F0] mb-2">Nu ai găsit răspunsul?</h3>
-            <p className="font-body text-sm text-[#888880] mb-8">Sună-ne direct, echipa MEDFIL te ajută în 2 minute.</p>
+            <p className="font-body text-sm text-[#B0B0A8] mb-8">Sună-ne direct, echipa MEDFIL te ajută în 2 minute.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="tel:0754299199" className="btn-gold py-3 px-8 rounded-sm text-sm font-semibold w-full sm:w-auto text-center min-h-[44px] flex items-center justify-center">
                 Sună 0754 299 199
@@ -565,7 +565,7 @@ export default function Finantare() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#F5F5F0] font-semibold mb-6">Gata să iei mașina în rate?</h2>
-          <p className="font-body text-base text-[#888880] max-w-md mx-auto mb-10 leading-relaxed">
+          <p className="font-body text-base text-[#B0B0A8] max-w-md mx-auto mb-10 leading-relaxed">
             Aprobarea durează cât o cafea. Alege mașina și noi ne ocupăm de restul.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

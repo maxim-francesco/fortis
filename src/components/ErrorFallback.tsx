@@ -14,7 +14,7 @@ export default function ErrorFallback({ error, resetErrorBoundary }: FallbackPro
       <h1 className="font-display text-2xl sm:text-3xl font-semibold text-[#F5F5F0] mb-3">
         Oops! A apărut o problemă.
       </h1>
-      <p className="font-body text-[#888880] max-w-md mx-auto mb-6">
+      <p className="font-body text-[#B0B0A8] max-w-md mx-auto mb-6">
         Ne cerem scuze, platforma a întâmpinat o eroare temporară (Eroare internă). Dacă problema persistă, te rugăm să ne contactezi telefonic.
       </p>
       

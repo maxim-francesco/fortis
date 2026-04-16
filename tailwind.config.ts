@@ -72,10 +72,10 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Cormorant Garamond", "serif"],
-        body: ["DM Sans", "sans-serif"],
-        label: ["Bebas Neue", "cursive"],
-        sans: ["DM Sans", "sans-serif"],
+        display: ['"Cormorant Garamond"', 'Georgia', 'Times New Roman', 'serif'],
+        body: ['"DM Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        label: ['"Bebas Neue"', 'Impact', 'Arial Narrow', 'sans-serif'],
+        sans: ['"DM Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

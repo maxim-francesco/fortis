@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
-import medfilLogo from "@/assets/medfil2.jpg";
 
 export default function Footer() {
   return (
@@ -9,8 +8,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <img src={medfilLogo} alt="MEDFIL Automobile - Parc Auto Cluj" className="h-12 md:h-14 w-auto object-contain mb-6" />
-            <p className="font-body text-sm text-[#888880] leading-relaxed mb-6">
+            <Link to="/" aria-label="MEDFIL Automobile - Acasă" className="inline-block mb-6">
+              <picture>
+                <source 
+                  type="image/webp" 
+                  srcSet="/images/logo/medfil-128.webp 1x, /images/logo/medfil-256.webp 2x" 
+                />
+                <img 
+                  src="/images/logo/medfil-128.png"
+                  srcSet="/images/logo/medfil-128.png 1x, /images/logo/medfil-256.png 2x"
+                  alt="MEDFIL Automobile - Parc Auto Cluj"
+                  className="h-12 md:h-14 w-auto object-contain"
+                  width="128"
+                  height="128"
+                  loading="lazy"
+                />
+              </picture>
+            </Link>
+            <p className="font-body text-sm text-[#B0B0A8] leading-relaxed mb-6">
               <em className="text-[#B8962E] not-italic font-display text-base">"Parc auto autorizat în inima cartierului Iris."</em>
               <br />
               Dealer premium de mașini rulate în Cluj-Napoca, cu istoric verificat, garanție și servicii complete. Deservim cu mândrie zona de nord a Clujului — cartierul Iris și zona industrială Oașului-Muncii.
@@ -18,13 +33,13 @@ export default function Footer() {
             <div className="flex gap-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                 aria-label="Instagram MEDFIL Automobile"
-                className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
+                className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#B0B0A8] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
                 <span className="sr-only">Instagram</span>
                 <Instagram size={15} aria-hidden="true" />
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
                 aria-label="Facebook MEDFIL Automobile"
-                className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#888880] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
+                className="w-9 h-9 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center text-[#B0B0A8] hover:text-[#B8962E] hover:border-[#B8962E] transition-all duration-300">
                 <span className="sr-only">Facebook</span>
                 <Facebook size={15} aria-hidden="true" />
               </a>
@@ -45,7 +60,7 @@ export default function Footer() {
               ].map((link) => (
                 <li key={link.href}>
                   <Link to={link.href}
-                    className="font-body text-sm text-[#888880] hover:text-[#D4AF6A] transition-colors duration-200 flex items-center gap-2 group">
+                    className="font-body text-sm text-[#B0B0A8] hover:text-[#D4AF6A] transition-colors duration-200 flex items-center gap-2 group">
                     <span className="w-4 h-px bg-[rgba(184,150,46,0.3)] group-hover:bg-[#B8962E] transition-colors duration-200" />
                     {link.label}
                   </Link>
@@ -66,7 +81,7 @@ export default function Footer() {
                 "RAR la Cerere",
                 "Consultanță Video",
               ].map((s) => (
-                <li key={s} className="font-body text-sm text-[#888880] flex items-center gap-2">
+                <li key={s} className="font-body text-sm text-[#B0B0A8] flex items-center gap-2">
                   <span className="w-1 h-1 rounded-full bg-[#B8962E] flex-shrink-0" />
                   {s}
                 </li>
@@ -85,7 +100,7 @@ export default function Footer() {
               ].map((link) => (
                 <li key={link.href}>
                   <Link to={link.href}
-                    className="font-body text-sm text-[#888880] hover:text-[#D4AF6A] transition-colors duration-200 flex items-center gap-2 group">
+                    className="font-body text-sm text-[#B0B0A8] hover:text-[#D4AF6A] transition-colors duration-200 flex items-center gap-2 group">
                     <span className="w-4 h-px bg-[rgba(184,150,46,0.3)] group-hover:bg-[#B8962E] transition-colors duration-200" />
                     {link.label}
                   </Link>
@@ -101,7 +116,7 @@ export default function Footer() {
               <li>
                 <a href="tel:0754299199"
                   aria-label="Sună la numărul 0754 299 199"
-                  className="flex items-center gap-3 font-body text-sm text-[#888880] hover:text-[#D4AF6A] transition-colors group">
+                  className="flex items-center gap-3 font-body text-sm text-[#B0B0A8] hover:text-[#D4AF6A] transition-colors group">
                   <div aria-hidden="true" className="w-8 h-8 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center group-hover:border-[#B8962E] transition-colors">
                     <Phone size={13} className="text-[#B8962E]" />
                   </div>
@@ -111,13 +126,13 @@ export default function Footer() {
                   </div>
                 </a>
               </li>
-              <li className="flex items-center gap-3 font-body text-sm text-[#888880]">
+              <li className="flex items-center gap-3 font-body text-sm text-[#B0B0A8]">
                 <div className="w-8 h-8 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center flex-shrink-0">
                   <MapPin size={13} className="text-[#B8962E]" />
                 </div>
                 <span>Str. Oașului 134a, Cluj-Napoca, cartier Iris</span>
               </li>
-              <li className="flex items-center gap-3 font-body text-sm text-[#888880]">
+              <li className="flex items-center gap-3 font-body text-sm text-[#B0B0A8]">
                 <div className="w-8 h-8 border border-[rgba(184,150,46,0.2)] rounded-sm flex items-center justify-center flex-shrink-0">
                   <Mail size={13} className="text-[#B8962E]" />
                 </div>
@@ -130,15 +145,15 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[rgba(184,150,46,0.12)] pt-8 flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="text-center sm:text-left">
-            <p className="font-body text-xs text-[#888880]">
+            <p className="font-body text-xs text-[#B0B0A8]">
               © 2025 MEDFIL AUTOMOBILE | <span className="text-[#B8962E]">MEDFIL AUTOMOBILE SRL</span>
             </p>
-            <p className="font-body text-[10px] text-[#888880]/60 mt-1 uppercase tracking-widest">
+            <p className="font-body text-[10px] text-[#B0B0A8]/60 mt-1 uppercase tracking-widest">
               CUI: 44290330 | Nr. Reg. Com.: J12/2390/2021
             </p>
           </div>
           <div className="flex items-center gap-6">
-            <p className="font-body text-[10px] text-[#888880] uppercase tracking-widest">
+            <p className="font-body text-[10px] text-[#B0B0A8] uppercase tracking-widest">
               Toate drepturile rezervate.
             </p>
           </div>

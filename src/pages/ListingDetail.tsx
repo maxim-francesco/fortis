@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { getListingById } from "@/lib/api";
 import { getVehicleSchema } from "@/lib/seo/schemas";
+import { cldImage, cldSrcSet } from "@/lib/cloudinary";
 export default function ListingDetail() {
   const { id } = useParams<{ id: string }>();
   const [listing, setListing] = useState<any>(null);
@@ -69,7 +70,7 @@ export default function ListingDetail() {
     return (
       <div className="min-h-screen bg-[#080808] flex flex-col items-center justify-center">
         <Loader2 className="animate-spin text-[#B8962E] mb-4" size={40} />
-        <p className="font-body text-[#888880] text-sm tracking-widest">SE ÎNCARCĂ DETALIILE...</p>
+        <p className="font-body text-[#B0B0A8] text-sm tracking-widest">SE ÎNCARCĂ DETALIILE...</p>
       </div>
     );
   }
@@ -112,7 +113,7 @@ export default function ListingDetail() {
       {/* Breadcrumbs */}
       <div className="pt-24 pb-6 bg-[#0A0A0A] border-b border-[rgba(184,150,46,0.1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-2 font-body text-xs text-[#888880]">
+          <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8]">
             <Link to="/" className="hover:text-[#B8962E] transition-colors">Acasă</Link>
             <ChevronRight size={12} />
             <Link to="/stoc" className="hover:text-[#B8962E] transition-colors">Mașini</Link>
@@ -135,9 +136,14 @@ export default function ListingDetail() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  src={images[activeImage]?.url || "https://picsum.photos/seed/car/800/500"} 
+                  src={images[activeImage]?.url ? cldImage(images[activeImage]?.url, { width: 1200, format: 'auto' }) : "https://picsum.photos/seed/car/800/500"} 
+                  srcSet={images[activeImage]?.url ? cldSrcSet(images[activeImage]?.url, [600, 800, 1200]) : undefined}
+                  sizes="(max-width: 1024px) 100vw, 800px"
                   alt={`Fotografie principală ${listing.title || 'vehicul'}`}
                   className="w-full h-full object-cover"
+                  loading={activeImage === 0 ? "eager" : "lazy"}
+                  fetchpriority={activeImage === 0 ? "high" : "auto"}
+                  decoding="async"
                   onClick={() => setIsLightboxOpen(true)}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
@@ -191,7 +197,7 @@ export default function ListingDetail() {
                   €{listing.price?.toLocaleString() || "Contact"}
                 </div>
                 <div className="h-6 w-px bg-[rgba(184,150,46,0.2)]" />
-                <div className="font-body text-xs text-[#888880] uppercase tracking-widest">
+                <div className="font-body text-xs text-[#B0B0A8] uppercase tracking-widest">
                   TVA INCLUS
                 </div>
               </div>
@@ -201,28 +207,28 @@ export default function ListingDetail() {
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
                   <Calendar size={18} className="text-[#B8962E]" />
                   <div>
-                    <div className="text-[9px] font-label text-[#888880] tracking-widest">AN</div>
+                    <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">AN</div>
                     <div className="text-sm font-body text-[#F5F5F0]">{getAttr("An")?.numberValue || getAttr("An")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
                   <Gauge size={18} className="text-[#B8962E]" />
                   <div>
-                    <div className="text-[9px] font-label text-[#888880] tracking-widest">KILOMETRAJ</div>
+                    <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">KILOMETRAJ</div>
                     <div className="text-sm font-body text-[#F5F5F0]">{listing.mileage?.toLocaleString() || "N/A"} km</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
                   <Fuel size={18} className="text-[#B8962E]" />
                   <div>
-                    <div className="text-[9px] font-label text-[#888880] tracking-widest">COMBUSTIBIL</div>
+                    <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">COMBUSTIBIL</div>
                     <div className="text-sm font-body text-[#F5F5F0]">{getAttr("Combustibil")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
                   <Settings size={18} className="text-[#B8962E]" />
                   <div>
-                    <div className="text-[9px] font-label text-[#888880] tracking-widest">CUTIE</div>
+                    <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">CUTIE</div>
                     <div className="text-sm font-body text-[#F5F5F0]">{getAttr("Cutie de viteze")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
@@ -239,7 +245,7 @@ export default function ListingDetail() {
                 <MessageCircle size={18} />
                 <span>Scrie pe WhatsApp</span>
               </a>
-              <Link to="/finantare" className="block w-full text-center font-body text-xs text-[#888880] hover:text-[#B8962E] transition-colors py-2 uppercase tracking-widest">
+              <Link to="/finantare" className="block w-full text-center font-body text-xs text-[#B0B0A8] hover:text-[#B8962E] transition-colors py-2 uppercase tracking-widest">
                 VERIFICĂ ELIGIBILITATE FINANȚARE
               </Link>
             </div>
@@ -248,13 +254,13 @@ export default function ListingDetail() {
             <div className="bg-[#111111] border border-[rgba(184,150,46,0.1)] rounded-sm p-5 space-y-4">
               <div className="flex gap-3">
                 <Shield size={18} className="text-[#B8962E] flex-shrink-0" />
-                <p className="text-xs font-body text-[#888880] leading-relaxed">
+                <p className="text-xs font-body text-[#B0B0A8] leading-relaxed">
                   <strong className="text-[#F5F5F0]">Garanție 12 luni Motor+Cutie</strong> — Mașina a fost supusă unei verificări tehnice riguroase înainte de vânzare.
                 </p>
               </div>
               <div className="flex gap-3">
                 <CreditCard size={18} className="text-[#B8962E] flex-shrink-0" />
-                <p className="text-xs font-body text-[#888880] leading-relaxed">
+                <p className="text-xs font-body text-[#B0B0A8] leading-relaxed">
                   <strong className="text-[#F5F5F0]">Finanțare Fără Avans</strong> — Aprobare rapidă doar cu buletinul pentru persoane fizice și juridice.
                 </p>
               </div>
@@ -274,7 +280,7 @@ export default function ListingDetail() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-1">
                 {attributes.map((av: any, i: number) => (
                   <div key={i} className="flex justify-between items-center border-b border-[rgba(136,136,128,0.1)] py-3">
-                    <span className="text-[10px] font-label text-[#888880] tracking-widest uppercase">{av.attribute.name}</span>
+                    <span className="text-[10px] font-label text-[#B0B0A8] tracking-widest uppercase">{av.attribute.name}</span>
                     <span className="text-sm font-body text-[#F5F5F0]">
                       {av.stringValue ?? av.numberValue ?? (av.booleanValue ? "Da" : "Nu")}
                     </span>
@@ -289,7 +295,7 @@ export default function ListingDetail() {
                 <h2 className="font-display text-2xl text-[#F5F5F0] mb-6 gold-underline pb-3">
                   Descrierea Vehiculului
                 </h2>
-                <div className="font-body text-sm text-[#888880] leading-relaxed whitespace-pre-line bg-[#111] p-6 sm:p-8 rounded-sm border border-[rgba(184,150,46,0.05)] shadow-inner">
+                <div className="font-body text-sm text-[#B0B0A8] leading-relaxed whitespace-pre-line bg-[#111] p-6 sm:p-8 rounded-sm border border-[rgba(184,150,46,0.05)] shadow-inner">
                   {listing.description}
                 </div>
               </div>
@@ -306,7 +312,7 @@ export default function ListingDetail() {
                   </div>
                 </div>
                 <h3 className="font-display text-xl text-[#F5F5F0] mb-2 font-medium">Vrei să o vezi live?</h3>
-                <p className="font-body text-xs text-[#888880] mb-8 leading-relaxed">Programează o prezentare video prin WhatsApp sau vizitează parcul nostru auto.</p>
+                <p className="font-body text-xs text-[#B0B0A8] mb-8 leading-relaxed">Programează o prezentare video prin WhatsApp sau vizitează parcul nostru auto.</p>
                 <a href="tel:0754299199" className="btn-gold w-full text-center py-3 rounded-sm text-sm">Programează Vizionare</a>
               </div>
               
@@ -314,7 +320,7 @@ export default function ListingDetail() {
                 <h4 className="font-label text-[#B8962E] text-[10px] tracking-widest mb-4">ALTE SERVICII INCLUSE</h4>
                 <ul className="space-y-3">
                   {["Transport Gratuit", "RAR la Cerere", "Numere Provizorii", "Consultanță RAR"].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs text-[#888880] font-body">
+                    <li key={item} className="flex items-center gap-2 text-xs text-[#B0B0A8] font-body">
                       <div className="w-1 h-1 bg-[#B8962E] rounded-full" />
                       {item}
                     </li>
@@ -383,7 +389,11 @@ export default function ListingDetail() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  src={images[activeImage]?.url} 
+                  src={images[activeImage]?.url ? cldImage(images[activeImage]?.url, { width: 1920, format: 'auto' }) : undefined} 
+                  srcSet={images[activeImage]?.url ? cldSrcSet(images[activeImage]?.url, [800, 1200, 1920]) : undefined}
+                  sizes="100vw"
+                  loading="lazy"
+                  decoding="async"
                   className="max-w-full max-h-full object-contain shadow-2xl"
                   alt={`Fotografie detaliu ${listing.title || 'vehicul'}`}
                   drag="x"

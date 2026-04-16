@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
 import { Calendar, Gauge, Fuel, Settings, ChevronRight, SlidersHorizontal, X, Loader2 } from "lucide-react";
 import { useListings } from "@/hooks/useListings";
-import { cldImage } from "@/lib/cloudinary";
+import { cldImage, cldSrcSet } from "@/lib/cloudinary";
 
 function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.05);
@@ -29,7 +29,9 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const transmission = getAttr("Cutie de viteze") || "N/A";
   const price = listing.price ? listing.price.toLocaleString() : "Contact";
   const km = listing.mileage ? listing.mileage.toLocaleString() : "N/A";
-  const imageUrl = cldImage(listing.images?.[0]?.url, 600) || "https://picsum.photos/seed/car/600/400";
+  const rawUrl = listing.images?.[0]?.url;
+  const imageUrl = cldImage(rawUrl, { width: 600, format: 'auto', quality: 'auto' }) || "https://picsum.photos/seed/car/600/400";
+  const imageSrcSet = rawUrl ? cldSrcSet(rawUrl, [400, 600, 800]) : undefined;
 
   return (
     <m.article
@@ -42,6 +44,8 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
         <img 
           src={imageUrl} 
+          srcSet={imageSrcSet}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
           alt={`Fotografie exterioară ${listing.title || 'Mașină second-hand'}`} 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" 
           loading="lazy"
@@ -58,21 +62,21 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           {listing.title}
         </h3>
         <div className="flex items-center gap-2 mb-3 flex-wrap">
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Calendar size={10} />{year}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]"><Calendar size={10} />{year}</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Gauge size={10} />{km} km</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]"><Gauge size={10} />{km} km</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Fuel size={10} />{fuel}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]"><Fuel size={10} />{fuel}</span>
           <span className="w-1 h-1 rounded-full bg-[rgba(136,136,128,0.4)]" />
-          <span className="flex items-center gap-1 font-body text-xs text-[#888880]"><Settings size={10} />{transmission}</span>
+          <span className="flex items-center gap-1 font-body text-xs text-[#B0B0A8]"><Settings size={10} />{transmission}</span>
         </div>
         <div className="flex items-end justify-between mb-4">
           <div>
             <div className="font-display text-xl font-semibold text-[#B8962E]">€{price}</div>
-            <div className="font-body text-[10px] text-[#888880]">Finanțare disponibilă</div>
+            <div className="font-body text-[10px] text-[#B0B0A8]">Finanțare disponibilă</div>
           </div>
         </div>
-        <Link to={`/stoc/${listing.id}`} className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
+        <Link to={`/stoc/${listing.id}`} aria-label={`Vezi detalii despre ${listing.title}`} className="block w-full text-center font-body text-xs font-medium border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] py-2.5 rounded-sm hover:bg-[#B8962E] hover:text-[#080808] hover:border-[#B8962E] transition-all duration-300">
           Vezi Detalii
         </Link>
       </div>
@@ -128,7 +132,7 @@ export default function Masini() {
           }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex items-center gap-2 font-body text-xs text-[#888880] mb-4">
+          <div className="flex items-center gap-2 font-body text-xs text-[#B0B0A8] mb-4">
             <Link to="/" className="hover:text-[#B8962E] transition-colors">Acasă</Link>
             <ChevronRight size={12} />
             <span className="text-[#B8962E]">Mașini</span>
@@ -136,7 +140,7 @@ export default function Masini() {
           <h1 className="font-display text-4xl sm:text-5xl font-semibold text-[#F5F5F0]">
             Mașinile Noastre
           </h1>
-          <p className="font-body text-sm text-[#888880] mt-2">Selecție premium de vehicule verificate și garantate</p>
+          <p className="font-body text-sm text-[#B0B0A8] mt-2">Selecție premium de vehicule verificate și garantate</p>
         </div>
       </div>
 
@@ -150,7 +154,7 @@ export default function Masini() {
               className="font-display text-xl text-[#F5F5F0]"
             >
               {loading ? (
-                <div className="flex items-center gap-2 text-sm text-[#888880]">
+                <div className="flex items-center gap-2 text-sm text-[#B0B0A8]">
                   <Loader2 className="animate-spin" size={16} /> Se încarcă stocul...
                 </div>
               ) : error ? (
@@ -161,7 +165,7 @@ export default function Masini() {
             </m.div>
           </div>
           <div className="flex items-center gap-3">
-            <select aria-label="Sortează mașinile" className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#888880] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
+            <select aria-label="Sortează mașinile" className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
               <option>Preț crescător</option>
               <option>Preț descrescător</option>
               <option>An (nou→vechi)</option>
@@ -182,13 +186,13 @@ export default function Masini() {
         {/* Desktop filter bar */}
         <div className="hidden sm:flex flex-wrap gap-3 mb-8 p-4 bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm">
           {["BMW", "Mercedes", "Audi", "Volkswagen", "Volvo"].map((brand) => (
-            <button key={brand} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#888880] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
+            <button key={brand} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
               {brand}
             </button>
           ))}
           <div className="w-px bg-[rgba(184,150,46,0.2)] self-stretch" />
           {["Diesel", "Benzină", "Hybrid", "Electric"].map((fuel) => (
-            <button key={fuel} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#888880] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
+            <button key={fuel} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
               {fuel}
             </button>
           ))}
@@ -218,7 +222,7 @@ export default function Masini() {
               Pagina anterioară
             </button>
             
-            <div className="font-body text-sm text-[#888880]">
+            <div className="font-body text-sm text-[#B0B0A8]">
               Pagina <span className="text-[#B8962E] font-semibold">{pagination.page}</span> din {pagination.totalPages}
             </div>
 
@@ -250,13 +254,13 @@ export default function Masini() {
           >
             <div className="flex items-center justify-between mb-6">
               <h3 id="filter-dialog-title" className="font-display text-xl text-[#F5F5F0]">Filtre</h3>
-              <button aria-label="Închide filtre" onClick={() => setFilterOpen(false)} className="text-[#888880] hover:text-[#F5F5F0] min-h-[44px] min-w-[44px] flex items-center justify-center"><X size={20} /></button>
+              <button aria-label="Închide filtre" onClick={() => setFilterOpen(false)} className="text-[#B0B0A8] hover:text-[#F5F5F0] min-h-[44px] min-w-[44px] flex items-center justify-center"><X size={20} /></button>
             </div>
             <div className="mb-5">
               <p className="font-label text-[#B8962E] text-xs tracking-widest mb-3">MARCĂ</p>
               <div className="flex flex-wrap gap-2">
                 {["BMW", "Mercedes", "Audi", "Volkswagen", "Volvo"].map((b) => (
-                  <button key={b} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#888880] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{b}</button>
+                  <button key={b} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{b}</button>
                 ))}
               </div>
             </div>
@@ -264,7 +268,7 @@ export default function Masini() {
               <p className="font-label text-[#B8962E] text-xs tracking-widest mb-3">COMBUSTIBIL</p>
               <div className="flex flex-wrap gap-2">
                 {["Diesel", "Benzină", "Hybrid", "Electric"].map((f) => (
-                  <button key={f} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#888880] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{f}</button>
+                  <button key={f} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{f}</button>
                 ))}
               </div>
             </div>

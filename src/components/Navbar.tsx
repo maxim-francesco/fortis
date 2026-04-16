@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { m, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
-import medfilLogo from "@/assets/medfil2.jpg";
 
 const navLinks = [
   { label: "Acasă", href: "/" },
@@ -51,8 +50,23 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center flex-shrink-0">
-            <img src={medfilLogo} alt="MEDFIL Automobile - Parc Auto Cluj" className="h-14 md:h-16 w-auto object-contain" />
+          <Link to="/" className="flex items-center flex-shrink-0" aria-label="MEDFIL Automobile - Acasă">
+            <picture>
+              <source 
+                type="image/webp" 
+                srcSet="/images/logo/medfil-64.webp 1x, /images/logo/medfil-128.webp 2x" 
+              />
+              <img 
+                src="/images/logo/medfil-64.png"
+                srcSet="/images/logo/medfil-64.png 1x, /images/logo/medfil-128.png 2x"
+                alt="MEDFIL Automobile - Parc Auto Cluj"
+                className="h-14 md:h-16 w-auto object-contain"
+                width="64"
+                height="64"
+                loading="eager"
+                fetchpriority="high"
+              />
+            </picture>
           </Link>
 
           {/* Desktop nav links */}
@@ -62,7 +76,7 @@ export default function Navbar() {
                 key={link.href}
                 to={link.href}
                 className={`font-body text-sm tracking-wide transition-colors duration-200 hover:text-[#D4AF6A] relative group ${
-                  location.pathname === link.href ? "text-[#B8962E]" : "text-[#888880]"
+                  location.pathname === link.href ? "text-[#B8962E]" : "text-[#B0B0A8]"
                 }`}
               >
                 {link.label}
@@ -115,8 +129,22 @@ export default function Navbar() {
           >
             {/* Header row */}
             <div className="flex justify-between items-center px-6 pt-6 h-auto pb-4">
-              <Link to="/">
-                <img src={medfilLogo} alt="MEDFIL Automobile - Parc Auto Cluj" className="h-14 w-auto object-contain" />
+              <Link to="/" aria-label="MEDFIL Automobile - Acasă">
+                <picture>
+                  <source 
+                    type="image/webp" 
+                    srcSet="/images/logo/medfil-64.webp 1x, /images/logo/medfil-128.webp 2x" 
+                  />
+                  <img 
+                    src="/images/logo/medfil-64.png"
+                    srcSet="/images/logo/medfil-64.png 1x, /images/logo/medfil-128.png 2x"
+                    alt="MEDFIL Automobile - Parc Auto Cluj"
+                    className="h-14 w-auto object-contain"
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                  />
+                </picture>
               </Link>
               <button
                 onClick={() => setMobileOpen(false)}

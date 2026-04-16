@@ -65,7 +65,7 @@ export default function Testimonials() {
               className="snap-item w-[85vw] sm:w-auto flex-shrink-0 sm:flex-shrink bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm p-6 flex flex-col gap-4"
             >
               <Quote size={28} className="text-[#B8962E] opacity-60" />
-              <p className="font-body text-sm text-[#888880] leading-relaxed flex-1">
+              <p className="font-body text-sm text-[#B0B0A8] leading-relaxed flex-1">
                 "{t.text}"
               </p>
               <div>
@@ -75,7 +75,7 @@ export default function Testimonials() {
                   ))}
                 </div>
                 <div className="font-body text-sm font-medium text-[#F5F5F0]">{t.name}</div>
-                <div className="font-body text-xs text-[#888880]">{t.city}</div>
+                <div className="font-body text-xs text-[#B0B0A8]">{t.city}</div>
               </div>
             </m.div>
           ))}
