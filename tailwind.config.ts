@@ -68,7 +68,7 @@ export default {
           secondary: "#111111",
           card: "#161616",
           white: "#F5F5F0",
-          muted: "#888880",
+          muted: "#A8A8A0",
         },
       },
       fontFamily: {

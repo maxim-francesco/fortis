@@ -53,8 +53,8 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           data-ai-hint="car exterior"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/30 to-transparent" />
-        <div className="absolute top-3 left-3 flex gap-2">
-          <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#B8962E] px-2 py-1 bg-[rgba(8,8,8,0.85)]">GARANȚIE 12 LUNI</span>
+        <div className="absolute top-3 right-3">
+          <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#F5F5F0] px-2 py-1 bg-[rgba(8,8,8,0.95)]">GARANȚIE 12 LUNI</span>
         </div>
       </div>
       <div className="p-4">

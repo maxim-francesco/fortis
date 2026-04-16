@@ -4,6 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
 import { ArrowRight, Gauge, Calendar, Fuel, Loader2 } from "lucide-react";
 import { searchListings } from "@/lib/api";
+import { cldImage, cldSrcSet } from "@/lib/cloudinary";
 
 function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.1);
@@ -25,7 +26,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const fuel = getAttr("Combustibil") || "N/A";
   const km = listing.mileage ? listing.mileage.toLocaleString("ro-RO") : "N/A";
   const price = listing.price ? listing.price.toLocaleString("ro-RO") : "Contact";
-  const imageUrl = listing.images?.[0]?.url || "https://picsum.photos/seed/car/600/400";
+  const imageUrl = listing.images?.[0]?.url;
 
   return (
     <m.div
@@ -37,8 +38,15 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
     >
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
         <img
-          src={imageUrl}
-          alt={listing.title}
+          src={imageUrl ? cldImage(imageUrl, { width: 400, format: 'auto', quality: 'auto' }) : "https://picsum.photos/seed/car/400/300"}
+          srcSet={imageUrl ? cldSrcSet(imageUrl, [400, 600, 800]) : undefined}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+          alt={`${listing.title}`}
+          width="400"
+          height="250"
+          loading={delay === 0 ? "eager" : "lazy"}
+          {...(delay === 0 ? { fetchpriority: "high" } : {})}
+          decoding="async"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
         <div className="absolute top-3 left-3">
@@ -47,7 +55,7 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
           </span>
         </div>
         <div className="absolute top-3 right-3">
-          <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#B8962E] px-2 py-1 bg-[rgba(8,8,8,0.8)]">
+          <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#F5F5F0] px-2 py-1 bg-[rgba(8,8,8,0.95)]">
             GARANȚIE 12 LUNI
           </span>
         </div>
