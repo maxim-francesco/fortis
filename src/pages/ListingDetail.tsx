@@ -86,7 +86,15 @@ export default function ListingDetail() {
   }
 
   const getAttr = (name: string) => {
-    return listing.attributeValues?.find((av: any) => av.attribute.name.toLowerCase() === name.toLowerCase());
+    if (!listing?.attributeValues) return null;
+    return listing.attributeValues.find((av: any) => {
+      const avName = (av.attribute?.name || "").toLowerCase().trim();
+      const query = name.toLowerCase().trim();
+      if (query === 'an') return avName === 'an' || avName.includes('fabrica');
+      if (query === 'cutie de viteze' || query === 'cutie') return avName.includes('cutie') || avName.includes('transmisie') || avName.includes('viteze');
+      if (query === 'combustibil') return avName.includes('combustibil') || avName.includes('motorizare');
+      return avName === query || avName.includes(query);
+    });
   };
 
   const attributes = listing.attributeValues || [];

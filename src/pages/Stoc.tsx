@@ -11,8 +11,16 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
 
   // Extract attributes from real data structure
   const getAttr = (name: string) => {
-    const attr = listing.attributeValues?.find((av: any) => av.attribute.name === name);
-    return attr?.stringValue || attr?.numberValue || attr?.booleanValue;
+    if (!listing?.attributeValues) return null;
+    const attr = listing.attributeValues.find((av: any) => {
+      const avName = (av.attribute?.name || "").toLowerCase().trim();
+      const query = name.toLowerCase().trim();
+      if (query === 'an') return avName === 'an' || avName.includes('fabrica');
+      if (query === 'cutie de viteze' || query === 'cutie') return avName.includes('cutie') || avName.includes('transmisie') || avName.includes('viteze');
+      if (query === 'combustibil') return avName.includes('combustibil') || avName.includes('motorizare');
+      return avName === query || avName.includes(query);
+    });
+    return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
   };
 
   const year = getAttr("An") || "N/A";
