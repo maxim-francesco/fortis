@@ -57,7 +57,7 @@ export default defineConfig(({ mode }) => ({
         '/politica-cookies'
       ],
       renderer: new puppeteer({
-        renderAfterDocumentEvent: 'custom-render-trigger',
+        renderAfterTime: 5000,
         timeout: 60000,
         maxConcurrentRoutes: 4
       }),
