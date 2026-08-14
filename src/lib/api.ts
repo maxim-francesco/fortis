@@ -23,6 +23,8 @@ export async function submitContactForm(data: {
   email: string;
   phone?: string;
   message: string;
+  type?: string;
+  listingId?: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
     const response = await fetch(`${API_BASE_URL}/public/contact`, {
@@ -30,6 +32,7 @@ export async function submitContactForm(data: {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         businessId: MEDFIL_BUSINESS_ID,
+        type: "GENERAL",
         ...data,
       }),
     });

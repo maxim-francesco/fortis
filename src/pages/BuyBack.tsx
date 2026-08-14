@@ -170,6 +170,7 @@ ${formData.descriere || 'Fără descriere adițională'}
 
     try {
       const result = await submitContactForm({
+        type: "BUYBACK",
         name: formData.nume,
         email: 'medfilautomobile@gmail.com',
         phone: formData.telefon,

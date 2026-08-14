@@ -24,9 +24,9 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
     return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
   };
 
-  const year = getAttr("An") || "N/A";
-  const fuel = getAttr("Combustibil") || "N/A";
-  const transmission = getAttr("Cutie de viteze") || "N/A";
+  const year = listing.year || getAttr("An") || "N/A";
+  const fuel = listing.fuelType || getAttr("Combustibil") || "N/A";
+  const transmission = listing.gearbox || getAttr("Cutie de viteze") || "N/A";
   const price = listing.price ? listing.price.toLocaleString() : "Contact";
   const km = listing.mileage ? listing.mileage.toLocaleString() : "N/A";
   const rawUrl = listing.images?.[0]?.url;

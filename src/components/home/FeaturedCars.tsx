@@ -22,8 +22,8 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
     return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
   };
 
-  const year = getAttr("An") || "N/A";
-  const fuel = getAttr("Combustibil") || "N/A";
+  const year = listing.year || getAttr("An") || "N/A";
+  const fuel = listing.fuelType || getAttr("Combustibil") || "N/A";
   const km = listing.mileage ? listing.mileage.toLocaleString("ro-RO") : "N/A";
   const price = listing.price ? listing.price.toLocaleString("ro-RO") : "Contact";
   const imageUrl = listing.images?.[0]?.url;

@@ -208,7 +208,7 @@ export default function ListingDetail() {
                   <Calendar size={18} className="text-[#B8962E]" />
                   <div>
                     <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">AN</div>
-                    <div className="text-sm font-body text-[#F5F5F0]">{getAttr("An")?.numberValue || getAttr("An")?.stringValue || "N/A"}</div>
+                    <div className="text-sm font-body text-[#F5F5F0]">{listing.year || getAttr("An")?.numberValue || getAttr("An")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
@@ -222,14 +222,14 @@ export default function ListingDetail() {
                   <Fuel size={18} className="text-[#B8962E]" />
                   <div>
                     <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">COMBUSTIBIL</div>
-                    <div className="text-sm font-body text-[#F5F5F0]">{getAttr("Combustibil")?.stringValue || "N/A"}</div>
+                    <div className="text-sm font-body text-[#F5F5F0]">{listing.fuelType || getAttr("Combustibil")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#111111] border border-[rgba(184,150,46,0.1)] p-3 rounded-sm">
                   <Settings size={18} className="text-[#B8962E]" />
                   <div>
                     <div className="text-[9px] font-label text-[#B0B0A8] tracking-widest">CUTIE</div>
-                    <div className="text-sm font-body text-[#F5F5F0]">{getAttr("Cutie de viteze")?.stringValue || "N/A"}</div>
+                    <div className="text-sm font-body text-[#F5F5F0]">{listing.gearbox || getAttr("Cutie de viteze")?.stringValue || "N/A"}</div>
                   </div>
                 </div>
               </div>

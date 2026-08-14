@@ -77,6 +77,7 @@ ${formData.mesaj}
 
     try {
       const result = await submitContactForm({
+        type: "GENERAL",
         name: formData.nume,
         email: 'medfilautomobile@gmail.com', // Ignored legacy fallback
         phone: formData.telefon,
