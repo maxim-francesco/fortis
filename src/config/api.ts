@@ -2,7 +2,7 @@
 // Configurare centrală pentru integrarea cu backend-ul SaaS MEDFIL.
 // Toate endpoint-urile și ID-urile hardcodate trebuie să folosească aceste constante.
 
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000") + "/api";
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || "https://saas-platform-backend-1.onrender.com") + "/api";
 
 // Business MEDFIL Automobile
 export const MEDFIL_BUSINESS_ID = "cmjt2601008sslj28uni4fwkj";
