@@ -30,8 +30,10 @@ export default function Contact() {
 
   const [formData, setFormData] = useState({
     nume: "",
+    email: "",
     telefon: "",
     mesaj: "",
+    consent: false,
   });
   
   const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +42,13 @@ export default function Contact() {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
     if (validationErrors[name]) {
       setValidationErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -53,10 +60,14 @@ export default function Contact() {
     // Validare
     const errors: Record<string, string> = {};
     if (!formData.nume || formData.nume.trim().length < 2) errors.nume = "Introdu un nume valid";
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = "Introdu o adresă de email validă";
+    }
     if (!formData.telefon || !/^(\+4|4)?0?7[0-9]{8}$/.test(formData.telefon.replace(/\s+/g, ''))) {
       errors.telefon = "Introdu un număr de telefon românesc valid";
     }
     if (!formData.mesaj || formData.mesaj.trim().length < 10) errors.mesaj = "Mesajul e prea scurt (min 10 caractere)";
+    if (!formData.consent) errors.consent = "Trebuie să fii de acord cu Politica de Confidențialitate";
     
     setValidationErrors(errors);
     if (Object.keys(errors).length > 0) return;
@@ -69,6 +80,7 @@ export default function Contact() {
 📨 MESAJ DE CONTACT
 
 👤 Nume: ${formData.nume}
+✉️ Email: ${formData.email}
 📞 Telefon: ${formData.telefon}
 
 📝 Mesaj:
@@ -79,14 +91,14 @@ ${formData.mesaj}
       const result = await submitContactForm({
         type: "GENERAL",
         name: formData.nume,
-        email: 'medfilautomobile@gmail.com', // Ignored legacy fallback
+        email: formData.email,
         phone: formData.telefon,
         message: formattedMessage,
       });
 
       if (result.success) {
         setSuccessMessage("Am primit mesajul tău. Te contactăm în cel mai scurt timp posibil.");
-        setFormData({ nume: "", telefon: "", mesaj: "" });
+        setFormData({ nume: "", email: "", telefon: "", mesaj: "", consent: false });
         setValidationErrors({});
       } else {
         setErrorMessage(result.error || "A apărut o eroare. Încearcă din nou sau sună-ne direct la 0754 299 199.");
@@ -336,6 +348,28 @@ ${formData.mesaj}
               </div>
 
               <div>
+                <label htmlFor="email" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">EMAIL *</label>
+                <input 
+                  id="email"
+                  required 
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  aria-invalid={!!validationErrors.email}
+                  aria-describedby={validationErrors.email ? "email-error" : undefined}
+                  className={`w-full bg-[#111] border text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px] disabled:opacity-50 ${
+                    validationErrors.email ? 'border-red-500' : 'border-[rgba(184,150,46,0.2)]'
+                  }`}
+                  placeholder="ion.popescu@gmail.com" 
+                />
+                {validationErrors.email && (
+                  <p id="email-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.email}</p>
+                )}
+              </div>
+
+              <div>
                 <label htmlFor="telefon" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">TELEFON *</label>
                 <input 
                   id="telefon"
@@ -382,6 +416,31 @@ ${formData.mesaj}
                   <p className="font-body text-[10px] text-[#B0B0A8]/60 mt-1 text-right">{formData.mesaj.length} / 1000</p>
                 </div>
               </div>
+
+              <div className="pt-2">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    checked={formData.consent}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                    aria-invalid={!!validationErrors.consent}
+                    className="mt-1 h-4 w-4 rounded border-[rgba(184,150,46,0.3)] bg-[#111] text-[#B8962E] focus:ring-[#B8962E]"
+                  />
+                  <label htmlFor="consent" className="font-body text-xs text-[#B0B0A8] leading-normal">
+                    Sunt de acord cu prelucrarea datelor mele personale conform{" "}
+                    <Link to="/politica-de-confidentialitate" target="_blank" className="text-[#B8962E] underline hover:text-[#D4AF6A]">
+                      Politicii de Confidențialitate
+                    </Link>. *
+                  </label>
+                </div>
+                {validationErrors.consent && (
+                  <p role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.consent}</p>
+                )}
+              </div>
+
 
               <button 
                 type="submit" 

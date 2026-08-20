@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { SEO } from "@/components/SEO";
+import { Link } from "react-router-dom";
 import { m, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { 
@@ -82,6 +83,7 @@ export default function Comanda() {
   
   const [formData, setFormData] = useState({
     nume: "",
+    email: "",
     telefon: "",
     marca: "",
     model: "",
@@ -89,7 +91,8 @@ export default function Comanda() {
     buget: "",
     combustibil: [] as string[],
     cutieViteze: "Oricare",
-    observatii: ""
+    observatii: "",
+    consent: false,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -97,8 +100,13 @@ export default function Comanda() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
     // Curăță eroarea când se scrie
     if (validationErrors[name]) {
       setValidationErrors(prev => ({ ...prev, [name]: "" }));
@@ -130,8 +138,16 @@ export default function Comanda() {
         errors.nume = "Numele este obligatoriu.";
         isValid = false;
       }
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+        errors.email = "Adresa de email este invalidă.";
+        isValid = false;
+      }
       if (!formData.telefon || formData.telefon.trim().length < 9) {
         errors.telefon = "Numărul de telefon este invalid.";
+        isValid = false;
+      }
+      if (!formData.consent) {
+        errors.consent = "Trebuie să fii de acord cu Politica de Confidențialitate.";
         isValid = false;
       }
     }
@@ -169,6 +185,7 @@ export default function Comanda() {
 🔍 CERERE MAȘINĂ LA COMANDĂ
 
 👤 Nume: ${formData.nume}
+✉️ Email: ${formData.email}
 📞 Telefon: ${formData.telefon}
 🏷️ Marcă dorită: ${formData.marca || 'Nespecificat'}
 📋 Model dorit: ${formData.model || 'Nespecificat'}
@@ -185,7 +202,7 @@ ${formData.observatii || 'Fără observații'}
       const result = await submitContactForm({
         type: "ORDER",
         name: formData.nume,
-        email: 'medfilautomobile@gmail.com',
+        email: formData.email,
         phone: formData.telefon,
         message: formattedMessage,
       });
@@ -594,7 +611,7 @@ ${formData.observatii || 'Fără observații'}
                         <h3 ref={stepHeadingRef} tabIndex={-1} className="font-display text-lg text-[#F5F5F0] mb-2 focus:outline-none">Pasul 3: Cum Te Putem Contacta?</h3>
                         <p className="font-body text-sm text-[#B0B0A8] mb-6">Ultimul pas. Promitem că nu vom face spam. Te sunăm doar când avem opțiuni concrete.</p>
                         
-                        <div className="grid sm:grid-cols-2 gap-6">
+                        <div className="grid sm:grid-cols-3 gap-6">
                           <div>
                             <label htmlFor="nume" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Nume Complet *</label>
                             <input 
@@ -610,6 +627,23 @@ ${formData.observatii || 'Fără observații'}
                               placeholder="Ion Popescu" 
                             />
                             {validationErrors.nume && <p id="nume-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.nume}</p>}
+                          </div>
+                          <div>
+                            <label htmlFor="email" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Email *</label>
+                            <input 
+                              id="email"
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              disabled={isLoading}
+                              aria-required="true"
+                              aria-invalid={!!validationErrors.email}
+                              aria-describedby={validationErrors.email ? "email-error" : undefined}
+                              className={`w-full bg-[#111] border ${validationErrors.email ? 'border-red-500' : 'border-[rgba(184,150,46,0.2)]'} text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]`} 
+                              placeholder="ion.popescu@gmail.com" 
+                            />
+                            {validationErrors.email && <p id="email-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.email}</p>}
                           </div>
                           <div>
                             <label htmlFor="telefon" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Telefon *</label>
@@ -629,6 +663,31 @@ ${formData.observatii || 'Fără observații'}
                             {validationErrors.telefon && <p id="telefon-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.telefon}</p>}
                           </div>
                         </div>
+
+                        <div className="pt-4">
+                          <div className="flex items-start gap-3">
+                            <input
+                              type="checkbox"
+                              id="consent"
+                              name="consent"
+                              checked={formData.consent}
+                              onChange={handleInputChange}
+                              disabled={isLoading}
+                              aria-invalid={!!validationErrors.consent}
+                              className="mt-1 h-4 w-4 rounded border-[rgba(184,150,46,0.3)] bg-[#111] text-[#B8962E] focus:ring-[#B8962E]"
+                            />
+                            <label htmlFor="consent" className="font-body text-xs text-[#B0B0A8] leading-normal">
+                              Sunt de acord cu prelucrarea datelor mele personale conform{" "}
+                              <Link to="/politica-de-confidentialitate" target="_blank" className="text-[#B8962E] underline hover:text-[#D4AF6A]">
+                                Politicii de Confidențialitate
+                              </Link>. *
+                            </label>
+                          </div>
+                          {validationErrors.consent && (
+                            <p role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.consent}</p>
+                          )}
+                        </div>
+
 
                         {/* Order Summary */}
                         <div className="bg-[#080808] border border-[rgba(184,150,46,0.1)] rounded-sm p-5 mt-8 mb-4">

@@ -16,12 +16,17 @@ import {
   Zap, 
   CreditCard, 
   TrendingDown, 
-  Clock 
+  Clock,
+  Loader2,
+  Send,
+  AlertCircle
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getFinancialProductSchema } from "@/lib/seo/schemas";
+import { submitContactForm } from "@/lib/api";
+
 const faqs = [
   { q: "Ce acte sunt necesare pentru finanțare?", a: "Pentru finanțare este necesar doar buletinul de identitate. Nu sunt necesare documente suplimentare sau adeverințe de venit în majoritatea cazurilor." },
   { q: "Cât durează aprobarea finanțării?", a: "Aprobarea poate veni în aceeași zi, uneori în câteva ore. Partenerii noștri bancari au procese simplificate pentru clienții noștri." },
@@ -65,10 +70,10 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function Finantare() {
-  const { ref: heroRef, inView: heroInView } = useInView(0.1);
+  const { ref: heroRef } = useInView(0.1);
   const { ref: processRef, inView: processInView } = useInView(0.1);
   const { ref: calcRef, inView: calcInView } = useInView(0.05);
-  const { ref: tabsRef, inView: tabsInView } = useInView(0.1);
+  const { ref: tabsRef } = useInView(0.1);
 
   // Calculator State
   const [pretMasina, setPretMasina] = useState(30000);
@@ -102,6 +107,91 @@ export default function Finantare() {
 
   // Tabs state
   const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
+
+  // Form State
+  const [formData, setFormData] = useState({
+    nume: "",
+    email: "",
+    telefon: "",
+    consent: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errors: Record<string, string> = {};
+
+    if (!formData.nume || formData.nume.trim().length < 2) {
+      errors.nume = "Numele este obligatoriu.";
+    }
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = "Adresa de email este invalidă.";
+    }
+    if (!formData.telefon || formData.telefon.trim().length < 9) {
+      errors.telefon = "Numărul de telefon este invalid.";
+    }
+    if (!formData.consent) {
+      errors.consent = "Trebuie să fii de acord cu Politica de Confidențialitate.";
+    }
+
+    setValidationErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
+    setIsLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    const formattedMessage = `
+💳 SOLICITARE OFERTĂ FINANȚARE
+
+👤 Nume: ${formData.nume}
+✉️ Email: ${formData.email}
+📞 Telefon: ${formData.telefon}
+
+📊 SIMULARE CREDIT:
+• Preț mașină: ${formatNumber(pretMasina)} €
+• Avans: ${avansPercent}% (${formatNumber(avansEur)} € / ${formatNumber(avansRon)} RON)
+• Perioadă: ${perioada} luni
+• Sumă finanțată: ${formatNumber(results.principalRon)} RON
+• Rată lunară estimată: ${formatNumber(results.rata)} RON / lună
+    `.trim();
+
+    try {
+      const result = await submitContactForm({
+        type: "FINANCING",
+        name: formData.nume,
+        email: formData.email,
+        phone: formData.telefon,
+        message: formattedMessage,
+      });
+
+      if (result.success) {
+        setSuccessMessage("Solicitarea ta de finanțare a fost înregistrată! Un consultant te va contacta în cel mai scurt timp.");
+        setFormData({ nume: "", email: "", telefon: "", consent: false });
+        setValidationErrors({});
+      } else {
+        setErrorMessage(result.error || "A apărut o eroare la trimiterea solicitării.");
+      }
+    } catch (err) {
+      setErrorMessage("Eroare de rețea. Încearcă din nou.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#080808]">
@@ -210,7 +300,7 @@ export default function Finantare() {
         </div>
       </section>
 
-      {/* 3. CALCULATOR RATE */}
+      {/* 3. CALCULATOR RATE & INLINE FORM */}
       <section id="calculator" className="py-16 sm:py-24 scroll-mt-20" ref={calcRef as any}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <m.div 
@@ -334,13 +424,13 @@ export default function Finantare() {
                     <p className="font-body text-[11px] text-[#B0B0A8] italic leading-relaxed text-center mb-6">
                       * Calculul este orientativ. Oferta finală se stabilește individual, în funcție de profilul financiar.
                     </p>
-                    <Link 
-                      to="/contact?subiect=finantare" 
+                    <a 
+                      href="#form-finantare" 
                       className="btn-gold w-full flex items-center justify-center gap-2 py-4 rounded-sm font-semibold tracking-wide min-h-[44px]"
                     >
                       <span>Solicită Ofertă Acum</span>
                       <ArrowRight size={16} />
-                    </Link>
+                    </a>
                     <div className="text-center">
                       <a href="tel:0754299199" className="font-body text-xs text-[#B0B0A8] hover:text-[#B8962E] transition-colors min-h-[44px] inline-flex items-center justify-center">
                         sau sună direct la 0754 299 199
@@ -350,7 +440,145 @@ export default function Finantare() {
                 </div>
               </div>
             </div>
-            
+
+            {/* Inline Financing Form */}
+            <div id="form-finantare" className="mt-12 pt-10 border-t border-[rgba(184,150,46,0.15)] scroll-mt-24">
+              <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-8">
+                  <h3 className="font-display text-2xl text-[#F5F5F0] mb-2 font-semibold">Aplică Pentru Oferta Simulată</h3>
+                  <p className="font-body text-sm text-[#B0B0A8]">
+                    Trimite detaliile de mai jos și un consultant MEDFIL te va contacta pentru aprobarea rapidă.
+                  </p>
+                </div>
+
+                {successMessage ? (
+                  <m.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-[#0A0A0A] border border-[#B8962E] rounded-sm p-8 text-center space-y-4"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-[rgba(184,150,46,0.15)] border border-[#B8962E] flex items-center justify-center mx-auto text-[#B8962E]">
+                      <CheckCircle2 size={24} />
+                    </div>
+                    <h4 className="font-display text-xl text-[#F5F5F0]">Solicitare Trimisă cu Succes!</h4>
+                    <p className="font-body text-sm text-[#B0B0A8] max-w-md mx-auto">{successMessage}</p>
+                    <button
+                      onClick={() => setSuccessMessage("")}
+                      className="btn-ghost text-xs px-6 py-2 rounded-sm text-[#B8962E] border border-[rgba(184,150,46,0.3)] mt-4"
+                    >
+                      Trimite o altă solicitare
+                    </button>
+                  </m.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6 bg-[#0A0A0A] border border-[rgba(184,150,46,0.15)] p-6 sm:p-8 rounded-sm">
+                    <div className="grid sm:grid-cols-3 gap-5">
+                      <div>
+                        <label htmlFor="fin-nume" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Nume Complet *</label>
+                        <input
+                          id="fin-nume"
+                          name="nume"
+                          value={formData.nume}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                          aria-required="true"
+                          aria-invalid={!!validationErrors.nume}
+                          aria-describedby={validationErrors.nume ? "fin-nume-error" : undefined}
+                          className={`w-full bg-[#111] border ${validationErrors.nume ? 'border-red-500' : 'border-[rgba(184,150,46,0.2)]'} text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]`}
+                          placeholder="Ion Popescu"
+                        />
+                        {validationErrors.nume && <p id="fin-nume-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.nume}</p>}
+                      </div>
+
+                      <div>
+                        <label htmlFor="fin-email" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Email *</label>
+                        <input
+                          id="fin-email"
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                          aria-required="true"
+                          aria-invalid={!!validationErrors.email}
+                          aria-describedby={validationErrors.email ? "fin-email-error" : undefined}
+                          className={`w-full bg-[#111] border ${validationErrors.email ? 'border-red-500' : 'border-[rgba(184,150,46,0.2)]'} text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]`}
+                          placeholder="ion.popescu@gmail.com"
+                        />
+                        {validationErrors.email && <p id="fin-email-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.email}</p>}
+                      </div>
+
+                      <div>
+                        <label htmlFor="fin-telefon" className="font-label text-[10px] text-[#B0B0A8] tracking-widest block mb-2 uppercase">Telefon *</label>
+                        <input
+                          id="fin-telefon"
+                          type="tel"
+                          name="telefon"
+                          value={formData.telefon}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                          aria-required="true"
+                          aria-invalid={!!validationErrors.telefon}
+                          aria-describedby={validationErrors.telefon ? "fin-telefon-error" : undefined}
+                          className={`w-full bg-[#111] border ${validationErrors.telefon ? 'border-red-500' : 'border-[rgba(184,150,46,0.2)]'} text-[#F5F5F0] font-body text-sm px-4 py-3 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[48px]`}
+                          placeholder="07xx xxx xxx"
+                        />
+                        {validationErrors.telefon && <p id="fin-telefon-error" role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.telefon}</p>}
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <div className="flex items-start gap-3">
+                        <input
+                          type="checkbox"
+                          id="fin-consent"
+                          name="consent"
+                          checked={formData.consent}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                          aria-invalid={!!validationErrors.consent}
+                          className="mt-1 h-4 w-4 rounded border-[rgba(184,150,46,0.3)] bg-[#111] text-[#B8962E] focus:ring-[#B8962E]"
+                        />
+                        <label htmlFor="fin-consent" className="font-body text-xs text-[#B0B0A8] leading-normal">
+                          Sunt de acord cu prelucrarea datelor mele personale conform{" "}
+                          <Link to="/politica-de-confidentialitate" target="_blank" className="text-[#B8962E] underline hover:text-[#D4AF6A]">
+                            Politicii de Confidențialitate
+                          </Link>. *
+                        </label>
+                      </div>
+                      {validationErrors.consent && (
+                        <p role="alert" className="text-red-500 text-xs font-body mt-1">{validationErrors.consent}</p>
+                      )}
+                    </div>
+
+                    {errorMessage && (
+                      <div className="p-4 bg-red-500/10 border border-red-500 rounded-sm flex items-start gap-3">
+                        <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+                        <p className="text-xs font-body text-red-500">{errorMessage}</p>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="btn-gold w-full py-4 rounded-sm text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed min-h-[48px]"
+                    >
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="animate-spin" size={18} />
+                          <span>Se trimite...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Trimite Solicitarea de Finanțare</span>
+                          <Send size={16} />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+
           </m.div>
         </div>
       </section>
