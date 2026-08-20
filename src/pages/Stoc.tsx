@@ -2,35 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import { SEO } from "@/components/SEO";
 import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
-import { Link } from "react-router-dom";
-import { Calendar, Gauge, Fuel, Settings, ChevronRight, SlidersHorizontal, X, Loader2 } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Calendar, Gauge, Fuel, Settings, ChevronRight, Loader2, Car } from "lucide-react";
 import { useListings } from "@/hooks/useListings";
 import { cldImage, cldSrcSet } from "@/lib/cloudinary";
+import { getAttrValue } from "@/lib/attributes";
 
 function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.05);
 
-  // Extract attributes from real data structure
-  const getAttr = (name: string) => {
-    if (!listing?.attributeValues) return null;
-    const attr = listing.attributeValues.find((av: any) => {
-      const avName = (av.attribute?.name || "").toLowerCase().trim();
-      const query = name.toLowerCase().trim();
-      if (query === 'an') return avName === 'an' || avName.includes('fabrica');
-      if (query === 'cutie de viteze' || query === 'cutie') return avName.includes('cutie') || avName.includes('transmisie') || avName.includes('viteze');
-      if (query === 'combustibil') return avName.includes('combustibil') || avName.includes('motorizare');
-      return avName === query || avName.includes(query);
-    });
-    return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
-  };
-
-  const year = listing.year || getAttr("An") || "N/A";
-  const fuel = listing.fuelType || getAttr("Combustibil") || "N/A";
-  const transmission = listing.gearbox || getAttr("Cutie de viteze") || "N/A";
+  const year = listing.year || getAttrValue(listing, "year") || "N/A";
+  const fuel = listing.fuelType || getAttrValue(listing, "fuelType") || "N/A";
+  const transmission = listing.gearbox || getAttrValue(listing, "gearbox") || "N/A";
   const price = listing.price ? listing.price.toLocaleString() : "Contact";
-  const km = listing.mileage ? listing.mileage.toLocaleString() : "N/A";
+  const km = listing.mileage ? listing.mileage.toLocaleString() : (getAttrValue(listing, "mileage")?.toLocaleString() ?? "N/A");
   const rawUrl = listing.images?.[0]?.url;
-  const imageUrl = cldImage(rawUrl, { width: 600, format: 'auto', quality: 'auto' }) || "https://picsum.photos/seed/car/600/400";
+  const imageUrl = rawUrl ? cldImage(rawUrl, { width: 600, format: 'auto', quality: 'auto' }) : null;
   const imageSrcSet = rawUrl ? cldSrcSet(rawUrl, [400, 600, 800]) : undefined;
 
   return (
@@ -42,16 +29,23 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
       className="bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300 flex flex-col"
     >
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
-        <img 
-          src={imageUrl} 
-          srcSet={imageSrcSet}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-          alt={`Fotografie exterioară ${listing.title || 'Mașină second-hand'}`} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" 
-          loading="lazy"
-          decoding="async"
-          data-ai-hint="car exterior"
-        />
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            srcSet={imageSrcSet}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+            alt={`Fotografie exterioară ${listing.title || 'Mașină second-hand'}`} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" 
+            loading="lazy"
+            decoding="async"
+            data-ai-hint="car exterior"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#111111] flex flex-col items-center justify-center text-[#B0B0A8] border border-[rgba(184,150,46,0.1)]">
+            <Car size={36} className="text-[#B8962E] mb-2" strokeWidth={1.5} />
+            <span className="font-body text-xs">Fără imagine</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/30 to-transparent" />
         <div className="absolute top-3 right-3">
           <span className="font-label text-[9px] tracking-widest border border-[rgba(184,150,46,0.5)] text-[#F5F5F0] px-2 py-1 bg-[rgba(8,8,8,0.95)]">GARANȚIE 12 LUNI</span>
@@ -86,7 +80,8 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
 
 export default function Masini() {
   const [page, setPage] = useState("1");
-  const [filterOpen, setFilterOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortParam = searchParams.get("sort") || "price_asc";
   const { listings, loading, error, pagination } = useListings({ page });
   const { ref, inView } = useInView(0.1);
   const listTopRef = useRef<HTMLDivElement>(null);
@@ -102,11 +97,39 @@ export default function Masini() {
     setPage(newPage);
   };
 
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSort = e.target.value;
+    setSearchParams(prev => {
+      const updated = new URLSearchParams(prev);
+      updated.set("sort", newSort);
+      return updated;
+    });
+  };
+
+  // Client-side sort over fetched listings using attribute lookup
+  const sortedListings = [...listings].sort((a, b) => {
+    const getPrice = (l: any) => l.price ?? getAttrValue(l, "price") ?? 0;
+    const getYear = (l: any) => Number(l.year || getAttrValue(l, "year") || 0);
+    const getKm = (l: any) => Number(l.mileage ?? getAttrValue(l, "mileage") ?? 0);
+
+    switch (sortParam) {
+      case "price_desc":
+        return getPrice(b) - getPrice(a);
+      case "year_desc":
+        return getYear(b) - getYear(a);
+      case "mileage_asc":
+        return getKm(a) - getKm(b);
+      case "price_asc":
+      default:
+        return getPrice(a) - getPrice(b);
+    }
+  });
+
   return (
     <div className="min-h-screen bg-[#080808]">
       <SEO
         title="Stoc Mașini Disponibile - MEDFIL Automobile Cluj"
-        description="Descoperă întregul stoc de mașini second-hand MEDFIL: BMW, Audi, Mercedes, Volkswagen și multe altele. Verificate tehnic, cu carte service completă."
+        description="Descoperă stocul de mașini second-hand MEDFIL Cluj-Napoca. Vehicule verificate tehnic, cu garanție 12 luni, finanțare flexibilă și carte service completă."
         canonical="https://medfil.ro/stoc"
         structuredData={[
           {
@@ -145,7 +168,7 @@ export default function Masini() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        {/* Filter toggle (mobile) + results header */}
+        {/* Results header + Sort */}
         <div ref={listTopRef} className="flex items-center justify-between mb-8 scroll-mt-24">
           <div ref={ref as React.RefObject<HTMLDivElement>}>
             <m.div
@@ -165,43 +188,23 @@ export default function Masini() {
             </m.div>
           </div>
           <div className="flex items-center gap-3">
-            <select aria-label="Sortează mașinile" className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors hidden sm:block">
-              <option>Preț crescător</option>
-              <option>Preț descrescător</option>
-              <option>An (nou→vechi)</option>
-              <option>Kilometraj</option>
-            </select>
-            <button
-              onClick={() => setFilterOpen(true)}
-              aria-label="Deschide filtre"
-              aria-expanded={filterOpen}
-              className="flex items-center gap-2 border border-[rgba(184,150,46,0.3)] text-[#F5F5F0] font-body text-sm px-4 py-2 rounded-sm hover:border-[#B8962E] transition-colors sm:hidden list-btn min-h-[44px]"
+            <select 
+              value={sortParam}
+              onChange={handleSortChange}
+              aria-label="Sortează mașinile" 
+              className="bg-[#161616] border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] font-body text-sm px-3 py-2 rounded-sm outline-none focus:border-[#B8962E] transition-colors min-h-[44px] w-full sm:w-auto"
             >
-              <SlidersHorizontal size={15} />
-              Filtre
-            </button>
+              <option value="price_asc">Preț crescător</option>
+              <option value="price_desc">Preț descrescător</option>
+              <option value="year_desc">An (nou→vechi)</option>
+              <option value="mileage_asc">Kilometraj crescător</option>
+            </select>
           </div>
-        </div>
-
-        {/* Desktop filter bar */}
-        <div className="hidden sm:flex flex-wrap gap-3 mb-8 p-4 bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm">
-          {["BMW", "Mercedes", "Audi", "Volkswagen", "Volvo"].map((brand) => (
-            <button key={brand} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
-              {brand}
-            </button>
-          ))}
-          <div className="w-px bg-[rgba(184,150,46,0.2)] self-stretch" />
-          {["Diesel", "Benzină", "Hybrid", "Electric"].map((fuel) => (
-            <button key={fuel} className="font-body text-xs px-3 py-1.5 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all">
-              {fuel}
-            </button>
-          ))}
-          <button className="ml-auto btn-gold text-xs px-4 py-1.5 rounded-sm">Aplică Filtre</button>
         </div>
 
         {/* Cars grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 min-h-[400px]">
-          {!loading && !error && listings.map((listing, i) => (
+          {!loading && !error && sortedListings.map((listing, i) => (
             <CarCard key={listing.id} listing={listing} delay={i * 0.07} />
           ))}
           
@@ -237,48 +240,6 @@ export default function Masini() {
           </div>
         )}
       </div>
-
-      {/* Mobile filter drawer */}
-      {filterOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setFilterOpen(false)} aria-hidden="true" />
-          <m.div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="filter-dialog-title"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ duration: 0.3 }}
-            className="relative mt-auto bg-[#161616] border-t border-[rgba(184,150,46,0.2)] rounded-t-xl p-6 z-10 max-h-[80vh] overflow-y-auto"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 id="filter-dialog-title" className="font-display text-xl text-[#F5F5F0]">Filtre</h3>
-              <button aria-label="Închide filtre" onClick={() => setFilterOpen(false)} className="text-[#B0B0A8] hover:text-[#F5F5F0] min-h-[44px] min-w-[44px] flex items-center justify-center"><X size={20} /></button>
-            </div>
-            <div className="mb-5">
-              <p className="font-label text-[#B8962E] text-xs tracking-widest mb-3">MARCĂ</p>
-              <div className="flex flex-wrap gap-2">
-                {["BMW", "Mercedes", "Audi", "Volkswagen", "Volvo"].map((b) => (
-                  <button key={b} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{b}</button>
-                ))}
-              </div>
-            </div>
-            <div className="mb-5">
-              <p className="font-label text-[#B8962E] text-xs tracking-widest mb-3">COMBUSTIBIL</p>
-              <div className="flex flex-wrap gap-2">
-                {["Diesel", "Benzină", "Hybrid", "Electric"].map((f) => (
-                  <button key={f} className="font-body text-sm px-3 py-2 border border-[rgba(184,150,46,0.2)] text-[#B0B0A8] rounded-sm hover:border-[#B8962E] hover:text-[#B8962E] transition-all min-h-[44px]">{f}</button>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button className="flex-1 btn-ghost py-3 rounded-sm text-sm">Resetează</button>
-              <button onClick={() => setFilterOpen(false)} className="flex-1 btn-gold py-3 rounded-sm text-sm">Aplică</button>
-            </div>
-          </m.div>
-        </div>
-      )}
     </div>
   );
 }

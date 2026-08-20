@@ -2,31 +2,20 @@ import { useState, useEffect } from "react";
 import { m } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { Link } from "react-router-dom";
-import { ArrowRight, Gauge, Calendar, Fuel, Loader2 } from "lucide-react";
+import { ArrowRight, Gauge, Calendar, Fuel, Loader2, Car } from "lucide-react";
 import { searchListings } from "@/lib/api";
 import { cldImage, cldSrcSet } from "@/lib/cloudinary";
+import { getAttrValue } from "@/lib/attributes";
 
 function CarCard({ listing, delay }: { listing: any; delay: number }) {
   const { ref, inView } = useInView(0.1);
 
-  const getAttr = (name: string) => {
-    if (!listing?.attributeValues) return null;
-    const attr = listing.attributeValues.find((av: any) => {
-      const avName = (av.attribute?.name || "").toLowerCase().trim();
-      const query = name.toLowerCase().trim();
-      if (query === 'an') return avName === 'an' || avName.includes('fabrica');
-      if (query === 'cutie de viteze' || query === 'cutie') return avName.includes('cutie') || avName.includes('transmisie') || avName.includes('viteze');
-      if (query === 'combustibil') return avName.includes('combustibil') || avName.includes('motorizare');
-      return avName === query || avName.includes(query);
-    });
-    return attr?.numberValue ?? attr?.stringValue ?? attr?.booleanValue;
-  };
-
-  const year = listing.year || getAttr("An") || "N/A";
-  const fuel = listing.fuelType || getAttr("Combustibil") || "N/A";
-  const km = listing.mileage ? listing.mileage.toLocaleString("ro-RO") : "N/A";
+  const year = listing.year || getAttrValue(listing, "year") || "N/A";
+  const fuel = listing.fuelType || getAttrValue(listing, "fuelType") || "N/A";
+  const km = listing.mileage ? listing.mileage.toLocaleString("ro-RO") : (getAttrValue(listing, "mileage")?.toLocaleString("ro-RO") ?? "N/A");
   const price = listing.price ? listing.price.toLocaleString("ro-RO") : "Contact";
-  const imageUrl = listing.images?.[0]?.url;
+  const rawUrl = listing.images?.[0]?.url;
+  const imageUrl = rawUrl ? cldImage(rawUrl, { width: 400, format: 'auto', quality: 'auto' }) : null;
 
   return (
     <m.div
@@ -37,18 +26,26 @@ function CarCard({ listing, delay }: { listing: any; delay: number }) {
       className="snap-item w-[80vw] sm:w-auto flex-shrink-0 sm:flex-shrink bg-[#161616] border border-[rgba(184,150,46,0.15)] rounded-sm overflow-hidden group hover:-translate-y-1.5 hover:border-[rgba(184,150,46,0.45)] hover:shadow-[0_20px_60px_-15px_rgba(184,150,46,0.2)] transition-all duration-300"
     >
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
-        <img
-          src={imageUrl ? cldImage(imageUrl, { width: 400, format: 'auto', quality: 'auto' }) : "https://picsum.photos/seed/car/400/300"}
-          srcSet={imageUrl ? cldSrcSet(imageUrl, [400, 600, 800]) : undefined}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-          alt={`${listing.title}`}
-          width="400"
-          height="250"
-          loading={delay === 0 ? "eager" : "lazy"}
-          {...(delay === 0 ? { fetchpriority: "high" } : {})}
-          decoding="async"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-        />
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            srcSet={cldSrcSet(rawUrl, [400, 600, 800])}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+            alt={`${listing.title}`}
+            width="400"
+            height="250"
+            loading={delay === 0 ? "eager" : "lazy"}
+            {...(delay === 0 ? { fetchpriority: "high" } : {})}
+            decoding="async"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#111111] flex flex-col items-center justify-center text-[#B0B0A8] border border-[rgba(184,150,46,0.1)]">
+            <Car size={36} className="text-[#B8962E] mb-2" strokeWidth={1.5} />
+            <span className="font-body text-xs">Fără imagine</span>
+          </div>
+        )}
+
         <div className="absolute top-3 left-3">
           <span className="font-label text-[10px] tracking-widest bg-[#B8962E] text-[#080808] px-2 py-1">
             RECOMANDAT

@@ -10,5 +10,6 @@ export const MEDFIL_BUSINESS_ID = "cmjt2601008sslj28uni4fwkj";
 // Categoria "Autovehicule" în SaaS-ul MEDFIL
 export const MEDFIL_CATEGORY_ID = "cmjt27qcc08swlj28gtgarg1a";
 
-// Limita default pentru listări publice
-export const DEFAULT_LISTINGS_LIMIT = "20";
+// Limita ceiling pentru listări publice
+export const DEFAULT_LISTINGS_LIMIT = "200";
+
